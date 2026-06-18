@@ -7,3 +7,22 @@ qwen-infra-sft/
 qwen-infra-dpo/
 __pycache__/
 *.pyc
+
+# Generated artifacts — re-run `python -m run_e2e` to regenerate.
+runs/
+
+# macOS
+.DS_Store
+
+# Local env
+.env
+.venv/
+venv/
+
+# Large datasets that are sourced from external repos — pull with the commands
+# in the wiki/data README. Don't commit them.
+*.zip
+real-data/
+
+# Vendored generate.py (when INFRA_AGENT_PATH is unset we fall back to this)
+sim/_vendored/
