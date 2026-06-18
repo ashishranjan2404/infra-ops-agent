@@ -45,8 +45,20 @@ python train_dpo.py --model qwen-infra-sft --data pairs.jsonl
 python eval_agent.py --model qwen-infra-dpo --n 1000
 ```
 
-> Data files (`*.jsonl`) are gitignored — regenerate them with the scripts above. Training
-> scripts run on a GPU (Colab/cloud).
+> Data files (`*.jsonl`) are gitignored here — get them from Hugging Face (below) or
+> regenerate locally with the scripts above (seeded → reproducible). Training runs on a GPU.
+
+## Data (Hugging Face)
+
+Pre-generated dataset: **https://huggingface.co/datasets/quantranger/infra-ops-incidents**
+(`incidents.jsonl` 150k · `pairs.jsonl` 30k · `rejections.jsonl` 20k).
+
+```python
+from datasets import load_dataset
+sft  = load_dataset("quantranger/infra-ops-incidents", data_files="incidents.jsonl", split="train")
+dpo  = load_dataset("quantranger/infra-ops-incidents", data_files="pairs.jsonl",      split="train")
+```
+Or `hf download quantranger/infra-ops-incidents --repo-type dataset --local-dir .`
 
 ## Incident taxonomy (the "issues we replicate")
 
