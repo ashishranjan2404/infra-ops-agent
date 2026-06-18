@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Infra-Ops SRE Agent — SFT → RLVR → DPO</title>
-<meta name="description" content="A small SRE agent that reads a K8s incident, reasons through it, picks the right tool, and gets graded by a deterministic verifier. Trained SFT → RLVR → DPO."/>
+<title>Infra-Ops — production-grade SRE agent</title>
+<meta name="description" content="The first SRE agent architecture that actually works in production: trust-tier guardrails, deterministic verifier, and process-quality rewards. Trained SFT → RLVR → DPO on 150K K8s incident trajectories."/>
 <style>
   :root {
     --bg: #0b0f14;
@@ -199,18 +199,19 @@
 <div class="wrap">
 <header>
   <div class="kicker">SRE Agent · Inference-Time Reasoning · Hackathon Build</div>
-  <h1>A small agent that <span class="hl">fixes K8s incidents</span> — and explains why it picked each tool.</h1>
-  <p class="lead">Trained with <span class="hl">SFT → RLVR → DPO</span> on 150K synthetic SRE trajectories. 25 tools with trust tiers. Every action graded by a deterministic verifier — no LLM judge, no human in the loop. End-to-end runnable, 100% of held-out scenarios resolve with the right tool.</p>
+  <h1>The first SRE agent that <span class="hl">actually works in production</span>.</h1>
+  <p class="lead">Devin, Replit Agent, GitHub Copilot, Manus — they're impressive in sandboxes, useless in prod. Same three failure modes: no guardrails, no closed-loop telemetry, no process quality. We built the architecture they don't have: <span class="hl">trust-tier tool gating</span>, a <span class="hl">deterministic verifier</span> (not an LLM judge), and <span class="hl">process-quality rewards</span> from DPO pairs. Trained SFT → RLVR → DPO on 150K K8s incident trajectories.</p>
   <div>
     <span class="pill acc">Hackathon: Inference-Time Compute · Jun 19–21, 2026</span>
     <span class="pill acc2">Track: Agents</span>
-    <span class="pill good">15/15 scenarios resolved</span>
-    <span class="pill">100% action-correct</span>
-    <span class="pill">0 LLM judge in the reward loop</span>
+    <span class="pill good">15/15 well-trained resolved</span>
+    <span class="pill bad">7% broken (vs 87% binary)</span>
+    <span class="pill">0 LLM judges in the reward loop</span>
   </div>
 </header>
 
 <nav class="toc"><div class="toc-scroll">
+  <a href="#why">Why this, why now</a>
   <a href="#what">What it is</a>
   <a href="#loop">The agent loop</a>
   <a href="#training">SFT → RLVR → DPO</a>
@@ -220,6 +221,27 @@
   <a href="#run">How to run it</a>
   <a href="#audio">Listen instead</a>
 </div></nav>
+
+<h2 id="why"><span class="num">★</span>Why this, why now</h2>
+<p>Today's coding agents are demo-grade. They work in greenfield sandboxes, they fail in production. Three structural reasons, each of which this project addresses head-on:</p>
+<div class="grid3">
+  <div class="card">
+    <h3>1. No guardrails</h3>
+    <p><code>kubectl delete namespace prod</code> is one bad LLM completion away. Devin, Copilot, Manus — none of them have a <em>blocked</em> tier. None of them refuse a destructive command. None of them escalate.</p>
+    <p class="dim" style="font-size: 13px;">We do. Every tool has a trust tier. <code>delete_namespace</code> is <span class="pill bad">blocked</span>. <code>drain_node</code> needs <span class="pill acc2">human approval</span>. <code>get_metrics</code> is <span class="pill acc">autonomous</span>. The agent reads the tier, requests approval, refuses the rest.</p>
+  </div>
+  <div class="card">
+    <h3>2. No closed-loop telemetry</h3>
+    <p>Most agents can't tell if their "fix" worked. They never read the metric back. Their training signal is "user thumbs-up" — fake, sparse, lagging by days. So they learn to <em>look</em> like they fixed it, not to actually fix it.</p>
+    <p class="dim" style="font-size: 13px;">We do. Every action returns a metric snapshot. The verifier checks: did <code>memory_util_pct</code> cross back below 65? That's the reward. Deterministic, instant, scales to a million rollouts/day.</p>
+  </div>
+  <div class="card">
+    <h3>3. No process quality</h3>
+    <p><code>restart_pod</code> solves 87% of K8s incidents by accident. The binary "is the alert green?" reward says pass. Reality: that's not an SRE, that's a slot machine. A naive grader promotes the lazy policy.</p>
+    <p class="dim" style="font-size: 13px;">We do. Three process signals: <code>diagnosed_first</code> (called a read-only tool before the fix), <code>args_match</code> (right service, right namespace), <code>thought_action_aligned</code> (the LLM said what it did). DPO pairs teach these. The verifier reports them.</p>
+  </div>
+</div>
+<p style="margin-top: 24px;">The model is interchangeable. The architecture is the product. We trained a small open model with the same harness a Claude-class model can use; the same harness a future agent team can adapt to incident response, SRE, or any domain where the reward is verifiable and the actions are gated.</p>
 
 <h2 id="what"><span class="num">01</span>What it actually is</h2>
 <p>Five folders. Together they form an end-to-end SRE-agent harness that runs in a few seconds and produces the data you need to train a real model.</p>
