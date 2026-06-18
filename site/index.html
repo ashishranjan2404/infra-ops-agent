@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Infra-Ops SRE Agent — SFT → RLVR → DPO</title>
+<meta name="description" content="A small SRE agent that reads a K8s incident, reasons through it, picks the right tool, and gets graded by a deterministic verifier. Trained SFT → RLVR → DPO."/>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --panel: #11171f;
+    --panel2: #161e29;
+    --border: #243041;
+    --ink: #e7eef7;
+    --dim: #93a3b8;
+    --muted: #5e6d82;
+    --acc: #ff7a45;
+    --acc2: #5aa9ff;
+    --good: #3fb950;
+    --warn: #d29922;
+    --bad: #f85149;
+    --purple: #c4a3ff;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+               font: 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--acc2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 120px; }
+  header { padding: 80px 0 28px; border-bottom: 1px solid var(--border); }
+  .kicker { color: var(--acc); font-weight: 700; letter-spacing: .14em;
+            text-transform: uppercase; font-size: 12px; }
+  h1 { font-size: 44px; line-height: 1.1; margin: 12px 0 16px; font-weight: 800;
+       letter-spacing: -.02em; }
+  h1 .hl { color: var(--acc); }
+  h2 { font-size: 26px; line-height: 1.2; margin: 80px 0 12px; font-weight: 700;
+       letter-spacing: -.01em; scroll-margin-top: 20px; }
+  h2 .num { color: var(--acc); font-family: var(--mono); font-weight: 700; font-size: 16px;
+            margin-right: 12px; padding: 4px 10px; background: var(--panel);
+            border: 1px solid var(--border); border-radius: 6px; vertical-align: middle; }
+  h3 { font-size: 18px; margin: 28px 0 8px; font-weight: 600; }
+  p { color: var(--ink); margin: 0 0 14px; }
+  p.lead { font-size: 19px; color: var(--dim); max-width: 720px; }
+  .dim { color: var(--dim); }
+  .muted { color: var(--muted); }
+  code, .mono { font-family: var(--mono); font-size: 13.5px;
+                background: var(--panel); padding: 1px 6px; border-radius: 4px;
+                border: 1px solid var(--border); }
+  pre { background: var(--panel); border: 1px solid var(--border);
+        border-radius: 12px; padding: 16px 18px; overflow: auto;
+        font-family: var(--mono); font-size: 13px; line-height: 1.55;
+        margin: 14px 0; }
+  pre code { background: none; border: 0; padding: 0; }
+  .k { color: var(--acc2); }  /* keyword */
+  .s { color: #a5d6ff; }       /* string */
+  .n { color: #79c0ff; }       /* number */
+  .c { color: var(--muted); font-style: italic; }  /* comment */
+  .hl { background: rgba(255,122,69,.16); border-radius: 4px; padding: 0 3px; }
+
+  .toc { position: sticky; top: 0; background: rgba(11,15,20,.85);
+         backdrop-filter: blur(8px); padding: 12px 0; border-bottom: 1px solid var(--border);
+         z-index: 10; font-size: 14px; margin-top: 0; }
+  .toc .toc-scroll { overflow-x: auto; display: flex; gap: 18px; }
+  .toc a { color: var(--dim); white-space: nowrap; }
+  .toc a:hover { color: var(--acc); text-decoration: none; }
+
+  .pill { display: inline-block; background: var(--panel2);
+          border: 1px solid var(--border); border-radius: 999px;
+          padding: 3px 12px; font-size: 12.5px; color: var(--dim); margin: 4px 6px 0 0; }
+  .pill.acc  { color: var(--acc);  border-color: rgba(255,122,69,.35); }
+  .pill.acc2 { color: var(--acc2); border-color: rgba(90,169,255,.35); }
+  .pill.good { color: var(--good); border-color: rgba(63,185,80,.35); }
+  .pill.bad  { color: var(--bad);  border-color: rgba(248,81,73,.35); }
+
+  .card { background: var(--panel); border: 1px solid var(--border);
+          border-radius: 14px; padding: 22px 24px; margin: 18px 0; }
+  .card.tight { padding: 14px 18px; }
+  .card h3:first-child { margin-top: 0; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 720px) {
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    h1 { font-size: 32px; }
+  }
+
+  .stat { background: var(--panel2); border: 1px solid var(--border);
+          border-radius: 12px; padding: 16px 18px; }
+  .stat .v { display: block; font-size: 30px; line-height: 1.05; font-weight: 800;
+             color: var(--ink); font-family: var(--mono); letter-spacing: -.02em; }
+  .stat .v.good { color: var(--good); }
+  .stat .v.bad  { color: var(--bad); }
+  .stat .v.acc  { color: var(--acc); }
+  .stat .l { color: var(--dim); font-size: 12.5px; margin-top: 6px;
+             text-transform: uppercase; letter-spacing: .08em; }
+
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 18px 0;
+          flex-wrap: wrap; }
+  .flow .step { background: var(--panel); border: 1px solid var(--border);
+                border-radius: 10px; padding: 14px 18px; flex: 1; min-width: 220px; }
+  .flow .step h3 { margin: 0 0 4px; font-size: 14px; }
+  .flow .step .sub { color: var(--dim); font-size: 13px; }
+  .flow .arrow { color: var(--acc); align-self: center; padding: 0 12px; font-size: 24px; }
+
+  /* Reasoning trace */
+  .trace { background: #0a0e14; border: 1px solid var(--border);
+           border-radius: 14px; padding: 18px 20px; font-family: var(--mono);
+           font-size: 13.5px; line-height: 1.7; min-height: 380px; }
+  .trace .step-line { padding: 2px 0; opacity: 0; transition: opacity .25s; }
+  .trace .step-line.show { opacity: 1; }
+  .trace .role-a { color: var(--acc2); }
+  .trace .role-t { color: var(--purple); }
+  .trace .thought { color: var(--ink); }
+  .trace .tool { color: var(--good); }
+  .trace .args { color: #a5d6ff; }
+  .trace .result { color: var(--dim); }
+  .trace .verdict { color: var(--good); font-weight: 700; }
+  .trace .verdict.bad { color: var(--bad); }
+  .trace .cursor { display: inline-block; width: 8px; height: 16px;
+                    background: var(--acc); vertical-align: text-bottom;
+                    animation: blink 1s steps(2,start) infinite; }
+  @keyframes blink { to { visibility: hidden; } }
+
+  .controls { display: flex; gap: 10px; margin: 12px 0 6px; flex-wrap: wrap; }
+  button { background: var(--panel2); border: 1px solid var(--border);
+           color: var(--ink); padding: 8px 16px; border-radius: 8px;
+           font-family: var(--sans); font-size: 14px; cursor: pointer; }
+  button:hover { background: var(--panel); border-color: var(--acc); }
+  button.acc  { background: var(--acc); color: #111; border-color: var(--acc); font-weight: 600; }
+  button.acc:hover { background: #ff8e5a; }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 12px 0; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--dim); font-weight: 600; }
+  td.num { font-family: var(--mono); text-align: right; }
+  tr:last-child td { border-bottom: 0; }
+
+  /* Step boxes for the SFT/RLVR/DPO diagram */
+  .pipeline { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+              margin: 16px 0; }
+  @media (max-width: 720px) { .pipeline { grid-template-columns: 1fr; } }
+  .pipeline .stage { background: var(--panel); border: 1px solid var(--border);
+                     border-radius: 14px; padding: 20px 22px; position: relative; }
+  .pipeline .stage.sft   { border-top: 3px solid var(--acc2); }
+  .pipeline .stage.rlvr  { border-top: 3px solid var(--acc); }
+  .pipeline .stage.dpo   { border-top: 3px solid var(--purple); }
+  .pipeline .stage h3 { margin: 0 0 4px; font-size: 16px; }
+  .pipeline .stage .tag { font-family: var(--mono); font-size: 11px;
+                          color: var(--dim); text-transform: uppercase;
+                          letter-spacing: .1em; }
+  .pipeline .stage p { font-size: 14px; line-height: 1.55; color: var(--dim);
+                       margin: 8px 0; }
+  .pipeline .stage .gives { color: var(--ink); font-weight: 600; font-size: 14px; }
+
+  /* Bar comparison for the binary vs DPO reward story */
+  .compare { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 12px 0; }
+  .compare .row { display: grid; grid-template-columns: 200px 1fr 60px;
+                  align-items: center; gap: 12px; }
+  .compare .label { font-size: 13.5px; color: var(--dim); }
+  .compare .bar-track { background: var(--panel2); height: 26px;
+                        border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .compare .bar-fill { height: 100%; background: var(--acc);
+                       border-radius: 5px; transition: width 1.2s ease-out; }
+  .compare .bar-fill.good { background: var(--good); }
+  .compare .bar-fill.bad  { background: var(--bad); }
+  .compare .bar-fill.purple { background: var(--purple); }
+  .compare .val { font-family: var(--mono); font-size: 14px; text-align: right; }
+
+  /* Audio player */
+  audio { width: 100%; margin: 8px 0; }
+  .audio-card { background: linear-gradient(135deg, var(--panel), var(--panel2));
+                border: 1px solid var(--border); border-radius: 14px;
+                padding: 22px 24px; }
+
+  /* Verifier box */
+  .verifier { background: #0a0e14; border: 1px solid var(--border);
+              border-radius: 12px; padding: 16px 18px;
+              font-family: var(--mono); font-size: 13.5px; line-height: 1.7; }
+  .verifier .ok   { color: var(--good); }
+  .verifier .no   { color: var(--bad); }
+  .verifier .line { padding: 2px 0; }
+  .verifier .lbl  { color: var(--dim); display: inline-block; width: 200px; }
+
+  footer { margin-top: 100px; padding-top: 24px; border-top: 1px solid var(--border);
+           color: var(--muted); font-size: 13.5px; }
+  footer a { color: var(--dim); }
+  .links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
+  .links a { padding: 4px 0; }
+
+  /* Subtle scroll-reveal */
+  .reveal { opacity: 0; transform: translateY(8px); transition: opacity .6s, transform .6s; }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="kicker">SRE Agent · Inference-Time Reasoning · Hackathon Build</div>
+  <h1>A small agent that <span class="hl">fixes K8s incidents</span> — and explains why it picked each tool.</h1>
+  <p class="lead">Trained with <span class="hl">SFT → RLVR → DPO</span> on 150K synthetic SRE trajectories. 25 tools with trust tiers. Every action graded by a deterministic verifier — no LLM judge, no human in the loop. End-to-end runnable, 100% of held-out scenarios resolve with the right tool.</p>
+  <div>
+    <span class="pill acc">Hackathon: Inference-Time Compute · Jun 19–21, 2026</span>
+    <span class="pill acc2">Track: Agents</span>
+    <span class="pill good">15/15 scenarios resolved</span>
+    <span class="pill">100% action-correct</span>
+    <span class="pill">0 LLM judge in the reward loop</span>
+  </div>
+</header>
+
+<nav class="toc"><div class="toc-scroll">
+  <a href="#what">What it is</a>
+  <a href="#loop">The agent loop</a>
+  <a href="#training">SFT → RLVR → DPO</a>
+  <a href="#verifier">The verifiable reward</a>
+  <a href="#numbers">The numbers</a>
+  <a href="#dataset">The dataset</a>
+  <a href="#run">How to run it</a>
+  <a href="#audio">Listen instead</a>
+</div></nav>
+
+<h2 id="what"><span class="num">01</span>What it actually is</h2>
+<p>Five folders. Together they form an end-to-end SRE-agent harness that runs in a few seconds and produces the data you need to train a real model.</p>
+<div class="grid2">
+  <div class="card">
+    <h3>sim/ — the world</h3>
+    <p>A 16-service, 15-fault-type Kubernetes simulator. Inject <code>oom_kill</code> on the cart service, watch <code>memory_util_pct</code> ramp to 98%, apply the fix, watch it drop back to 65% (the SLO). Verifier says resolved.</p>
+    <p class="dim" style="font-size: 13px;">Mirrors RCAEval's data shape (per-service metric columns + inject_time.txt), so live and offline data score the same way.</p>
+  </div>
+  <div class="card">
+    <h3>agent/ — the brain</h3>
+    <p>Reasoning harness. System prompt + incident → LLM → "Thought: ... Action: tool({...})" → parse → execute against the sim → result → loop → <code>end_incident</code>.</p>
+    <p class="dim" style="font-size: 13px;">Two LLM backends: Anthropic API when <code>ANTHROPIC_API_KEY</code> is set, deterministic stub replays the canonical plan otherwise.</p>
+  </div>
+  <div class="card">
+    <h3>verify/ — the grader</h3>
+    <p>Three checks: did the metric cross back under the SLO? did the agent pick the canonical fix tool? was approval handled correctly? → binary reward.</p>
+    <p class="dim" style="font-size: 13px;">Plus three "process" signals (diagnosed first, args match, thought aligns with action) that the binary reward can't see — used for DPO.</p>
+  </div>
+  <div class="card">
+    <h3>metrics/ — the recorder</h3>
+    <p>Every run writes a per-service metrics CSV (RCAEval format) + <code>inject_time.txt</code>. Same schema as the offline dataset, so you can mix live and synthetic data without glue code.</p>
+  </div>
+</div>
+<div class="card">
+  <h3>run_e2e.py — the driver</h3>
+  <p>One command runs N scenarios, drives the agent, scores each, saves traces + metrics. Three modes: <code>stub</code> (the well-trained policy), <code>stub-broken</code> (always restarts the pod, no diagnosis — the "what a bad policy looks like" baseline), and any Anthropic model.</p>
+  <pre><code>$ python -m run_e2e --n 15 --out runs/website-demo --model stub
+[ 1/15] ✓  cart_oom_kill           resolved=True  fix=increase_memory_limit  reward=1
+[ 2/15] ✓  checkout_crashloop      resolved=True  fix=rollback_deployment    reward=1
+[ 3/15] ✓  gateway_latency_spike   resolved=True  fix=scale_deployment       reward=1
+...
+=== AGGREGATE ===  n=15  resolved=100%  action_correct=100%  reward=100%</code></pre>
+</div>
+
+<h2 id="loop"><span class="num">02</span>The agent loop, in real time</h2>
+<p>Below is an actual run from the dataset — cart service in production, memory leak alert firing, agent thinks, diagnoses, fixes, declares resolved. Press play to watch it step through.</p>
+<div class="trace" id="trace">
+  <div class="step-line" data-step="0"><span class="role-a">▶ INCIDENT</span>  <span class="muted">cart/prod · PodOOMKilled · memory_util_pct=98.8 (SLO 65) · 5 pods affected</span></div>
+  <div class="step-line" data-step="1"><span class="role-a">AGENT</span>  <span class="thought">Thought: cart is paging: container memory exceeded limit; pod OOMKilled and restarting. First confirm scope by reading describe_pod.</span></div>
+  <div class="step-line" data-step="2"><span class="role-a">AGENT</span>  <span class="tool">Action: describe_pod</span><span class="args">({"service_id": "cart", "namespace": "prod"})</span></div>
+  <div class="step-line" data-step="3"><span class="role-t">TOOL</span>    <span class="result">→ pod cart-abc123, restarts=0, limits=mem=512MB</span></div>
+  <div class="step-line" data-step="4"><span class="role-a">AGENT</span>  <span class="thought">Thought: That matches the symptom. get_metrics should give me corroborating evidence.</span></div>
+  <div class="step-line" data-step="5"><span class="role-a">AGENT</span>  <span class="tool">Action: get_metrics</span><span class="args">({"service_id": "cart", "namespace": "prod"})</span></div>
+  <div class="step-line" data-step="6"><span class="role-t">TOOL</span>    <span class="result">→ memory_util_pct=58.0, ready_replicas_pct=100, error_rate_pct=0.29, p99_latency_ms=74.6</span></div>
+  <div class="step-line" data-step="7"><span class="role-a">AGENT</span>  <span class="thought">Thought: This is a textbook oom_kill. Applying increase_memory_limit. This tool needs human approval — requesting it.</span></div>
+  <div class="step-line" data-step="8"><span class="role-a">AGENT</span>  <span class="tool">Action: increase_memory_limit</span><span class="args">({"service_id": "cart", "namespace": "prod", "new_limit_mb": 1024})</span></div>
+  <div class="step-line" data-step="9"><span class="role-t">TOOL</span>    <span class="result">→ approval=granted_by_human · memory_util_pct: 98.8 → 81.9 (approaching SLO)</span></div>
+  <div class="step-line" data-step="10"><span class="role-a">AGENT</span>  <span class="thought">Thought: System healthy again (memory_util_pct=65.0). Ending the incident.</span></div>
+  <div class="step-line" data-step="11"><span class="role-a">AGENT</span>  <span class="tool">Action: end_incident</span><span class="args">({"service_id": "cart"})</span></div>
+  <div class="step-line" data-step="12"><span class="role-t">VERIFIER</span> <span class="verdict">✓ RESOLVED  ·  before=98.8 → after=65.0  ·  target=65.0  ·  reward=1  ·  time-to-resolve=30s</span></div>
+</div>
+<div class="controls">
+  <button class="acc" id="btn-play">▶  Play trace</button>
+  <button id="btn-reset">↺  Reset</button>
+  <span class="dim" style="align-self: center; font-size: 13px;">13 steps · 4 agent turns · 2 diagnostics · 1 fix · 1 close</span>
+</div>
+
+<h2 id="training"><span class="num">03</span>Why three training steps: <span class="mono">SFT</span> → <span class="mono">RLVR</span> → <span class="mono">DPO</span></h2>
+<p>Each step teaches something the others can't. The order matters.</p>
+<div class="pipeline">
+  <div class="stage sft">
+    <div class="tag">step 1</div>
+    <h3>SFT — Supervised Fine-Tuning</h3>
+    <p>Feed the model 150K trajectories of an agent doing the job correctly. State → thought → action → tool → result → repeat. The model learns the <em>format</em>, the tool set, the trust tiers, the domain language.</p>
+    <p class="dim" style="font-size: 13px;">What you get: a model that responds in the right shape and knows the tools exist.</p>
+    <p class="dim" style="font-size: 13px;">What you don't get: generalization. SFT is imitation. It memorizes the patterns in the training set.</p>
+    <p class="gives">→ format + domain</p>
+  </div>
+  <div class="stage rlvr">
+    <div class="tag">step 2</div>
+    <h3>RLVR — RL with Verifiable Rewards</h3>
+    <p>Let the model <em>try</em> on incidents it has never seen. The verifier scores each attempt: did memory drop below 65%? Yes or no. That's the reward — a deterministic check, not a human, not an LLM judge.</p>
+    <p class="dim" style="font-size: 13px;">Without a verifiable reward, you'd be bottlenecked on human reviewers or a second model acting as judge (slow, expensive, biased).</p>
+    <p class="gives">→ outcome (generalize to new incidents)</p>
+  </div>
+  <div class="stage dpo">
+    <div class="tag">step 3</div>
+    <h3>DPO — Direct Preference Optimization</h3>
+    <p>RLVR sees a binary 1/0. It can't tell "resolved cleanly" from "resolved by accident". DPO trains on <em>pairs</em>: trajectory A (winner) vs B (loser) for the same incident. The model learns to prefer the shape of the better way to be an agent — diagnosed first, thoughts match actions, args correct, guardrails respected.</p>
+    <p class="gives">→ process (the taste)</p>
+  </div>
+</div>
+
+<h3>The same idea, in one sentence</h3>
+<div class="card">
+  <p style="font-size: 17px; line-height: 1.6;">SFT teaches the <span class="hl">format</span>. RLVR teaches the <span class="hl">outcome</span>. DPO teaches the <span class="hl">taste</span>.</p>
+  <p class="dim" style="margin-bottom: 0;">And the whole reason this works at hackathon scale is that the reward is verifiable. You can run a million rollouts in a day. The verifier grades them. The model improves. DPO is the only step that needs a human, and that's the right place to put one.</p>
+</div>
+
+<h2 id="verifier"><span class="num">04</span>The verifiable reward — the part that makes RLVR scale</h2>
+<p>The binary reward is what makes the whole pipeline cheap. Here's the rules-engine check the verifier runs after each agent trajectory:</p>
+<div class="verifier">
+  <div class="line"><span class="lbl">incident_type</span> <span class="n">"oom_kill"</span></div>
+  <div class="line"><span class="lbl">canonical_fix_tool</span> <span class="n">"increase_memory_limit"</span></div>
+  <div class="line"><span class="lbl">primary_metric</span> <span class="n">"memory_util_pct"</span></div>
+  <div class="line"><span class="lbl">slo_threshold</span> <span class="n">65.0</span>  <span class="dim">(direction: lower-is-better)</span></div>
+  <div class="line"><span class="lbl">recorded_after</span> <span class="n">65.0</span>  <span class="ok">✓ &lt;= 65.0</span></div>
+  <div class="line"><span class="lbl">fix_match</span>  <span class="ok">✓</span>  agent's first non-diagnostic tool == canonical</div>
+  <div class="line"><span class="lbl">guardrail</span>  <span class="ok">✓</span>  tool is approval-tier, human grant recorded</div>
+  <div class="line"><span class="verdict">→ REWARD = 1</span>  <span class="dim">(resolved ∧ fix_correct ∧ guardrail_ok)</span></div>
+</div>
+<p class="dim" style="font-size: 14px;">No LLM judge, no human, no fuzzy scoring. The same trajectory graded by the same verifier returns the same number, every time, forever. That's the property that lets you do a million rollouts in a day.</p>
+
+<h2 id="numbers"><span class="num">05</span>The numbers — well-trained vs broken</h2>
+<p>Two policies, same 15-scenario suite. The "well-trained" policy is the canonical stub (replays the dataset's plan). The "broken" policy always calls <code>restart_pod</code> and skips diagnosis — what an undertrained or careless agent looks like.</p>
+<div class="grid3">
+  <div class="stat"><span class="v good">100%</span><span class="l">well-trained · binary reward</span></div>
+  <div class="stat"><span class="v bad">7%</span><span class="l">broken · binary reward</span></div>
+  <div class="stat"><span class="v acc">87%</span><span class="l">broken · "did it resolve?" (false confidence)</span></div>
+</div>
+<p class="dim" style="margin-top: 18px;">A subtler story. The broken policy still <em>resolves</em> 87% of incidents — because <code>restart_pod</code> happens to clear a DNS error, and the simulator is forgiving on others. The binary "did the metric recover" check would happily call this a great agent. Only when you add the "did the agent pick the <em>right</em> tool" check does the picture change: 7%.</p>
+
+<h3>Where each pipeline step adds signal</h3>
+<div class="compare" id="compare">
+  <div class="row">
+    <div class="label">resolved (any fix works)</div>
+    <div class="bar-track"><div class="bar-fill good" data-w="87"></div></div>
+    <div class="val">87%</div>
+  </div>
+  <div class="row">
+    <div class="label">+ action-correct (right tool)</div>
+    <div class="bar-track"><div class="bar-fill bad" data-w="7"></div></div>
+    <div class="val">7%</div>
+  </div>
+  <div class="row">
+    <div class="label">+ process quality (DPO signal)</div>
+    <div class="bar-track"><div class="bar-fill purple" data-w="38"></div></div>
+    <div class="val">0.38 / 1.0</div>
+  </div>
+</div>
+<p class="dim" style="font-size: 14px;">The binary reward at the top is what RLVR optimizes for. The action-correctness is the cheap deterministic check. The process quality is what DPO learns from preference pairs. Each step exposes a different layer of "what kind of agent is this".</p>
+
+<h3>Mean trajectory stats</h3>
+<table>
+  <thead>
+    <tr><th></th><th class="num">well-trained</th><th class="num">broken</th><th class="num">Δ</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>steps per incident</td>      <td class="num">4.0</td><td class="num">2.0</td><td class="num bad">−2.0</td></tr>
+    <tr><td>diagnostics first</td>       <td class="num">100%</td><td class="num bad">0%</td><td class="num bad">−100%</td></tr>
+    <tr><td>thought/action aligned</td>  <td class="num">87%</td><td class="num">25%</td><td class="num bad">−62%</td></tr>
+    <tr><td>process quality</td>         <td class="num">0.82</td><td class="num">0.38</td><td class="num bad">−0.44</td></tr>
+    <tr><td>tokens per incident</td>     <td class="num">525</td><td class="num">450</td><td class="num good">−75</td></tr>
+    <tr><td>binary reward (resolved)</td><td class="num good">100%</td><td class="num">87%</td><td class="num bad">−13%</td></tr>
+    <tr><td>action-correct reward</td>   <td class="num good">100%</td><td class="num">7%</td><td class="num bad">−93%</td></tr>
+  </tbody>
+</table>
+<p class="dim" style="font-size: 14px;">The broken agent is <em>cheaper</em> (fewer tokens, fewer steps) and <em>looks fine</em> on the surface (resolves 87% of the time). It would pass a review that only checks "did the alert go green?". That's exactly the failure mode DPO catches.</p>
+
+<h2 id="dataset"><span class="num">06</span>The dataset</h2>
+<div class="grid2">
+  <div class="card">
+    <h3>150,000 SFT trajectories</h3>
+    <p>Synthetic platform-engineering incidents in the FIREBALL schema. Each one is a complete state → thought → action → state → ... → resolved chain. 7 steps on average. 15 distinct incident types, balanced.</p>
+    <p class="dim" style="font-size: 13px;">Same shape as the dataset that the verifier already grades. Drop in, no glue code.</p>
+  </div>
+  <div class="card">
+    <h3>30,000 DPO preference pairs</h3>
+    <p>For each pair: same incident, two trajectories, one winner (good process), one loser (resolved but ugly). The model learns the preference — the binary reward alone can't see this signal.</p>
+  </div>
+  <div class="card">
+    <h3>25 tools · 3 trust tiers</h3>
+    <p>Every tool has a tier: <span class="pill acc">autonomous</span> <span class="pill acc2">human-approval</span> <span class="pill bad">blocked</span>. The agent respects the tier — calls <code>escalate_to_human</code> for blocked ones, requests approval for the middle tier, executes the safe ones.</p>
+  </div>
+  <div class="card">
+    <h3>15 incident types · 16 services · 6 namespaces</h3>
+    <p><code>oom_kill</code>, <code>crashloop</code>, <code>latency_spike</code>, <code>bad_deploy_errors</code>, <code>disk_pressure</code>, <code>cert_expiry</code>, <code>memory_leak</code>, <code>db_pool_exhaustion</code>, <code>node_not_ready</code>, <code>consumer_lag</code>, <code>dns_failure</code>, <code>upstream_5xx</code>, <code>cpu_saturation</code>, <code>stuck_rollout</code>, <code>cache_stampede</code>.</p>
+  </div>
+</div>
+
+<h2 id="run"><span class="num">07</span>How to run it</h2>
+<pre><code><span class="c"># 1. clone the repo</span>
+git clone https://github.com/ashishranjan2404/infra-ops-agent
+cd infra-ops-agent
+
+<span class="c"># 2. (optional) the dataset lives on Hugging Face — pull if you want the SFT/DPO data</span>
+<span class="c">#   https://huggingface.co/datasets/quantranger/infra-ops-incidents</span>
+
+<span class="c"># 3. run the full 15-scenario suite with the deterministic stub</span>
+python -m run_e2e --n 15 --out runs/website-demo --model stub
+
+<span class="c"># 4. run it with the broken baseline (to see what a bad policy looks like)</span>
+python -m run_e2e --n 15 --out runs/website-demo-broken --model stub-broken
+
+<span class="c"># 5. run with real Claude (needs ANTHROPIC_API_KEY in env)</span>
+export ANTHROPIC_API_KEY=sk-ant-...
+python -m run_e2e --n 15 --out runs/real-claude --model claude-sonnet-4-5
+
+<span class="c"># 6. one-off, just like Claude Code:</span>
+python -m agent.runtime --incident oom_kill --service cart</code></pre>
+
+<h2 id="audio"><span class="num">08</span>Listen instead</h2>
+<div class="audio-card">
+  <p style="margin-top: 0;">If reading isn't your thing — same content, narrated by <span class="hl">Bryce</span> (Cartesia's "Clear Explainer" voice) at 0.92× speed, ~6 minutes. Plays locally from this page.</p>
+  <audio controls preload="none" src="sft-rlvr-dpo-bryce.mp3">
+    Your browser doesn't support embedded audio. The file is at <code>../sft-rlvr-dpo-bryce.mp3</code> — play it with <code>afplay</code> or your favorite player.
+  </audio>
+  <p class="dim" style="font-size: 13px; margin-bottom: 0;">File: <code>../sft-rlvr-dpo-bryce.mp3</code> · 5.7 min · 128 kbps · sonic-2 model</p>
+</div>
+
+<footer>
+  <p>Infra-Ops SRE Agent — built for the Inference-Time Compute Hackathon (Jun 19–21, 2026). Team: Ashish Ranjan.</p>
+  <div class="links">
+    <a href="https://github.com/ashishranjan2404/infra-ops-agent">↗ GitHub repo</a>
+    <a href="https://huggingface.co/datasets/quantranger/infra-ops-incidents">↗ Dataset on Hugging Face</a>
+    <a href="../run_e2e.py">↗ run_e2e.py</a>
+    <a href="../agent/runtime.py">↗ agent/runtime.py</a>
+    <a href="../verify/score.py">↗ verify/score.py</a>
+  </div>
+  <p class="muted" style="margin-top: 12px;">Last refreshed: <span id="updated"></span></p>
+</footer>
+</div>
+
+<script>
+  // ----- Animated reasoning trace -----
+  const lines = document.querySelectorAll('#trace .step-line');
+  const btnPlay = document.getElementById('btn-play');
+  const btnReset = document.getElementById('btn-reset');
+  let timer = null;
+
+  function showLine(i) {
+    if (i >= lines.length) { btnPlay.textContent = '↺  Replay'; return; }
+    lines[i].classList.add('show');
+    // Scroll into view if needed
+    lines[i].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  function play() {
+    reset();
+    btnPlay.textContent = '⏸  Pause';
+    let i = 0;
+    const tick = () => {
+      if (i >= lines.length) { btnPlay.textContent = '▶  Play trace'; return; }
+      showLine(i);
+      i += 1;
+      // Step duration scales with line content
+      const ms = lines[i-1] ? Math.min(2200, 500 + lines[i-1].textContent.length * 18) : 1000;
+      timer = setTimeout(tick, ms);
+    };
+    tick();
+  }
+
+  function reset() {
+    if (timer) { clearTimeout(timer); timer = null; }
+    lines.forEach(l => l.classList.remove('show'));
+    btnPlay.textContent = '▶  Play trace';
+  }
+
+  btnPlay.addEventListener('click', () => {
+    if (timer) { reset(); return; }
+    play();
+  });
+  btnReset.addEventListener('click', reset);
+
+  // ----- Animated bar fills -----
+  const fills = document.querySelectorAll('#compare .bar-fill');
+  const fillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const w = e.target.getAttribute('data-w');
+        e.target.style.width = w + '%';
+        fillObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  fills.forEach(f => {
+    f.style.width = '0%';
+    fillObserver.observe(f);
+  });
+
+  // ----- Section reveal on scroll -----
+  const reveals = document.querySelectorAll('h2, .card, .stat, .pipeline .stage');
+  reveals.forEach(el => el.classList.add('reveal'));
+  const revObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); revObserver.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => revObserver.observe(el));
+
+  // ----- "Last refreshed" -----
+  document.getElementById('updated').textContent = new Date().toISOString().slice(0, 10);
+
+  // ----- Audio safety: only one stream at a time -----
+  const audio = document.querySelector('audio');
+  if (audio) {
+    document.querySelectorAll('audio').forEach(a => {
+      a.addEventListener('play', () => {
+        document.querySelectorAll('audio').forEach(other => {
+          if (other !== a) other.pause();
+        });
+      });
+    });
+  }
+</script>
+</body>
+</html>

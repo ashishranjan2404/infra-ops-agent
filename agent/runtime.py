@@ -21,9 +21,10 @@ from typing import Callable
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from sim.cluster import ClusterSim, Incident, ToolResult
 from agent.llm import (
-    LLMMessage, llm_call, parse_response,
+    LLMMessage, parse_response,
     SYSTEM_PROMPT as AGENT_SYSTEM_PROMPT, stub_plan,
 )
+import agent.llm as _llm_mod  # so tests/run_e2e can monkey-patch llm_call
 import os as _os
 _INFRA_AGENT = _os.environ.get(
     "INFRA_AGENT_PATH",
@@ -106,7 +107,7 @@ class AgentRuntime:
         for step_idx in range(self.max_steps):
             # Ask the LLM what to do next
             try:
-                resp = llm_call(messages, model=self.model)
+                resp = _llm_mod.llm_call(messages, model=self.model)
             except Exception as e:
                 err_step = Step(
                     step=step_idx + 1, role="assistant",
