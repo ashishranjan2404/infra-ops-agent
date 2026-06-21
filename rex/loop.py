@@ -135,7 +135,7 @@ def refine_loop(scenario, budget: int = 6, propose_fn=propose, judge_fn=None, lo
         if not rec["failed_checks"]:
             break
         feedback = fb
-    return {
+    result = {
         "scenario": scenario.name,
         "iterations": iterations,
         "best_score": round(best_score, 4),
@@ -143,3 +143,9 @@ def refine_loop(scenario, budget: int = 6, propose_fn=propose, judge_fn=None, lo
         "resolved": any(it["resolved"] for it in iterations),
         "clean_win": any(not it["failed_checks"] for it in iterations),
     }
+    # novelty router: a clean win -> resolved; budget exhausted without one -> escalate
+    result["outcome"] = "resolved" if result["clean_win"] else "escalated"
+    if result["outcome"] == "escalated":
+        from rex.escalate import escalation_report
+        result["escalation"] = escalation_report(scenario, result)
+    return result
