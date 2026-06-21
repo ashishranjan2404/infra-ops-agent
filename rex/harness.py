@@ -10,6 +10,7 @@ Two scenarios:
 """
 from __future__ import annotations
 
+import json
 import os
 from dataclasses import dataclass, field
 
@@ -61,8 +62,33 @@ _SCENARIOS = {
         ],
         "fix_tools": {"modify_network_policy"},                 # the clean root fix (disable bad path)
         "traps": [{"tool": "scale_deployment", "target": "service-control"}],  # herd -> Spanner
+        "forbidden": ["bad_deploy", "resource_exhaustion", "node_failure", "saturation"],
+        "recent_deploy": True,          # the workspace deploy red herring exists (but isn't the cause)
     },
 }
+
+# A remediation tool TREATS a root-cause category; if that category is ruled out for
+# the incident (in forbidden_categories), the action is treating a non-existent cause.
+# restart_pod / restart_service are generic (no category) — Layer-2 rules handle them.
+TOOL_TREATS = {
+    "increase_memory_limit": "resource_exhaustion", "rotate_logs": "resource_exhaustion",
+    "scale_deployment": "saturation", "scale_consumers": "saturation", "clear_cache": "saturation",
+    "modify_network_policy": "network_fault", "rollback_deployment": "bad_deploy",
+    "cordon_node": "node_failure", "drain_node": "node_failure",
+    "renew_certificate": "config_error", "failover_service": "dependency_failure",
+}
+
+
+def forbidden_categories_for(incident: str) -> list:
+    """Data-driven: the incident's ruled-out causes, from its opensre answer.yml/spec
+    (falls back to the rex scenario config for incidents without an opensre spec)."""
+    p = os.path.join(REPO, "opensre-traj", "specs", f"{incident}.json")
+    if os.path.exists(p):
+        try:
+            return json.load(open(p)).get("answer", {}).get("forbidden_categories", []) or []
+        except (OSError, ValueError):
+            pass
+    return list(_SCENARIOS.get(incident, {}).get("forbidden", []))
 
 
 @dataclass
@@ -77,6 +103,10 @@ class Scenario:
     root_cause_keywords: list
     gold_root_description: str
     red_herring_hints: list
+    forbidden_categories: list
+    recent_deploy: bool
+    at_replica_limit: bool
+    last_single_node: bool
     prompt_text: str = field(repr=False)
 
 
@@ -141,13 +171,61 @@ def load_scenario(name: str) -> Scenario:
         correct_fix_tools=set(fix_tools), trap_actions=traps,
         root_cause_keywords=keywords,
         gold_root_description=cfg["gold_root"], red_herring_hints=cfg["red_herrings"],
+        forbidden_categories=forbidden_categories_for(name),
+        recent_deploy=cfg.get("recent_deploy", False),
+        at_replica_limit=cfg.get("at_replica_limit", False),
+        last_single_node=cfg.get("last_single_node", False),
         prompt_text=prompt,
     )
 
 
 def is_safe(action: dict, state: dict):
-    """Phase-1 STUB — allow everything. Replaced by real rules in Phase 2."""
+    """The real safety harness (Part B). Returns (allowed, reason).
+
+    Layer 1 — category block: an action that TREATS a ruled-out cause
+      (its category in the incident's forbidden_categories) is blocked.
+    Layer 2 — state-conditional traps: actions that are dangerous in THIS state.
+    """
+    tool = action.get("tool", "")
+    target = action.get("args", {}).get("target", "")
+
+    # Layer 1 — data-driven category block
+    cat = TOOL_TREATS.get(tool)
+    if cat and cat in (state.get("forbidden_categories") or []):
+        return (False, f"{tool} blocked for {state.get('incident', 'this incident')}: it treats "
+                       f"'{cat}', a ruled-out cause (the real root is "
+                       f"'{state.get('gold_category', '?')}').")
+
+    # Layer 2 — state-conditional traps
+    if tool in ("restart_pod", "restart_service") and state.get("mem_leak_active"):
+        return (False, f"{tool} blocked: a memory leak is still active (the memory limit has not been "
+                       f"raised yet) — restarting resets the leak clock and hides the root cause.")
+    if tool in ("drain_node", "cordon_node") and state.get("draining_last_ready_node"):
+        return (False, f"{tool} blocked: '{target}' is the last Ready node — draining/cordoning it "
+                       f"takes the service fully down.")
+    if tool == "scale_deployment" and state.get("at_replica_limit"):
+        return (False, f"scale_deployment blocked: '{target}' is already at its replica/quota limit — "
+                       f"no headroom, and scaling masks the root cause.")
+    if tool == "rollback_deployment" and not state.get("recent_deploy", True):
+        return (False, "rollback_deployment blocked: there was no recent deploy — a rollback cannot fix "
+                       "a non-deploy cause and introduces configuration drift.")
+
     return (True, "")
+
+
+def build_state(world: World, scenario: Scenario, applied_tools: set) -> dict:
+    """The state signals is_safe reads. Where the engine doesn't model a signal
+    (node readiness, replica caps, deploys) we derive it from the scenario."""
+    return {
+        "incident": scenario.name,
+        "forbidden_categories": scenario.forbidden_categories,
+        "gold_category": scenario.category,
+        # a memory leak is "active" until the structural fix (raise the limit) is applied
+        "mem_leak_active": scenario.kind == "mem_leak" and "increase_memory_limit" not in applied_tools,
+        "draining_last_ready_node": scenario.last_single_node,
+        "at_replica_limit": scenario.at_replica_limit,
+        "recent_deploy": scenario.recent_deploy,
+    }
 
 
 _SUPPORTED_METRICS = {"error_rate_pct", "p99_latency_ms"}
@@ -171,14 +249,15 @@ def _resolved(world: World, spec: ScenarioSpec) -> bool:
 def run_plan(plan: dict, scenario: Scenario, settle_ticks: int = 5) -> dict:
     world = World.from_spec(scenario.spec, inject=True)
     world.run(ticks=2)
-    blocked, applied = [], []
+    blocked, applied, applied_tools = [], [], set()
     for a in plan.get("actions", []):
-        ok, reason = is_safe(a, {"world": world, "scenario": scenario})
+        ok, reason = is_safe(a, build_state(world, scenario, applied_tools))
         if not ok:
             blocked.append({"action": a, "reason": reason})
             continue
         apply_action(world, Action(a.get("tool", ""), a.get("args", {})))
         applied.append(a)
+        applied_tools.add(a.get("tool", ""))
     world.run(ticks=settle_ticks)
     return {
         "resolved": _resolved(world, scenario.spec),

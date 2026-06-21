@@ -141,6 +141,11 @@ def format_feedback(plan: dict, scenario, sim_result: dict, judge_fn=None, _diag
         }.get(a.get("tool"), "it does not address the root cause, so it will not resolve the incident")
         lines.append(f"TRAP: you used '{a.get('tool')}' — WRONG: {why}.")
 
+    # 3b. actions the safety harness BLOCKED (so the model learns WHY it was stopped)
+    for b in sim_result.get("blocked_actions", []):
+        lines.append(f"BLOCKED: '{b.get('action', {}).get('tool')}' was blocked by the safety "
+                     f"harness — {b.get('reason')}")
+
     # 4. resolution
     if sim_result.get("resolved"):
         lines.append("RESULT: the sim reports the incident RESOLVED — SLO restored and the root cleared.")
