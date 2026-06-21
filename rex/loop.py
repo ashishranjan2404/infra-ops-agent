@@ -12,7 +12,7 @@ import os
 import re
 
 from rex.harness import run_plan
-from rex.scoring import score_plan
+from rex.scoring import score_plan, failed_checks
 
 _REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _SMALL_MODEL = "claude-haiku-4-5"
@@ -95,32 +95,32 @@ def propose(scenario, prior_feedback: str | None = None, model: str = _SMALL_MOD
     return parse_plan(text)
 
 
-def _failed_checks(plan, scenario, sim_result) -> list:
-    from rex.scoring import _traps_in, _fix_credit, _root_cause_match
-    actions = sim_result.get("applied_actions", plan.get("actions", []))
-    failed = []
-    if _root_cause_match(plan, scenario) < 0.6:
-        failed.append("root_cause")
-    if _fix_credit(actions, scenario) < 1.0:
-        failed.append("correct_fix_missing")
-    if _traps_in(actions, scenario):
-        failed.append("trap_action")
-    if not sim_result.get("resolved"):
-        failed.append("not_resolved")
-    return failed
-
-
-def refine_loop(scenario, budget: int = 6, propose_fn=propose, log=None) -> dict:
-    """Linear propose->run->score->feedback loop. Returns per-iteration log + best."""
+def refine_loop(scenario, budget: int = 6, propose_fn=propose, judge_fn=None, log=None) -> dict:
+    """Linear propose->run->score->feedback loop. Returns per-iteration log + best.
+    judge_fn is the diagnosis judge (None -> the real LLM judge)."""
+    from rex import scoring
     iterations, feedback = [], None
     best_score, best_iter = -1.0, -1
     for i in range(budget):
         plan = propose_fn(scenario, feedback)
         sim_result = run_plan(plan, scenario)
-        score, fb = score_plan(plan, scenario, sim_result)
+        # Judge the diagnosis ONCE per iteration (memoized by stated cause) so
+        # score/feedback/failed_checks agree and we don't spend redundant judge calls.
+        cache: dict = {}
+
+        def memo(stated, gold, herrings, _fn=judge_fn):
+            if stated not in cache:
+                fn = _fn or scoring._llm_judge
+                cache[stated] = bool(fn(stated, gold, herrings))
+            return cache[stated]
+
+        score, fb = score_plan(plan, scenario, sim_result, judge_fn=memo)
+        fc = failed_checks(plan, scenario, sim_result, judge_fn=memo)
         rec = {
             "iter": i, "score": round(score, 4), "resolved": bool(sim_result["resolved"]),
-            "failed_checks": _failed_checks(plan, scenario, sim_result),
+            "stated_root_cause": plan.get("root_cause", ""),
+            "diagnosis_correct": "root_cause" not in fc,
+            "failed_checks": fc,
             "blocked": sim_result.get("blocked_actions", []),
             "plan": plan, "feedback": fb,
         }
