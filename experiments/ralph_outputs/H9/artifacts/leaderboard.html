@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SRE-Degrees Leaderboard</title>
+<style>
+  :root {
+    --bg: #0c1018;
+    --panel: #141a26;
+    --panel-2: #1b2433;
+    --border: #243044;
+    --text: #e6edf6;
+    --muted: #8b9bb4;
+    --accent: #4ea1ff;
+    --gold: #ffd84d;
+    --good: #3ddc97;
+    --bar-bg: #223049;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(1200px 600px at 50% -200px, #1a2334 0%, var(--bg) 60%);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 24px 80px; }
+  header h1 { font-size: 2.1rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  header .tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); background: rgba(78,161,255,0.12);
+    border: 1px solid rgba(78,161,255,0.3); padding: 3px 10px; border-radius: 999px; margin-bottom: 14px;
+  }
+  header p.sub { color: var(--muted); max-width: 760px; margin: 0 0 4px; }
+  header p.meta { color: var(--muted); font-size: 0.82rem; margin: 10px 0 0; }
+  .controls { margin: 28px 0 14px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .controls label { color: var(--muted); font-size: 0.85rem; margin-right: 4px; }
+  .controls select, .controls input {
+    background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 10px; font-size: 0.85rem;
+  }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; background: var(--panel); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  thead th {
+    text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--muted); padding: 14px 16px; border-bottom: 1px solid var(--border); white-space: nowrap;
+    cursor: pointer; user-select: none;
+  }
+  thead th:hover { color: var(--text); }
+  tbody td { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 0.9rem; vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr.highlight { background: linear-gradient(90deg, rgba(255,216,77,0.07), transparent); }
+  tbody tr:hover { background: var(--panel-2); }
+  .rank { font-weight: 700; color: var(--muted); width: 38px; }
+  tr.highlight .rank { color: var(--gold); }
+  .system { font-weight: 600; }
+  .model { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.78rem; color: var(--accent); }
+  .fam { font-size: 0.7rem; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 1px 7px; }
+  .src { font-size: 0.7rem; color: var(--muted); }
+  .p1cell { min-width: 200px; }
+  .barwrap { display: flex; align-items: center; gap: 10px; }
+  .bar { flex: 1; height: 8px; background: var(--bar-bg); border-radius: 999px; overflow: hidden; }
+  .bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--good)); border-radius: 999px; }
+  tr.highlight .bar > span { background: linear-gradient(90deg, var(--gold), var(--good)); }
+  .pct { font-variant-numeric: tabular-nums; font-weight: 700; min-width: 52px; text-align: right; }
+  .ci { color: var(--muted); font-size: 0.74rem; font-variant-numeric: tabular-nums; }
+  .num { font-variant-numeric: tabular-nums; color: var(--muted); }
+  .note { color: var(--muted); font-size: 0.78rem; max-width: 320px; }
+  .blocked { margin-top: 26px; background: var(--panel); border: 1px dashed var(--border); border-radius: 12px; padding: 16px 18px; }
+  .blocked h3 { margin: 0 0 8px; font-size: 0.9rem; color: var(--muted); }
+  .blocked .item { font-size: 0.83rem; color: var(--muted); }
+  .blocked .item b { color: var(--text); }
+  footer { margin-top: 36px; color: var(--muted); font-size: 0.78rem; }
+  #status { font-size: 0.85rem; color: var(--muted); padding: 10px 0; }
+  #status.err { color: #ff7b7b; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="tag" id="bench-tag">Leaderboard</span>
+    <h1 id="bench-title">SRE-Degrees Leaderboard</h1>
+    <p class="sub" id="bench-sub"></p>
+    <p class="meta" id="bench-meta"></p>
+  </header>
+
+  <div class="controls">
+    <label for="famsel">Family</label>
+    <select id="famsel"><option value="*">all</option></select>
+    <label for="search" style="margin-left:12px">Search</label>
+    <input id="search" type="text" placeholder="model or system…" />
+  </div>
+
+  <div id="status">Loading leaderboard.json…</div>
+
+  <table id="board" hidden>
+    <thead>
+      <tr>
+        <th data-sort="rank">#</th>
+        <th data-sort="system">System</th>
+        <th data-sort="model">Model</th>
+        <th data-sort="family">Family</th>
+        <th data-sort="pass@1" class="p1cell">pass@1 (95% CI)</th>
+        <th data-sort="pass@2">pass@2</th>
+        <th data-sort="pass@5">pass@5</th>
+        <th data-sort="episodes">n</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <div class="blocked" id="blocked-box" hidden>
+    <h3>Blocked / not evaluated (no fabricated numbers)</h3>
+    <div id="blocked-list"></div>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const STATE = { data: null, fam: "*", q: "", sortKey: "rank", sortDir: 1 };
+
+function fmtPct(v) { return v == null ? "—" : (v * 100).toFixed(1) + "%"; }
+function fmtCI(ci) { return (ci && ci.length === 2) ? `[${(ci[0]*100).toFixed(0)}, ${(ci[1]*100).toFixed(0)}]` : ""; }
+
+function render() {
+  const d = STATE.data;
+  let rows = d.entries.slice();
+  if (STATE.fam !== "*") rows = rows.filter(r => r.family === STATE.fam);
+  if (STATE.q) {
+    const q = STATE.q.toLowerCase();
+    rows = rows.filter(r => (r.system + " " + r.model).toLowerCase().includes(q));
+  }
+  const k = STATE.sortKey, dir = STATE.sortDir;
+  rows.sort((a, b) => {
+    let av = a[k], bv = b[k];
+    if (av == null) av = -Infinity; if (bv == null) bv = -Infinity;
+    if (typeof av === "string") return dir * av.localeCompare(bv);
+    return dir * (av - bv);
+  });
+
+  const tb = document.getElementById("tbody");
+  tb.innerHTML = "";
+  for (const r of rows) {
+    const tr = document.createElement("tr");
+    if (r.highlight) tr.className = "highlight";
+    const pct = (r["pass@1"] * 100).toFixed(1);
+    tr.innerHTML = `
+      <td class="rank">${r.rank}</td>
+      <td class="system">${escapeHtml(r.system)}</td>
+      <td><span class="model">${escapeHtml(r.model)}</span></td>
+      <td><span class="fam">${escapeHtml(r.family)}</span> <span class="src">(${escapeHtml(r.source)})</span></td>
+      <td class="p1cell">
+        <div class="barwrap">
+          <span class="pct">${fmtPct(r["pass@1"])}</span>
+          <div class="bar"><span style="width:${pct}%"></span></div>
+        </div>
+        <div class="ci">${fmtCI(r.ci95)}</div>
+      </td>
+      <td class="num">${fmtPct(r["pass@2"])}</td>
+      <td class="num">${fmtPct(r["pass@5"])}</td>
+      <td class="num">${r.episodes}</td>
+      <td class="note">${escapeHtml(r.note || "")}</td>`;
+    tb.appendChild(tr);
+  }
+  document.getElementById("status").hidden = true;
+  document.getElementById("board").hidden = false;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
+
+function initMeta(d) {
+  document.getElementById("bench-tag").textContent = "Leaderboard · " + (d.columns || []).join(" / ");
+  document.getElementById("bench-title").textContent = d.benchmark || "Leaderboard";
+  document.getElementById("bench-sub").textContent = d.subtitle || "";
+  document.getElementById("bench-meta").textContent =
+    (d.generated ? "Generated " + d.generated + " · " : "") + (d.metric_notes || "");
+  document.getElementById("footer").textContent =
+    "Static leaderboard — renders entirely from leaderboard.json. " +
+    (d.metric_notes ? "" : "");
+
+  const fams = Array.from(new Set(d.entries.map(e => e.family)));
+  const sel = document.getElementById("famsel");
+  for (const f of fams) {
+    const o = document.createElement("option"); o.value = f; o.textContent = f; sel.appendChild(o);
+  }
+
+  if (d.blocked && d.blocked.length) {
+    document.getElementById("blocked-box").hidden = false;
+    const bl = document.getElementById("blocked-list");
+    bl.innerHTML = d.blocked.map(b =>
+      `<div class="item"><b>${escapeHtml(b.system)}</b> (${escapeHtml(b.source)}) — ${escapeHtml(b.reason)}</div>`
+    ).join("");
+  }
+}
+
+function wireControls() {
+  document.getElementById("famsel").addEventListener("change", e => { STATE.fam = e.target.value; render(); });
+  document.getElementById("search").addEventListener("input", e => { STATE.q = e.target.value; render(); });
+  document.querySelectorAll("th[data-sort]").forEach(th => {
+    th.addEventListener("click", () => {
+      const key = th.getAttribute("data-sort");
+      if (STATE.sortKey === key) STATE.sortDir *= -1;
+      else { STATE.sortKey = key; STATE.sortDir = (key === "rank") ? 1 : -1; }
+      render();
+    });
+  });
+}
+
+async function load() {
+  try {
+    const res = await fetch("leaderboard.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (!data.entries || !Array.isArray(data.entries)) throw new Error("leaderboard.json has no 'entries' array");
+    STATE.data = data;
+    initMeta(data);
+    wireControls();
+    render();
+  } catch (e) {
+    const s = document.getElementById("status");
+    s.className = "err";
+    s.textContent = "Failed to load leaderboard.json: " + e.message +
+      " — serve this directory over HTTP (e.g. `python3 -m http.server`) rather than opening via file://.";
+  }
+}
+load();
+</script>
+</body>
+</html>

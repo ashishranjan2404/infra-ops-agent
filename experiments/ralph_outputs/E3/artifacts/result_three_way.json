@@ -1,0 +1,116 @@
+{
+  "task_id": "E3",
+  "threshold": 0.8,
+  "incident_family": "cascade",
+  "n_incidents": 14,
+  "incidents": [
+    "aws_dynamodb_dns",
+    "aws_kinesis_cell_manager",
+    "azure_ddos",
+    "circleci_kubeproxy_iptables",
+    "cloudflare_bgp_reorder",
+    "cloudflare_byzantine_switch",
+    "cloudflare_waf",
+    "cloudflare_zonemd_stale_cache",
+    "crowdstrike_bsod",
+    "datadog_systemd_cilium",
+    "gcp_service_control",
+    "github_dns_zone_corruption",
+    "github_mysql_semaphore_rename",
+    "github_network_partition"
+  ],
+  "arm_status": {
+    "zero_shot": {
+      "runnable": true,
+      "roster_key": "qwen3-8b-base",
+      "probe": "'<think>\\nOkay, the user wants me'"
+    },
+    "opensre_trained": {
+      "runnable": true,
+      "roster_key": "opensre-qwen3-8b",
+      "probe": "'<think>\\nOkay, the user wants me'"
+    },
+    "fireball_trained": {
+      "runnable": false,
+      "reason": "No Fireball training data or forked model exists. Upstream Fireball pipeline (tasks E2/D8) produced no dataset and no model; nothing to evaluate. Numbers intentionally NOT fabricated."
+    }
+  },
+  "blocked_arms": [
+    "fireball_trained"
+  ],
+  "runnable_arms": [
+    "zero_shot",
+    "opensre_trained"
+  ],
+  "mode": "eval",
+  "seeds": 2,
+  "elapsed_s": 64.2,
+  "n_errors": 0,
+  "errors": [],
+  "by_arm": {
+    "zero_shot": {
+      "roster_key": "qwen3-8b-base",
+      "note": "base Qwen/Qwen3-8B, untrained (apples-to-apples control)",
+      "overall": {
+        "n": 28,
+        "passes": 2,
+        "pass@1": 0.0714,
+        "ci95": [
+          0.0198,
+          0.2265
+        ],
+        "pass@2": 0.1402,
+        "mean_reward": 0.4536,
+        "reward_std": 0.2934
+      },
+      "per_incident_mean": {
+        "aws_dynamodb_dns": 0.85,
+        "aws_kinesis_cell_manager": 0.75,
+        "azure_ddos": 0.25,
+        "circleci_kubeproxy_iptables": 0.15,
+        "cloudflare_bgp_reorder": 0.75,
+        "cloudflare_byzantine_switch": 0.3,
+        "cloudflare_waf": 0.55,
+        "cloudflare_zonemd_stale_cache": 0.3,
+        "crowdstrike_bsod": 0.3,
+        "datadog_systemd_cilium": 0.525,
+        "gcp_service_control": 0.6,
+        "github_dns_zone_corruption": 0.375,
+        "github_mysql_semaphore_rename": 0.65,
+        "github_network_partition": 0.0
+      }
+    },
+    "opensre_trained": {
+      "roster_key": "opensre-qwen3-8b",
+      "note": "Qwen3-8B after OpenSRE GRPO/RFT (forked slug opensre-qwen3-8b-1e439a)",
+      "overall": {
+        "n": 28,
+        "passes": 3,
+        "pass@1": 0.1071,
+        "ci95": [
+          0.0371,
+          0.272
+        ],
+        "pass@2": 0.2063,
+        "mean_reward": 0.475,
+        "reward_std": 0.3049
+      },
+      "per_incident_mean": {
+        "aws_dynamodb_dns": 0.4,
+        "aws_kinesis_cell_manager": 0.525,
+        "azure_ddos": 0.275,
+        "circleci_kubeproxy_iptables": 0.3,
+        "cloudflare_bgp_reorder": 0.75,
+        "cloudflare_byzantine_switch": 0.3,
+        "cloudflare_waf": 0.425,
+        "cloudflare_zonemd_stale_cache": 0.3,
+        "crowdstrike_bsod": 0.15,
+        "datadog_systemd_cilium": 0.875,
+        "gcp_service_control": 0.6,
+        "github_dns_zone_corruption": 0.75,
+        "github_mysql_semaphore_rename": 1.0,
+        "github_network_partition": 0.0
+      }
+    }
+  }
+}

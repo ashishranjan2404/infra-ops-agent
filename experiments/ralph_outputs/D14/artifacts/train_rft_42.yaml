@@ -1,0 +1,46 @@
+# D14 — RFT training config for the full 42-incident opensre benchmark.
+#
+# This is the runnable config consumed by train_rft_42.py. It trains an OPEN model
+# (Qwen-family via the HUD Tinker provider) on hud_env_v2.py (the deterministic-judge
+# reward) over the assembled 42-incident task set (tasks_42.json), rather than the
+# 10-index slice that train_rft_v2.py uses by default.
+#
+# Closed models (Claude/GPT/Gemini) are EVAL baselines only — GRPO needs an open,
+# forkable trainable head.
+#
+#   set -a; source ~/.zshrc; set +a            # HUD_API_KEY
+#   # fork a trainable head once:
+#   #   ../../../../.venv-hud/bin/hud models fork Qwen/Qwen3-8B --name opensre-qwen3-8b
+#   # smoke (cheap, fail-fast, 2 tasks 1 step):
+#   ../../../../.venv-hud/bin/python train_rft_42.py --config train_rft_42.yaml --smoke
+#   # real run (background):
+#   ../../../../.venv-hud/bin/python train_rft_42.py --config train_rft_42.yaml
+
+name: opensre-rft-42
+
+# Trainable open model slug (produced by `hud models fork`). Override with --model.
+model: opensre-qwen3-8b
+
+# Env + assembled task set
+env_module: hud_env_v2.py          # resolved relative to opensre-traj/
+task_file: tasks_42.json           # resolved relative to this config's directory
+tasks: all                         # "all" = the 42; or a comma list of 0-based indices
+
+# GRPO hyperparameters
+group: 6                           # rollouts per group (within-group advantage)
+steps: 30
+learning_rate: 1.0e-5
+reset_head: true                   # reward objective changed -> roll head back before step 0
+
+# Curriculum: order the 42 tasks by difficulty so early steps see easier incidents.
+# (handled in-launcher when curriculum=true; otherwise corpus order.)
+curriculum: true
+
+# Output
+out: runs/train_rft_42.jsonl       # relative to opensre-traj/
+
+# Smoke-mode overrides (used with --smoke): tiny + fail-fast
+smoke:
+  tasks: "0,1"
+  group: 4
+  steps: 1

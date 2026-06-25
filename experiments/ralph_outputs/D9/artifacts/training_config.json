@@ -1,0 +1,959 @@
+{
+  "experiment": "D9-curriculum-rft",
+  "base_model": "Qwen3-8B (forked slug, see rft-training-run memory)",
+  "algorithm": "GRPO",
+  "reward": "rex.scoring.score_plan (deterministic root-cause judge)",
+  "group_size": 8,
+  "lr": 1e-06,
+  "kl_coeff": 0.02,
+  "max_tokens": 4000,
+  "epochs_per_stage": 1,
+  "advance_criterion": {
+    "metric": "mean_stage_reward",
+    "threshold": 0.55,
+    "patience_epochs": 2,
+    "note": "advance to next band when running mean reward on the current band clears threshold OR patience exhausted"
+  },
+  "curriculum": {
+    "order": "curriculum",
+    "n_stages": 5,
+    "rehearsal": 0.3,
+    "seed": 1234,
+    "samples_per_incident": 8,
+    "source_signal": "composite static-structural difficulty score (see weights)",
+    "n_incidents": 51,
+    "total_sample_budget": 616,
+    "ordered_ids": [
+      "cert-expire-leaf-sidecar",
+      "fd-exhaust-leaf-shipper",
+      "mem-leak-leaf-transcoder",
+      "billing_disk_fill",
+      "ingest_fd_exhaust",
+      "media_oom_leak",
+      "redis_cache_flush",
+      "search_cpu_starve",
+      "auth_cert_expiry",
+      "checkout_bad_rollout",
+      "payments_dep_revoked",
+      "cert-expire-cascade-ingress",
+      "fd-exhaust-cascade-gw",
+      "mem-leak-cascade-cache",
+      "cloudbleed-parser-overrun",
+      "honeycomb-retry-storm",
+      "stripe-redis-fork-latency",
+      "travis-ci-leaked-secret",
+      "firefox_addon_cert",
+      "multi-cert-poolleak",
+      "multi-fdexhaust-cpustarve",
+      "aws-s3-typo-capacity",
+      "fastly-pop-config",
+      "gitlab-db-deletion",
+      "monzo-cassandra-compaction",
+      "reddit-piday-k8s-route",
+      "roblox-consul-streaming",
+      "aws_kinesis_cell_manager",
+      "azure_leapyear_cert",
+      "cloudflare_leap_second",
+      "cloudflare_waf_regex",
+      "cloudflare_zonemd_stale_cache",
+      "conntrack_exhaustion",
+      "github_dns_zone_corruption",
+      "github_mysql_semaphore_rename",
+      "github_proxysql_fd_limit",
+      "github_zk_splitbrain",
+      "gke_ip_exhaustion",
+      "incidentio_anetd_cpu",
+      "kafka_poison_pill",
+      "knight_capital_conflict",
+      "slack_consul_cache_db",
+      "multi-rollout-cacheflush",
+      "circleci_kubeproxy_iptables",
+      "cloudflare_bgp_reorder",
+      "cloudflare_byzantine_switch",
+      "datadog_systemd_cilium",
+      "facebook_bgp_backbone",
+      "github_network_partition",
+      "launchdarkly_cold_cache",
+      "slack_tgw_fd_exhaustion"
+    ],
+    "stages": [
+      {
+        "stage": 0,
+        "epoch": 0,
+        "newly_unlocked": [
+          "cert-expire-leaf-sidecar",
+          "fd-exhaust-leaf-shipper",
+          "mem-leak-leaf-transcoder",
+          "billing_disk_fill",
+          "ingest_fd_exhaust",
+          "media_oom_leak",
+          "redis_cache_flush",
+          "search_cpu_starve",
+          "auth_cert_expiry",
+          "checkout_bad_rollout",
+          "payments_dep_revoked"
+        ],
+        "active_incidents": [
+          {
+            "id": "cert-expire-leaf-sidecar",
+            "weight": 1.0,
+            "difficulty": 0.9
+          },
+          {
+            "id": "fd-exhaust-leaf-shipper",
+            "weight": 1.0,
+            "difficulty": 0.9
+          },
+          {
+            "id": "mem-leak-leaf-transcoder",
+            "weight": 1.0,
+            "difficulty": 0.9
+          },
+          {
+            "id": "billing_disk_fill",
+            "weight": 1.0,
+            "difficulty": 2.1
+          },
+          {
+            "id": "ingest_fd_exhaust",
+            "weight": 1.0,
+            "difficulty": 2.1
+          },
+          {
+            "id": "media_oom_leak",
+            "weight": 1.0,
+            "difficulty": 2.1
+          },
+          {
+            "id": "redis_cache_flush",
+            "weight": 1.0,
+            "difficulty": 2.1
+          },
+          {
+            "id": "search_cpu_starve",
+            "weight": 1.0,
+            "difficulty": 2.1
+          },
+          {
+            "id": "auth_cert_expiry",
+            "weight": 1.0,
+            "difficulty": 2.5
+          },
+          {
+            "id": "checkout_bad_rollout",
+            "weight": 1.0,
+            "difficulty": 2.5
+          },
+          {
+            "id": "payments_dep_revoked",
+            "weight": 1.0,
+            "difficulty": 2.5
+          }
+        ],
+        "n_active": 11,
+        "samples_this_stage": 88
+      },
+      {
+        "stage": 1,
+        "epoch": 1,
+        "newly_unlocked": [
+          "cert-expire-cascade-ingress",
+          "fd-exhaust-cascade-gw",
+          "mem-leak-cascade-cache",
+          "cloudbleed-parser-overrun",
+          "honeycomb-retry-storm",
+          "stripe-redis-fork-latency",
+          "travis-ci-leaked-secret",
+          "firefox_addon_cert",
+          "multi-cert-poolleak",
+          "multi-fdexhaust-cpustarve"
+        ],
+        "active_incidents": [
+          {
+            "id": "cert-expire-leaf-sidecar",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "fd-exhaust-leaf-shipper",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "mem-leak-leaf-transcoder",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "billing_disk_fill",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "ingest_fd_exhaust",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "media_oom_leak",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "redis_cache_flush",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "search_cpu_starve",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "auth_cert_expiry",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "checkout_bad_rollout",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "payments_dep_revoked",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "cert-expire-cascade-ingress",
+            "weight": 1.0,
+            "difficulty": 12.7
+          },
+          {
+            "id": "fd-exhaust-cascade-gw",
+            "weight": 1.0,
+            "difficulty": 12.7
+          },
+          {
+            "id": "mem-leak-cascade-cache",
+            "weight": 1.0,
+            "difficulty": 12.7
+          },
+          {
+            "id": "cloudbleed-parser-overrun",
+            "weight": 1.0,
+            "difficulty": 13.9
+          },
+          {
+            "id": "honeycomb-retry-storm",
+            "weight": 1.0,
+            "difficulty": 13.9
+          },
+          {
+            "id": "stripe-redis-fork-latency",
+            "weight": 1.0,
+            "difficulty": 13.9
+          },
+          {
+            "id": "travis-ci-leaked-secret",
+            "weight": 1.0,
+            "difficulty": 13.9
+          },
+          {
+            "id": "firefox_addon_cert",
+            "weight": 1.0,
+            "difficulty": 14.0
+          },
+          {
+            "id": "multi-cert-poolleak",
+            "weight": 1.0,
+            "difficulty": 14.1
+          },
+          {
+            "id": "multi-fdexhaust-cpustarve",
+            "weight": 1.0,
+            "difficulty": 14.5
+          }
+        ],
+        "n_active": 21,
+        "samples_this_stage": 102
+      },
+      {
+        "stage": 2,
+        "epoch": 2,
+        "newly_unlocked": [
+          "aws-s3-typo-capacity",
+          "fastly-pop-config",
+          "gitlab-db-deletion",
+          "monzo-cassandra-compaction",
+          "reddit-piday-k8s-route",
+          "roblox-consul-streaming",
+          "aws_kinesis_cell_manager",
+          "azure_leapyear_cert",
+          "cloudflare_leap_second",
+          "cloudflare_waf_regex"
+        ],
+        "active_incidents": [
+          {
+            "id": "cert-expire-leaf-sidecar",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "fd-exhaust-leaf-shipper",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "mem-leak-leaf-transcoder",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "billing_disk_fill",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "ingest_fd_exhaust",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "media_oom_leak",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "redis_cache_flush",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "search_cpu_starve",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "auth_cert_expiry",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "checkout_bad_rollout",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "payments_dep_revoked",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "cert-expire-cascade-ingress",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "fd-exhaust-cascade-gw",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "mem-leak-cascade-cache",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "cloudbleed-parser-overrun",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "honeycomb-retry-storm",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "stripe-redis-fork-latency",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "travis-ci-leaked-secret",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "firefox_addon_cert",
+            "weight": 0.3,
+            "difficulty": 14.0
+          },
+          {
+            "id": "multi-cert-poolleak",
+            "weight": 0.3,
+            "difficulty": 14.1
+          },
+          {
+            "id": "multi-fdexhaust-cpustarve",
+            "weight": 0.3,
+            "difficulty": 14.5
+          },
+          {
+            "id": "aws-s3-typo-capacity",
+            "weight": 1.0,
+            "difficulty": 15.4
+          },
+          {
+            "id": "fastly-pop-config",
+            "weight": 1.0,
+            "difficulty": 15.4
+          },
+          {
+            "id": "gitlab-db-deletion",
+            "weight": 1.0,
+            "difficulty": 15.4
+          },
+          {
+            "id": "monzo-cassandra-compaction",
+            "weight": 1.0,
+            "difficulty": 15.4
+          },
+          {
+            "id": "reddit-piday-k8s-route",
+            "weight": 1.0,
+            "difficulty": 15.4
+          },
+          {
+            "id": "roblox-consul-streaming",
+            "weight": 1.0,
+            "difficulty": 15.4
+          },
+          {
+            "id": "aws_kinesis_cell_manager",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "azure_leapyear_cert",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "cloudflare_leap_second",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "cloudflare_waf_regex",
+            "weight": 1.0,
+            "difficulty": 15.5
+          }
+        ],
+        "n_active": 31,
+        "samples_this_stage": 122
+      },
+      {
+        "stage": 3,
+        "epoch": 3,
+        "newly_unlocked": [
+          "cloudflare_zonemd_stale_cache",
+          "conntrack_exhaustion",
+          "github_dns_zone_corruption",
+          "github_mysql_semaphore_rename",
+          "github_proxysql_fd_limit",
+          "github_zk_splitbrain",
+          "gke_ip_exhaustion",
+          "incidentio_anetd_cpu",
+          "kafka_poison_pill",
+          "knight_capital_conflict"
+        ],
+        "active_incidents": [
+          {
+            "id": "cert-expire-leaf-sidecar",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "fd-exhaust-leaf-shipper",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "mem-leak-leaf-transcoder",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "billing_disk_fill",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "ingest_fd_exhaust",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "media_oom_leak",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "redis_cache_flush",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "search_cpu_starve",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "auth_cert_expiry",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "checkout_bad_rollout",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "payments_dep_revoked",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "cert-expire-cascade-ingress",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "fd-exhaust-cascade-gw",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "mem-leak-cascade-cache",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "cloudbleed-parser-overrun",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "honeycomb-retry-storm",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "stripe-redis-fork-latency",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "travis-ci-leaked-secret",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "firefox_addon_cert",
+            "weight": 0.3,
+            "difficulty": 14.0
+          },
+          {
+            "id": "multi-cert-poolleak",
+            "weight": 0.3,
+            "difficulty": 14.1
+          },
+          {
+            "id": "multi-fdexhaust-cpustarve",
+            "weight": 0.3,
+            "difficulty": 14.5
+          },
+          {
+            "id": "aws-s3-typo-capacity",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "fastly-pop-config",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "gitlab-db-deletion",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "monzo-cassandra-compaction",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "reddit-piday-k8s-route",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "roblox-consul-streaming",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "aws_kinesis_cell_manager",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "azure_leapyear_cert",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "cloudflare_leap_second",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "cloudflare_waf_regex",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "cloudflare_zonemd_stale_cache",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "conntrack_exhaustion",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "github_dns_zone_corruption",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "github_mysql_semaphore_rename",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "github_proxysql_fd_limit",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "github_zk_splitbrain",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "gke_ip_exhaustion",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "incidentio_anetd_cpu",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "kafka_poison_pill",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "knight_capital_conflict",
+            "weight": 1.0,
+            "difficulty": 15.5
+          }
+        ],
+        "n_active": 41,
+        "samples_this_stage": 142
+      },
+      {
+        "stage": 4,
+        "epoch": 4,
+        "newly_unlocked": [
+          "slack_consul_cache_db",
+          "multi-rollout-cacheflush",
+          "circleci_kubeproxy_iptables",
+          "cloudflare_bgp_reorder",
+          "cloudflare_byzantine_switch",
+          "datadog_systemd_cilium",
+          "facebook_bgp_backbone",
+          "github_network_partition",
+          "launchdarkly_cold_cache",
+          "slack_tgw_fd_exhaustion"
+        ],
+        "active_incidents": [
+          {
+            "id": "cert-expire-leaf-sidecar",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "fd-exhaust-leaf-shipper",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "mem-leak-leaf-transcoder",
+            "weight": 0.3,
+            "difficulty": 0.9
+          },
+          {
+            "id": "billing_disk_fill",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "ingest_fd_exhaust",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "media_oom_leak",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "redis_cache_flush",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "search_cpu_starve",
+            "weight": 0.3,
+            "difficulty": 2.1
+          },
+          {
+            "id": "auth_cert_expiry",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "checkout_bad_rollout",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "payments_dep_revoked",
+            "weight": 0.3,
+            "difficulty": 2.5
+          },
+          {
+            "id": "cert-expire-cascade-ingress",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "fd-exhaust-cascade-gw",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "mem-leak-cascade-cache",
+            "weight": 0.3,
+            "difficulty": 12.7
+          },
+          {
+            "id": "cloudbleed-parser-overrun",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "honeycomb-retry-storm",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "stripe-redis-fork-latency",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "travis-ci-leaked-secret",
+            "weight": 0.3,
+            "difficulty": 13.9
+          },
+          {
+            "id": "firefox_addon_cert",
+            "weight": 0.3,
+            "difficulty": 14.0
+          },
+          {
+            "id": "multi-cert-poolleak",
+            "weight": 0.3,
+            "difficulty": 14.1
+          },
+          {
+            "id": "multi-fdexhaust-cpustarve",
+            "weight": 0.3,
+            "difficulty": 14.5
+          },
+          {
+            "id": "aws-s3-typo-capacity",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "fastly-pop-config",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "gitlab-db-deletion",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "monzo-cassandra-compaction",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "reddit-piday-k8s-route",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "roblox-consul-streaming",
+            "weight": 0.3,
+            "difficulty": 15.4
+          },
+          {
+            "id": "aws_kinesis_cell_manager",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "azure_leapyear_cert",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "cloudflare_leap_second",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "cloudflare_waf_regex",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "cloudflare_zonemd_stale_cache",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "conntrack_exhaustion",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "github_dns_zone_corruption",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "github_mysql_semaphore_rename",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "github_proxysql_fd_limit",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "github_zk_splitbrain",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "gke_ip_exhaustion",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "incidentio_anetd_cpu",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "kafka_poison_pill",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "knight_capital_conflict",
+            "weight": 0.3,
+            "difficulty": 15.5
+          },
+          {
+            "id": "slack_consul_cache_db",
+            "weight": 1.0,
+            "difficulty": 15.5
+          },
+          {
+            "id": "multi-rollout-cacheflush",
+            "weight": 1.0,
+            "difficulty": 15.9
+          },
+          {
+            "id": "circleci_kubeproxy_iptables",
+            "weight": 1.0,
+            "difficulty": 17.0
+          },
+          {
+            "id": "cloudflare_bgp_reorder",
+            "weight": 1.0,
+            "difficulty": 17.0
+          },
+          {
+            "id": "cloudflare_byzantine_switch",
+            "weight": 1.0,
+            "difficulty": 17.0
+          },
+          {
+            "id": "datadog_systemd_cilium",
+            "weight": 1.0,
+            "difficulty": 17.0
+          },
+          {
+            "id": "facebook_bgp_backbone",
+            "weight": 1.0,
+            "difficulty": 17.0
+          },
+          {
+            "id": "github_network_partition",
+            "weight": 1.0,
+            "difficulty": 17.0
+          },
+          {
+            "id": "launchdarkly_cold_cache",
+            "weight": 1.0,
+            "difficulty": 17.0
+          },
+          {
+            "id": "slack_tgw_fd_exhaustion",
+            "weight": 1.0,
+            "difficulty": 17.0
+          }
+        ],
+        "n_active": 51,
+        "samples_this_stage": 162
+      }
+    ]
+  },
+  "blocker": "No GPU / training backend in this env (frozen-LLM project). Config + schedule are runnable inputs; gradient step is out of scope here \u2014 see comparison harness for eval proxy."
+}

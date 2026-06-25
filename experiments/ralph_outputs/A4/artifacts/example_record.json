@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "incident_id": "partner-cdn-cache-stampede",
+  "source": {
+    "org": "Snorkel (illustrative partner record)",
+    "kind": "reconstructed",
+    "url": "",
+    "license": "CC-BY-4.0",
+    "anonymization": "entities mapped to role placeholders; no hostnames/IPs/PII",
+    "pii_status": "none"
+  },
+  "title": "CDN origin cache stampede after TTL drop",
+  "category": "saturation",
+  "classification": "cascade",
+  "loud_symptom": "Origin tier 5xx error rate spikes; on-call sees origin CPU saturation and pages the origin team",
+  "why_misleading": "Origin saturation looks like the cause, but origin is healthy in isolation — the real driver is a config change that collapsed edge cache TTL, sending a read stampede to origin",
+  "root_cause": {
+    "location": "edge-cache",
+    "kind": "config_error",
+    "severity": 0.8,
+    "hidden": true,
+    "persistent": false
+  },
+  "causal_chain": [
+    "edge cache TTL config dropped from 300s to 0 in a routine push",
+    "edge cache hit-rate collapses",
+    "read stampede hits origin tier",
+    "origin CPU saturates and returns 5xx",
+    "loud alert fires on origin, not on the edge config change"
+  ],
+  "trap_actions": [
+    { "tool": "scale_deployment", "args": { "target": "origin-tier", "replicas": 20 } },
+    { "tool": "restart_service", "args": { "target": "origin-tier" } }
+  ],
+  "canonical_fix": {
+    "ordering_notes": "Restore edge cache TTL FIRST; do not scale origin (masks root cause and burns budget).",
+    "steps": [
+      { "tool": "rollback_deployment", "args": { "target": "edge-cache" } },
+      { "tool": "clear_cache", "args": { "target": "edge-cache" } }
+    ]
+  },
+  "slo": [
+    { "metric": "error_rate_pct", "node": "origin-tier", "direction": "higher_bad", "threshold": 5, "sustain_ticks": 3 }
+  ],
+  "assertions": {
+    "cascades": true,
+    "loudest_alert_not_cause": true,
+    "fix_resolves": true,
+    "buried_gun_exists": true,
+    "hysteresis": false,
+    "monitoring_degrades": false
+  },
+  "seed": 2401,
+  "notes": "Illustrative record demonstrating the ingest contract; NOT real Snorkel data."
+}

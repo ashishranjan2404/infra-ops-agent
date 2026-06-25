@@ -1,0 +1,780 @@
+{
+  "task_id": "A8",
+  "description": "Strict held-out test split for cidg incidents with zero training overlap",
+  "criteria": {
+    "tier1": "exact incident-id novelty + no significant token-pair overlap",
+    "tier2": "company/vendor-axis novelty (same company + shared meaningful token => contaminated)",
+    "tier3_soft": "failure_class reuse recorded as flag; hard-enforced only with --strict-class",
+    "stop_tokens": [
+      "and",
+      "cache",
+      "cert",
+      "cold",
+      "cpu",
+      "delay",
+      "disk",
+      "error",
+      "errors",
+      "exhaust",
+      "exhaustion",
+      "expire",
+      "expiry",
+      "fd",
+      "fill",
+      "flush",
+      "leak",
+      "limit",
+      "node",
+      "pool",
+      "rollout",
+      "spike",
+      "stale",
+      "starve",
+      "the",
+      "via",
+      "with"
+    ],
+    "company_tokens": [
+      "aws",
+      "azure",
+      "circleci",
+      "cloudflare",
+      "consul",
+      "datadog",
+      "dynamodb",
+      "facebook",
+      "firefox",
+      "github",
+      "gke",
+      "incidentio",
+      "kafka",
+      "kinesis",
+      "knight",
+      "launchdarkly",
+      "mysql",
+      "proxysql",
+      "redis",
+      "slack"
+    ],
+    "strict_class_mode": false
+  },
+  "training_corpora": [
+    "opensre-traj/out/trajectories.jsonl",
+    "opensre-traj/out/hud_trajectories.jsonl"
+  ],
+  "training_stats": {
+    "n_lines": 516,
+    "n_distinct_incidents": 34,
+    "n_distinct_scenario_ids": 319,
+    "distinct_incidents": [
+      "aws_dynamodb_dns_enactor",
+      "aws_kinesis_cell_manager",
+      "bad_deploy_errors",
+      "cache_stampede",
+      "cert_expiry",
+      "circleci_kubeproxy_iptables",
+      "circleci_waf_manual_edit",
+      "cloudflare_1111_zonemd_stale_cache",
+      "cloudflare_bgp_reorder_withdraw",
+      "cloudflare_byzantine_switch",
+      "consumer_lag",
+      "cpu_saturation",
+      "crashloop",
+      "datadog_systemd_cilium",
+      "db_pool_exhaustion",
+      "disk_pressure",
+      "dns_failure",
+      "github_cache_ttl_read_explosion",
+      "github_dns_zone_corruption",
+      "github_git_failover_rollback",
+      "github_mlag_stonith_splitbrain",
+      "github_mysql_semaphore_rename",
+      "github_network_partition_orchestrator",
+      "github_proxysql_fd_limit",
+      "incidentio_anetd_cpu",
+      "latency_spike",
+      "launchdarkly_legacy_routing_cold_cache",
+      "memory_leak",
+      "node_not_ready",
+      "oom_kill",
+      "slack_consul_cache_db_metastable",
+      "slack_tgw_fd_exhaustion",
+      "stuck_rollout",
+      "upstream_5xx"
+    ]
+  },
+  "candidate_pool": {
+    "registry": "scenarios/cidg/generated/registry.json",
+    "n_candidates": 32
+  },
+  "held_out": [
+    "auth_cert_expiry",
+    "azure_leapyear_cert",
+    "billing_disk_fill",
+    "checkout_bad_rollout",
+    "conntrack_exhaustion",
+    "facebook_bgp_backbone",
+    "firefox_addon_cert",
+    "gke_ip_exhaustion",
+    "ingest_fd_exhaust",
+    "kafka_poison_pill",
+    "knight_capital_conflict",
+    "media_oom_leak",
+    "payments_dep_revoked",
+    "redis_cache_flush",
+    "search_cpu_starve"
+  ],
+  "n_held_out": 15,
+  "contaminated": [
+    "aws_kinesis_cell_manager",
+    "circleci_kubeproxy_iptables",
+    "cloudflare_bgp_reorder",
+    "cloudflare_byzantine_switch",
+    "cloudflare_leap_second",
+    "cloudflare_waf_regex",
+    "cloudflare_zonemd_stale_cache",
+    "datadog_systemd_cilium",
+    "github_dns_zone_corruption",
+    "github_mysql_semaphore_rename",
+    "github_network_partition",
+    "github_proxysql_fd_limit",
+    "github_zk_splitbrain",
+    "incidentio_anetd_cpu",
+    "launchdarkly_cold_cache",
+    "slack_consul_cache_db",
+    "slack_tgw_fd_exhaustion"
+  ],
+  "n_contaminated": 17,
+  "per_incident": [
+    {
+      "cidg_key": "redis_cache_flush",
+      "yaml": "scenarios/cidg/generated/40-redis-cache-flush.yaml",
+      "family": "simple",
+      "style": "leaf",
+      "failure_class": "cache_flush",
+      "source": "Synthetic simple incident (cache_flush)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "billing_disk_fill",
+      "yaml": "scenarios/cidg/generated/41-billing-disk-fill.yaml",
+      "family": "simple",
+      "style": "leaf",
+      "failure_class": "disk_fill",
+      "source": "Synthetic simple incident (disk_fill)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "auth_cert_expiry",
+      "yaml": "scenarios/cidg/generated/42-auth-cert-expiry.yaml",
+      "family": "simple",
+      "style": "leaf",
+      "failure_class": "cert_expire",
+      "source": "Synthetic simple incident (cert_expire)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "checkout_bad_rollout",
+      "yaml": "scenarios/cidg/generated/43-checkout-bad-rollout.yaml",
+      "family": "simple",
+      "style": "leaf",
+      "failure_class": "bad_revision",
+      "source": "Synthetic simple incident (bad_revision)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "search_cpu_starve",
+      "yaml": "scenarios/cidg/generated/44-search-cpu-starve.yaml",
+      "family": "simple",
+      "style": "leaf",
+      "failure_class": "cpu_starve",
+      "source": "Synthetic simple incident (cpu_starve)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "ingest_fd_exhaust",
+      "yaml": "scenarios/cidg/generated/45-ingest-fd-exhaust.yaml",
+      "family": "simple",
+      "style": "leaf",
+      "failure_class": "fd_exhaust",
+      "source": "Synthetic simple incident (fd_exhaust)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": true
+      }
+    },
+    {
+      "cidg_key": "media_oom_leak",
+      "yaml": "scenarios/cidg/generated/46-media-oom-leak.yaml",
+      "family": "simple",
+      "style": "leaf",
+      "failure_class": "mem_leak",
+      "source": "Synthetic simple incident (mem_leak)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "payments_dep_revoked",
+      "yaml": "scenarios/cidg/generated/47-payments-dep-revoked.yaml",
+      "family": "simple",
+      "style": "leaf",
+      "failure_class": "dep_revoked",
+      "source": "Synthetic simple incident (dep_revoked)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "circleci_kubeproxy_iptables",
+      "yaml": "scenarios/cidg/generated/50-circleci-kubeproxy-iptables.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "net_delay",
+      "source": "CircleCI 2023-03-14 kube-proxy iptables-restore outage",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "circleci_kubeproxy_iptables",
+          [
+            "circleci",
+            "iptables",
+            "kubeproxy"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "circleci",
+          "circleci_kubeproxy_iptables"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "datadog_systemd_cilium",
+      "yaml": "scenarios/cidg/generated/51-datadog-systemd-cilium.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "config_bloat",
+      "source": "Datadog 2023-03-08 systemd-networkd / Cilium route flush",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "datadog_systemd_cilium",
+          [
+            "cilium",
+            "datadog",
+            "systemd"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "datadog",
+          "datadog_systemd_cilium"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "incidentio_anetd_cpu",
+      "yaml": "scenarios/cidg/generated/52-incidentio-anetd-cpu.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "cpu_starve",
+      "source": "incident.io 2023-09 anetd CPU saturation",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "incidentio_anetd_cpu",
+          [
+            "anetd",
+            "incidentio"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "incidentio",
+          "incidentio_anetd_cpu"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "slack_tgw_fd_exhaustion",
+      "yaml": "scenarios/cidg/generated/53-slack-tgw-fd-exhaustion.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "net_delay",
+      "source": "Slack 2021-01-04 Transit Gateway saturation",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "slack_tgw_fd_exhaustion",
+          [
+            "slack",
+            "tgw"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "slack",
+          "slack_consul_cache_db_metastable"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "slack_consul_cache_db",
+      "yaml": "scenarios/cidg/generated/54-slack-consul-cache-db.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "churn_spike",
+      "source": "Slack 2022-02-22 Consul/cache/DB metastable",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": [
+          "slack_consul_cache_db_metastable",
+          [
+            "consul",
+            "db",
+            "slack"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "slack",
+          "slack_consul_cache_db_metastable"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "github_network_partition",
+      "yaml": "scenarios/cidg/generated/55-github-network-partition.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "net_delay",
+      "source": "GitHub 2018-10-21 network partition / Orchestrator",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": [
+          "github_network_partition_orchestrator",
+          [
+            "github",
+            "network",
+            "partition"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "github",
+          "github_cache_ttl_read_explosion"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "github_proxysql_fd_limit",
+      "yaml": "scenarios/cidg/generated/56-github-proxysql-fd-limit.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "fd_exhaust",
+      "source": "GitHub 2020-02 ProxySQL silent FD clamp",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "github_proxysql_fd_limit",
+          [
+            "github",
+            "proxysql"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "proxysql",
+          "github_proxysql_fd_limit"
+        ],
+        "tier3_failure_class_seen_in_train": true
+      }
+    },
+    {
+      "cidg_key": "github_mysql_semaphore_rename",
+      "yaml": "scenarios/cidg/generated/57-github-mysql-semaphore-rename.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "thread_exhaust",
+      "source": "GitHub 2021-11-27 MySQL semaphore RENAME",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "github_mysql_semaphore_rename",
+          [
+            "github",
+            "mysql",
+            "rename",
+            "semaphore"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "github",
+          "github_cache_ttl_read_explosion"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "cloudflare_zonemd_stale_cache",
+      "yaml": "scenarios/cidg/generated/58-cloudflare-zonemd-stale-cache.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "config_bloat",
+      "source": "Cloudflare 2023-10-04 1.1.1.1 ZONEMD stale cache",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": [
+          "cloudflare_1111_zonemd_stale_cache",
+          [
+            "cloudflare",
+            "zonemd"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "cloudflare",
+          "cloudflare_1111_zonemd_stale_cache"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "cloudflare_byzantine_switch",
+      "yaml": "scenarios/cidg/generated/59-cloudflare-byzantine-switch.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "net_delay",
+      "source": "Cloudflare 2020-11-02 Byzantine switch",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "cloudflare_byzantine_switch",
+          [
+            "byzantine",
+            "cloudflare",
+            "switch"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "cloudflare",
+          "cloudflare_1111_zonemd_stale_cache"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "cloudflare_bgp_reorder",
+      "yaml": "scenarios/cidg/generated/60-cloudflare-bgp-reorder.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "config_bloat",
+      "source": "Cloudflare 2022-06-21 BGP term reorder withdraw",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": [
+          "cloudflare_bgp_reorder_withdraw",
+          [
+            "bgp",
+            "cloudflare",
+            "reorder"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "cloudflare",
+          "cloudflare_1111_zonemd_stale_cache"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "github_dns_zone_corruption",
+      "yaml": "scenarios/cidg/generated/61-github-dns-zone-corruption.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "config_bloat",
+      "source": "GitHub 2016-12-08 DNS zone corruption",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "github_dns_zone_corruption",
+          [
+            "corruption",
+            "dns",
+            "github",
+            "zone"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "github",
+          "github_cache_ttl_read_explosion"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "launchdarkly_cold_cache",
+      "yaml": "scenarios/cidg/generated/62-launchdarkly-cold-cache.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "dep_revoked",
+      "source": "LaunchDarkly 2025-10-20 legacy-routing cold cache",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": [
+          "launchdarkly",
+          "launchdarkly_legacy_routing_cold_cache"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "aws_kinesis_cell_manager",
+      "yaml": "scenarios/cidg/generated/63-aws-kinesis-cell-manager.yaml",
+      "family": "cascade",
+      "style": "cascade",
+      "failure_class": "churn_spike",
+      "source": "AWS 2024-07-30 Kinesis cell manager reshuffle",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": true,
+        "tier1_significant_pair_overlap": [
+          "aws_kinesis_cell_manager",
+          [
+            "aws",
+            "cell",
+            "kinesis",
+            "manager"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "kinesis",
+          "aws_kinesis_cell_manager"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "facebook_bgp_backbone",
+      "yaml": "scenarios/cidg/generated/70-facebook-bgp-backbone.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "config_bloat",
+      "source": "Facebook 2021-10-04 BGP backbone withdrawal",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "cloudflare_leap_second",
+      "yaml": "scenarios/cidg/generated/71-cloudflare-leap-second.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "config_bloat",
+      "source": "Cloudflare 2017 leap-second time panic",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": [
+          "cloudflare",
+          "cloudflare_1111_zonemd_stale_cache"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "knight_capital_conflict",
+      "yaml": "scenarios/cidg/generated/72-knight-capital-conflict.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "bad_revision",
+      "source": "Knight Capital 2012-08-01 $440M deployment conflict",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "azure_leapyear_cert",
+      "yaml": "scenarios/cidg/generated/73-azure-leapyear-cert.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "cert_expire",
+      "source": "Azure 2012-02-29 leap-year certificate",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "github_zk_splitbrain",
+      "yaml": "scenarios/cidg/generated/74-github-zk-splitbrain.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "net_delay",
+      "source": "GitHub ZooKeeper split-brain (novel)",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": [
+          "github_mlag_stonith_splitbrain",
+          [
+            "github",
+            "splitbrain"
+          ]
+        ],
+        "tier2_company_axis_hit": [
+          "github",
+          "github_cache_ttl_read_explosion"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "firefox_addon_cert",
+      "yaml": "scenarios/cidg/generated/75-firefox-addon-cert.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "cert_expire",
+      "source": "Mozilla 2019-05-04 add-on intermediate cert expiry",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "cloudflare_waf_regex",
+      "yaml": "scenarios/cidg/generated/76-cloudflare-waf-regex.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "bad_revision",
+      "source": "Cloudflare 2019-07-02 WAF regex CPU exhaustion",
+      "held_out": false,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": [
+          "cloudflare",
+          "cloudflare_1111_zonemd_stale_cache"
+        ],
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "gke_ip_exhaustion",
+      "yaml": "scenarios/cidg/generated/77-gke-ip-exhaustion.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "pool_leak",
+      "source": "GKE Pod CIDR / IP exhaustion (SREGym)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "kafka_poison_pill",
+      "yaml": "scenarios/cidg/generated/78-kafka-poison-pill.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "bad_content",
+      "source": "Kafka poison-pill consumer block (SREGym)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": false
+      }
+    },
+    {
+      "cidg_key": "conntrack_exhaustion",
+      "yaml": "scenarios/cidg/generated/79-conntrack-exhaustion.yaml",
+      "family": "novel",
+      "style": "cascade",
+      "failure_class": "fd_exhaust",
+      "source": "Conntrack table exhaustion (SREGym)",
+      "held_out": true,
+      "reasons": {
+        "tier1_exact_id_match": false,
+        "tier1_significant_pair_overlap": null,
+        "tier2_company_axis_hit": null,
+        "tier3_failure_class_seen_in_train": true
+      }
+    }
+  ],
+  "assertion_violations": [],
+  "assertion_pass": true,
+  "manifest_sha256": "90a78a75d4b3752836264bac7eb670a0dac7cbf3564ab10fc2b593777801f9e4"
+}

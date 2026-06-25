@@ -1,0 +1,62 @@
+{
+  "task_id": "J10",
+  "claim": "No production deployment has occurred; this is a deployment-readiness analysis. No production metrics are reported.",
+  "lessons": [
+    {
+      "id": "L1",
+      "statement": "The action layer is the binding safety constraint: a correct diagnosis does not license a safe action; trap-actions must be penalized/blocked independently.",
+      "grounding": ["rex/scoring.py"]
+    },
+    {
+      "id": "L2",
+      "statement": "The deterministic reward is a gameable proxy; a hedge diagnosis plus a legitimate fix scores 0.55, training non-committal behavior that is an action-safety risk in production.",
+      "grounding": ["experiments/ralph_outputs/D13/SUMMARY.md", "experiments/ralph_outputs/D13/result.json"]
+    },
+    {
+      "id": "L3",
+      "statement": "Substrate fidelity bounds and biases everything learned: 54/61 canonical fixes resolve in the sim engine, but 7 are broken (4 wrong-target/wrong-tool, 3 unmodeled-metric KeyErrors) and hysteresis is unmodeled.",
+      "grounding": ["experiments/ralph_outputs/A16/SUMMARY.md", "experiments/ralph_outputs/A16/validation_report.json"]
+    },
+    {
+      "id": "L4",
+      "statement": "We lack clean outcome ground truth: of the real incidents, 18 have a sourced MTTR and 12 are unknown, so no MTTR improvement can be claimed.",
+      "grounding": ["experiments/ralph_outputs/A9/SUMMARY.md"]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "G1",
+      "name": "Trap-action safety under distribution shift",
+      "why_open": "The trap-action check matches a closed, author-enumerated (tool,target) vocabulary; it cannot catch traps no author listed, and production incidents are out-of-distribution by definition. No off-distribution trap-avoidance evidence exists.",
+      "validation_protocol": "Build a held-out incident set whose root causes and trap actions are disjoint from the training vocabulary (closest available proxy: held-out CIDG slice; a true test needs a real/anonymized incident stream we do not yet have). Measure trap-proposal recall and separate agent-avoidance from safety-harness BLOCKs.",
+      "acceptance_gate": "TARGET — NOT YET MEASURED: trap-proposal rate on held-out, vocabulary-disjoint incidents <= 1%, with the safety harness blocking >= 99% of any that slip through, over >= 100 incidents.",
+      "grounding": ["rex/scoring.py", "experiments/ralph_outputs/A16/SUMMARY.md"]
+    },
+    {
+      "id": "G2",
+      "name": "Shadow-mode results",
+      "why_open": "The agent has never run in shadow mode (propose-only, human executes); there is zero shadow-mode data and no rollback path implemented in the loop, so any non-shadow first step is unacceptable.",
+      "validation_protocol": "Run the agent read-only alongside on-call: same signals in, proposed diagnosis+remediation out, human executes, diff per incident. Capture action-agreement with on-call, trap-proposal events, time-to-proposed-diagnosis, and false-confident commits.",
+      "acceptance_gate": "TARGET — NOT YET MEASURED: over >= 50 real incidents in shadow mode, action-agreement with on-call >= 80%, trap-proposal rate <= 1%, zero unrecoverable proposals, before any write access is granted.",
+      "grounding": ["rex/scoring.py"]
+    },
+    {
+      "id": "G3",
+      "name": "MTTR",
+      "why_open": "12 of the real incidents have unknown MTTR and source MTTRs are unverified, so there is no clean baseline; MTTR also cannot be measured before shadow mode (G2) exists. No MTTR delta is claimed.",
+      "validation_protocol": "Precondition: complete/verify the A9 MTTR labels (resolve the 12 unknowns or exclude with reason). Then in shadow mode measure time-to-correct-proposed-diagnosis vs human baseline; only after write access, measure true end-to-end MTTR against the labeled baseline on matched incident classes.",
+      "acceptance_gate": "TARGET — NOT YET MEASURED: on verified-MTTR incidents only, agent-in-loop MTTR is statistically non-inferior to the human baseline before any improvement claim is made.",
+      "grounding": ["experiments/ralph_outputs/A9/SUMMARY.md"]
+    }
+  ],
+  "readiness_checklist": [
+    {"item": "Deterministic reward not gameable by hedge/negation (D13 mitigations shipped)", "status": "blocked"},
+    {"item": "Trap-safety validated on vocabulary-disjoint off-distribution incidents (G1)", "status": "blocked"},
+    {"item": "Shadow-mode run with measured action-agreement and trap rate (G2)", "status": "blocked"},
+    {"item": "Rollback / blast-radius limit implemented and tested in the loop", "status": "blocked"},
+    {"item": "MTTR baseline labels completed and verified (A9 12 unknowns)", "status": "partial"},
+    {"item": "Scenario substrate authoring bugs fixed (A16: 7 broken fixes)", "status": "partial"},
+    {"item": "Engine models all SLO metrics the target cluster tracks (p99, pod_restarts)", "status": "blocked"},
+    {"item": "Sim-engine validation of canonical fixes (A16: 54/61 resolve)", "status": "done"}
+  ]
+}

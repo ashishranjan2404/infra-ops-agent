@@ -1,0 +1,31 @@
+{
+  "design": "within",
+  "n_control": 50,
+  "n_agent": 50,
+  "n_pairs": 50,
+  "gm_control_min": 277.5,
+  "gm_agent_min": 184.4,
+  "median_control_min": 264.61,
+  "median_agent_min": 187.63,
+  "speedup": 1.5049,
+  "speedup_ci95": [
+    1.341,
+    1.6783
+  ],
+  "pct_reduction": 33.55,
+  "p_value": 0.0,
+  "test_name": "paired t-test on log(MTTR)",
+  "effect_size_cliffs_delta": 0.1432,
+  "slo_minutes": 120.0,
+  "pct_within_slo_control": 34.0,
+  "pct_within_slo_agent": 38.0,
+  "significant_at_05": true,
+  "notes": [
+    "Wilcoxon signed-rank p=0.0000"
+  ],
+  "_meta": {
+    "scipy": true,
+    "n_trials_loaded": 100,
+    "source": "trials_within.csv"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "textworld": [
+    {
+      "game_id": "tw-coin-collector-001",
+      "objective": "navigate the maze and collect the coin",
+      "walkthrough_goal": "go east then take coin from the pedestal",
+      "max_score": 2,
+      "losing_commands": ["go west into the pit", "drop coin"],
+      "won": true,
+      "agent_summary": "took the coin from the pedestal after going east",
+      "transitions": [
+        {"feedback": "You stand at a crossroads. Exits: east, west.",
+         "admissible_commands": ["go east", "go west"],
+         "command": "go east", "score_delta": 0},
+        {"feedback": "A pedestal holds a shiny coin.",
+         "admissible_commands": ["take coin", "go west"],
+         "command": "take coin", "score_delta": 2}
+      ]
+    }
+  ],
+  "jericho": [
+    {
+      "rom": "zork1",
+      "episode_id": "zork1-ep-007",
+      "goal": "enter the house and retrieve the lantern",
+      "walkthrough_summary": "open window, enter house, take lantern from table",
+      "max_score": 350,
+      "dead_end_actions": ["climb tree forever", "go south into forest"],
+      "victory": false,
+      "agent_summary": "opened the window and entered the kitchen",
+      "history": [
+        {"observation": "West of House. A window is slightly ajar.",
+         "valid_actions": ["open window", "go north"],
+         "action": "open window", "reward": 0},
+        {"observation": "With great effort, you open the window.",
+         "valid_actions": ["enter house", "go north"],
+         "action": "enter house", "reward": 10}
+      ]
+    }
+  ],
+  "alfworld": [
+    {
+      "task_id": "alf-pick_and_place-042",
+      "task_type": "pick_and_place_simple",
+      "task_desc": "put a clean mug in the cabinet",
+      "expert_plan_summary": "take mug, clean mug in sink, put mug in cabinet",
+      "irrelevant_objects": ["apple", "toaster"],
+      "goal_condition_success": true,
+      "agent_summary": "cleaned the mug and placed it in the cabinet",
+      "trajectory": [
+        {"obs": "You see a mug on the countertop.",
+         "admissible_actions": ["take mug", "go to sink"],
+         "action": "take mug", "reward": 0},
+        {"obs": "You are holding a mug.",
+         "admissible_actions": ["clean mug", "put mug in cabinet"],
+         "action": "clean mug", "reward": 1}
+      ]
+    }
+  ],
+  "sre": [
+    {
+      "scenario_id": "redis-cache-flush",
+      "trace_id": "abc123",
+      "gold_root": "session-cache cache_flush requires clear_cache",
+      "red_herrings": ["scale_deployment on session-cache"],
+      "reward": 0.8,
+      "answer": "root cause is a cache flush on session-cache; remediate with clear_cache",
+      "tools_used": ["get_alerts", "get_metrics", "clear_cache"]
+    }
+  ]
+}

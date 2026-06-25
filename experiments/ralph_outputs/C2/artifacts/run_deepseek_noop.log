@@ -1,0 +1,17 @@
+=== CASCADE-ONLY harness synthesis: deepseek-v4-pro, budget 8 ===
+(first attempt — recorded as a real NEGATIVE/blocker finding)
+
+SYNTHESIS done: 8 tree nodes, best TRAIN score=0.395
+  node train-scores: [0.395, 0.395, 0.395, 0.395, 0.395, 0.395, 0.395, 0.395]
+CASCADE-ONLY SYNTHESIZED RULE-SET (best by TRAIN):
+  (empty — synthesis found no improving rule)
+
+ROOT CAUSE (diagnosed): deepseek-v4-pro via the HUD gateway returns an EMPTY
+completion (len(raw)==0) for the propose prompt — a reasoning model that emitted
+no message content. _extract_json_list("") -> None -> validate_ruleset -> [].
+So every mutation was a no-op and the tree never left the empty seed.
+gemini-3.1-pro: same (returns text but no parseable JSON list -> 0 rules).
+grok-4.3: 1 rule (partial). gpt-5.5: 2 rules, train score 0.954 (USED for the real run).
+
+Lesson: the synthesis engine (rex/harness_synth.propose_ruleset) has no retry/fallback
+when the LLM operator returns empty/invalid output; it silently degenerates to the seed.

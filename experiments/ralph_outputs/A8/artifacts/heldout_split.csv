@@ -1,0 +1,33 @@
+cidg_key,yaml,family,failure_class,source,held_out,tier1_exact,tier2_company_hit,tier3_fclass_seen
+redis_cache_flush,scenarios/cidg/generated/40-redis-cache-flush.yaml,simple,cache_flush,Synthetic simple incident (cache_flush),True,False,False,False
+billing_disk_fill,scenarios/cidg/generated/41-billing-disk-fill.yaml,simple,disk_fill,Synthetic simple incident (disk_fill),True,False,False,False
+auth_cert_expiry,scenarios/cidg/generated/42-auth-cert-expiry.yaml,simple,cert_expire,Synthetic simple incident (cert_expire),True,False,False,False
+checkout_bad_rollout,scenarios/cidg/generated/43-checkout-bad-rollout.yaml,simple,bad_revision,Synthetic simple incident (bad_revision),True,False,False,False
+search_cpu_starve,scenarios/cidg/generated/44-search-cpu-starve.yaml,simple,cpu_starve,Synthetic simple incident (cpu_starve),True,False,False,False
+ingest_fd_exhaust,scenarios/cidg/generated/45-ingest-fd-exhaust.yaml,simple,fd_exhaust,Synthetic simple incident (fd_exhaust),True,False,False,True
+media_oom_leak,scenarios/cidg/generated/46-media-oom-leak.yaml,simple,mem_leak,Synthetic simple incident (mem_leak),True,False,False,False
+payments_dep_revoked,scenarios/cidg/generated/47-payments-dep-revoked.yaml,simple,dep_revoked,Synthetic simple incident (dep_revoked),True,False,False,False
+circleci_kubeproxy_iptables,scenarios/cidg/generated/50-circleci-kubeproxy-iptables.yaml,cascade,net_delay,CircleCI 2023-03-14 kube-proxy iptables-restore outage,False,True,True,False
+datadog_systemd_cilium,scenarios/cidg/generated/51-datadog-systemd-cilium.yaml,cascade,config_bloat,Datadog 2023-03-08 systemd-networkd / Cilium route flush,False,True,True,False
+incidentio_anetd_cpu,scenarios/cidg/generated/52-incidentio-anetd-cpu.yaml,cascade,cpu_starve,incident.io 2023-09 anetd CPU saturation,False,True,True,False
+slack_tgw_fd_exhaustion,scenarios/cidg/generated/53-slack-tgw-fd-exhaustion.yaml,cascade,net_delay,Slack 2021-01-04 Transit Gateway saturation,False,True,True,False
+slack_consul_cache_db,scenarios/cidg/generated/54-slack-consul-cache-db.yaml,cascade,churn_spike,Slack 2022-02-22 Consul/cache/DB metastable,False,False,True,False
+github_network_partition,scenarios/cidg/generated/55-github-network-partition.yaml,cascade,net_delay,GitHub 2018-10-21 network partition / Orchestrator,False,False,True,False
+github_proxysql_fd_limit,scenarios/cidg/generated/56-github-proxysql-fd-limit.yaml,cascade,fd_exhaust,GitHub 2020-02 ProxySQL silent FD clamp,False,True,True,True
+github_mysql_semaphore_rename,scenarios/cidg/generated/57-github-mysql-semaphore-rename.yaml,cascade,thread_exhaust,GitHub 2021-11-27 MySQL semaphore RENAME,False,True,True,False
+cloudflare_zonemd_stale_cache,scenarios/cidg/generated/58-cloudflare-zonemd-stale-cache.yaml,cascade,config_bloat,Cloudflare 2023-10-04 1.1.1.1 ZONEMD stale cache,False,False,True,False
+cloudflare_byzantine_switch,scenarios/cidg/generated/59-cloudflare-byzantine-switch.yaml,cascade,net_delay,Cloudflare 2020-11-02 Byzantine switch,False,True,True,False
+cloudflare_bgp_reorder,scenarios/cidg/generated/60-cloudflare-bgp-reorder.yaml,cascade,config_bloat,Cloudflare 2022-06-21 BGP term reorder withdraw,False,False,True,False
+github_dns_zone_corruption,scenarios/cidg/generated/61-github-dns-zone-corruption.yaml,cascade,config_bloat,GitHub 2016-12-08 DNS zone corruption,False,True,True,False
+launchdarkly_cold_cache,scenarios/cidg/generated/62-launchdarkly-cold-cache.yaml,cascade,dep_revoked,LaunchDarkly 2025-10-20 legacy-routing cold cache,False,False,True,False
+aws_kinesis_cell_manager,scenarios/cidg/generated/63-aws-kinesis-cell-manager.yaml,cascade,churn_spike,AWS 2024-07-30 Kinesis cell manager reshuffle,False,True,True,False
+facebook_bgp_backbone,scenarios/cidg/generated/70-facebook-bgp-backbone.yaml,novel,config_bloat,Facebook 2021-10-04 BGP backbone withdrawal,True,False,False,False
+cloudflare_leap_second,scenarios/cidg/generated/71-cloudflare-leap-second.yaml,novel,config_bloat,Cloudflare 2017 leap-second time panic,False,False,True,False
+knight_capital_conflict,scenarios/cidg/generated/72-knight-capital-conflict.yaml,novel,bad_revision,Knight Capital 2012-08-01 $440M deployment conflict,True,False,False,False
+azure_leapyear_cert,scenarios/cidg/generated/73-azure-leapyear-cert.yaml,novel,cert_expire,Azure 2012-02-29 leap-year certificate,True,False,False,False
+github_zk_splitbrain,scenarios/cidg/generated/74-github-zk-splitbrain.yaml,novel,net_delay,GitHub ZooKeeper split-brain (novel),False,False,True,False
+firefox_addon_cert,scenarios/cidg/generated/75-firefox-addon-cert.yaml,novel,cert_expire,Mozilla 2019-05-04 add-on intermediate cert expiry,True,False,False,False
+cloudflare_waf_regex,scenarios/cidg/generated/76-cloudflare-waf-regex.yaml,novel,bad_revision,Cloudflare 2019-07-02 WAF regex CPU exhaustion,False,False,True,False
+gke_ip_exhaustion,scenarios/cidg/generated/77-gke-ip-exhaustion.yaml,novel,pool_leak,GKE Pod CIDR / IP exhaustion (SREGym),True,False,False,False
+kafka_poison_pill,scenarios/cidg/generated/78-kafka-poison-pill.yaml,novel,bad_content,Kafka poison-pill consumer block (SREGym),True,False,False,False
+conntrack_exhaustion,scenarios/cidg/generated/79-conntrack-exhaustion.yaml,novel,fd_exhaust,Conntrack table exhaustion (SREGym),True,False,False,True

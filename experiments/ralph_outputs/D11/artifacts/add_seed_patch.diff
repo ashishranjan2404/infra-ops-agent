@@ -1,0 +1,44 @@
+diff --git a/opensre-traj/train_rft_v2.py b/opensre-traj/train_rft_v2.py
+index e4a2d50..ee91396 100644
+--- a/opensre-traj/train_rft_v2.py
++++ b/opensre-traj/train_rft_v2.py
+@@ -31,6 +31,7 @@ import argparse
+ import asyncio
+ import json
+ import os
++import random
+ import statistics as st
+ 
+ from hud import Job, Taskset, TrainingClient
+@@ -55,7 +56,22 @@ async def _aretry(make_coro, what: str, tries: int = 6):
+             await asyncio.sleep(wait)
+ 
+ 
++def _seed_everything(seed: int) -> None:
++    """Make a GRPO run reproducible / enable controlled multi-seed variance runs."""
++    os.environ["PYTHONHASHSEED"] = str(seed)
++    os.environ["HUD_ROLLOUT_SEED"] = str(seed)
++    random.seed(seed)
++    try:
++        import numpy as _np
++        _np.random.seed(seed)
++    except Exception:
++        pass
++
++
+ async def run(args) -> int:
++    if args.seed is not None:
++        _seed_everything(args.seed)
++        print(f"seed={args.seed} (PYTHONHASHSEED/HUD_ROLLOUT_SEED set; random/numpy seeded)")
+     full = Taskset.from_module(ENV)
+     items = [t for (_slug, t) in full.items()]
+     idx = [int(i) for i in args.tasks.split(",")]
+@@ -123,6 +139,8 @@ def main() -> int:
+                     help="roll the trainable head back before step 0 (reward/objective changed)")
+     ap.add_argument("--out", default="")
+     ap.add_argument("--smoke", action="store_true")
++    ap.add_argument("--seed", type=int, default=None,
++                    help="random seed for reproducible / multi-seed variance runs")
+     args = ap.parse_args()
+     return asyncio.run(run(args))
+ 

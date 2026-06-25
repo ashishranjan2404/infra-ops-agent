@@ -1,0 +1,27 @@
+=== Frontier pass@k — 2 models x 2 incidents x 3 seeds, REx budget 3, threshold 0.8 ===
+
+--- deepseek-v4-pro ---
+  [deepseek-v4-pro] oom_kill                 baseline_mean=0.600  rex_mean=1.000  (seeds=3)
+  [deepseek-v4-pro] gcp_service_control      baseline_mean=0.550  rex_mean=1.000  (seeds=3)
+
+--- gpt-5.5 ---
+  [gpt-5.5] oom_kill                 baseline_mean=0.400  rex_mean=1.000  (seeds=3)
+  [gpt-5.5] gcp_service_control      baseline_mean=0.300  rex_mean=1.000  (seeds=3)
+
+
+============================================================================================
+FRONTIER pass@k — baseline vs REx  (threshold = SLO restored + root cleared + no trap)
+============================================================================================
+model             cond        pass@1          95% CI  pass@2  pass@5   mean    std    n
+--------------------------------------------------------------------------------------------
+deepseek-v4-pro   baseline     0.167     [0.03,0.56]   0.333   0.833   0.57   0.23    6
+deepseek-v4-pro   rex          1.000     [0.61,1.00]   1.000   1.000   1.00   0.00    6
+gpt-5.5           baseline     0.000     [0.00,0.39]   0.000   0.000   0.35   0.16    6
+gpt-5.5           rex          1.000     [0.61,1.00]   1.000   1.000   1.00   0.00    6
+--------------------------------------------------------------------------------------------
+model                 pass@1 lift (REx-base)     mean lift
+--------------------------------------------------------------------------------------------
+deepseek-v4-pro                       +0.833        +0.425
+gpt-5.5                               +1.000        +0.650
+
+-> experiments/ralph_outputs/B5/artifacts/frontier_pass_at_k_result.json  (558.7s)

@@ -1,0 +1,29 @@
+\section{Root-Cause Reward and Searched Verifier}
+\label{sec:reward}
+
+% [F3 content: reward + searched verifier. Source: rex/scoring.py, rex/harness_synth.py]
+\paragraph{Graded reward.}
+The scorer (\texttt{rex/scoring.py}) decomposes credit so that ``service is back'' is
+necessary but not sufficient:
+\begin{equation}
+r = 0.30\,d + 0.25\,f + 0.45\,s - 0.60\,t,
+\label{eq:reward}
+\end{equation}
+where \(d\) is diagnosis correctness (an LLM judge over the failure \emph{mechanism}, made
+phrasing-robust), \(f\) is correct-fix credit, \(s\) is genuine resolution, and \(t\) is the
+trap indicator. The trap penalty is what makes the loudest-alert decoy costly rather than
+free, and the mechanism-level judge is the anti-reward-hacking lever. Empirically the reward
+separates ``looks resolved'' (\(0.45\)) from a clean win (\(1.0\)) with the trap at
+\(-0.60\).
+
+\paragraph{Searched safety verifier.}
+Rather than hand-writing the safety harness, we \emph{search} it. A Thompson-sampling tree
+(\texttt{rex/tree.py}, \texttt{rex/harness\_synth.py}) explores rules-as-data --- declarative
+predicates over the action and state, with \emph{no} LLM code execution --- and selects a
+compact rule set that gates unsafe actions. The objective rewards held-out gating accuracy and
+penalises rule count, yielding a small, auditable harness instead of an opaque classifier.
+
+\paragraph{Why rules-as-data.}
+Keeping the verifier declarative makes it inspectable, deterministic at eval time, and safe to
+ship: a discovered rule can be read by an SRE before it is trusted to block a production
+action.

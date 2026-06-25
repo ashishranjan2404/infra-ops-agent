@@ -1,0 +1,46 @@
+{
+  "input": "/Users/mei/rl/opensre-traj/out/trajectories.jsonl",
+  "n_input": 319,
+  "variants": {
+    "full": {
+      "out": "./_variants_real/full.jsonl",
+      "stats": {
+        "n_records": 319,
+        "total_steps": 4654,
+        "mean_steps": 14.589,
+        "assistant_steps": 2327,
+        "tool_steps": 2327,
+        "records_with_state_transition": 312,
+        "records_with_canonical_fix": 319,
+        "records_with_evidence": 319
+      }
+    },
+    "state_only": {
+      "out": "./_variants_real/state_only.jsonl",
+      "stats": {
+        "n_records": 319,
+        "total_steps": 2327,
+        "mean_steps": 7.295,
+        "assistant_steps": 0,
+        "tool_steps": 2327,
+        "records_with_state_transition": 312,
+        "records_with_canonical_fix": 0,
+        "records_with_evidence": 319
+      }
+    },
+    "action_only": {
+      "out": "./_variants_real/action_only.jsonl",
+      "stats": {
+        "n_records": 319,
+        "total_steps": 2327,
+        "mean_steps": 7.295,
+        "assistant_steps": 2327,
+        "tool_steps": 0,
+        "records_with_state_transition": 0,
+        "records_with_canonical_fix": 319,
+        "records_with_evidence": 0
+      }
+    }
+  },
+  "blocker": "Model train/eval per variant is blocked: real FIREBALL D&D corpus and fireball-trained slug are not in the repo (see P7_fireball_status.md, E2). Data-transform layer is complete and tested."
+}

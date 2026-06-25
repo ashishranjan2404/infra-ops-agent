@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SRE-Degrees — A Verifiable RL Environment for Safe Incident Response (Poster)</title>
+<style>
+  :root{
+    --ink:#10202b; --muted:#46606e; --line:#cfd9de;
+    --bg:#f4f7f8; --card:#ffffff; --accent:#0b6e8c; --accent2:#0f8a6a;
+    --warn:#9a4b00; --warnbg:#fff4e6; --hero:#073b4c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#dfe6e9;
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  /* A0 portrait: 841mm x 1189mm */
+  .poster{
+    width:841mm; min-height:1189mm; margin:10mm auto; background:var(--bg);
+    padding:22mm 20mm; box-shadow:0 4mm 16mm rgba(0,0,0,.25);
+  }
+  header.masthead{
+    border-bottom:3mm solid var(--accent); padding-bottom:8mm; margin-bottom:10mm;
+  }
+  header.masthead h1{font-size:34pt; line-height:1.08; margin:0 0 4mm 0; color:var(--hero);}
+  header.masthead .sub{font-size:16pt; color:var(--accent); font-weight:600; margin:0 0 6mm 0;}
+  header.masthead .thesis{
+    font-size:14pt; font-style:italic; color:var(--muted); margin:0;
+    border-left:2mm solid var(--accent2); padding-left:6mm;
+  }
+  .cols{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10mm; align-items:start;}
+  section.card{
+    background:var(--card); border:0.5mm solid var(--line); border-radius:3mm;
+    padding:8mm; margin-bottom:10mm; break-inside:avoid;
+  }
+  section.card h2{
+    font-size:17pt; margin:0 0 5mm 0; color:#fff; background:var(--accent);
+    padding:4mm 6mm; border-radius:2mm; letter-spacing:.2pt;
+  }
+  section.hero h2{background:var(--hero);}
+  section.rigor h2{background:var(--warn);}
+  section.card p,section.card li{font-size:12pt; line-height:1.45; color:var(--ink);}
+  section.card ul{margin:0 0 0 5mm; padding-left:4mm;}
+  .bignum{font-size:30pt; font-weight:800; color:var(--accent2); line-height:1;}
+  .label{font-size:11pt; color:var(--muted);}
+  code,pre{font-family:"SF Mono",Consolas,Menlo,monospace;}
+  pre{
+    background:#0e2530; color:#e8f3f6; padding:6mm; border-radius:2mm;
+    font-size:11pt; overflow-x:auto; line-height:1.4;
+  }
+  code{background:#e7eef1; padding:0.3mm 1.5mm; border-radius:1mm; font-size:11pt;}
+  table{width:100%; border-collapse:collapse; font-size:11pt; margin-top:3mm;}
+  th,td{border:0.4mm solid var(--line); padding:2.5mm 3mm; text-align:left;}
+  th{background:var(--hero); color:#fff;}
+  tr:nth-child(even) td{background:#f0f5f6;}
+  .lift{color:var(--accent2); font-weight:700;}
+  .warnbox{background:var(--warnbg); border:0.5mm solid #e0b487; border-radius:2mm; padding:5mm; margin-top:3mm;}
+  .warnbox b{color:var(--warn);}
+  footer.foot{margin-top:8mm; border-top:0.6mm solid var(--line); padding-top:5mm;
+    font-size:10pt; color:var(--muted);}
+  .src{font-size:9.5pt; color:#7d929c;}
+  @page{ size:A0 portrait; margin:0; }
+  @media print{
+    body{background:#fff; margin:0;}
+    .poster{box-shadow:none; margin:0; width:auto; min-height:auto; page-break-after:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <header class="masthead">
+    <h1>SRE-Degrees: A Verifiable RL Environment for Safe Incident Response</h1>
+    <p class="sub">Frozen, swappable LLM policies &middot; a root-cause-aware reward &middot; a searched safety verifier</p>
+    <p class="thesis">A real production cascade misleads even frontier models on the first try; a reward that grades
+      <b>root cause + correct fix + trap-avoidance</b> &mdash; not just &ldquo;did it come back up?&rdquo; &mdash;
+      produces trajectory data with genuine within-group signal.</p>
+  </header>
+
+  <div class="cols">
+
+    <!-- ===== COLUMN 1 ===== -->
+    <div>
+      <section class="card">
+        <h2>Motivation</h2>
+        <p>Real outages are <b>cascades</b>: the loudest alert points at a <b>victim, not the cause</b>, and the
+          naive fix makes it worse (scale a crash-looping control plane &rarr; it herds its datastore &rarr; worse).</p>
+        <p>&ldquo;Did the metric recover?&rdquo; is reward-hackable &mdash; a model can restart/scale into a green
+          dashboard while misdiagnosing the mechanism and tripping the trap. We need an environment where
+          <b>being right about the mechanism</b> is what scores.</p>
+        <p class="src">src: ARCHITECTURE.md</p>
+      </section>
+
+      <section class="card">
+        <h2>The Cascade &mdash; worked example</h2>
+        <p>Reconstructed from real post-mortems: AWS DynamoDB DNS, Cloudflare WAF, CrowdStrike CF291,
+          Railway/GCP suspension, Azure DDoS.</p>
+        <ul>
+          <li><b>Loud alert</b> fires on the downstream <b>victim</b> service.</li>
+          <li><b>Hidden root cause</b>: an upstream config-crash / dependency failure.</li>
+          <li><b>Trap</b>: scaling/restarting the victim amplifies the cascade.</li>
+          <li><b>Correct fix</b>: address the upstream cause; if no safe fix exists, <b>escalate</b> &mdash; don&rsquo;t flail.</li>
+        </ul>
+        <p>One declarative spec drives both sim and live cluster; cascades are <i>derived</i>, never scripted.</p>
+        <p class="src">src: sim/engine.py &middot; scenarios/cidg/generated</p>
+      </section>
+
+      <section class="card hero">
+        <h2>Environment &mdash; survives ablation</h2>
+        <p>A <b>verifiable</b> incident-response environment + a <b>self-generalizing searched verifier</b>.</p>
+        <p><span class="bignum">0.0 / 0.15 / 1.0</span><br>
+          <span class="label">within-group reward spread &mdash; the property that makes the data trainable</span></p>
+        <p>The safety verifier is <b>learned, not hand-written</b>: a Thompson-tree search over rules-as-data
+          (no LLM code execution) discovers the safety harness. Trained on <b>7</b> incidents, it gates
+          <b>3 held-out</b> incidents at <b>0.90 acc vs 0.95 hand-written</b>, compressing <b>14&rarr;3</b> rules
+          with <b>zero synthesis-quality misses</b>.</p>
+        <p class="src">src: docs/headline_insights.md &middot; rex/harness_synth.py</p>
+      </section>
+    </div>
+
+    <!-- ===== COLUMN 2 ===== -->
+    <div>
+      <section class="card">
+        <h2>Method &mdash; the reward</h2>
+        <p>Anti-gaming reward (the crux):</p>
+        <pre>score = 0.30&middot;diagnosis_correct
+      + 0.25&middot;correct_fix
+      + 0.45&middot;resolved
+      &minus; 0.60&middot;trap          (clamp 0..1)</pre>
+        <p><code>resolved</code> alone is only 45% &mdash; misdiagnose or trip the trap and you score <b>0.0</b>.
+          <code>diagnosis_correct</code> is an LLM-judge on the <b>mechanism</b> (a config-crash diagnosed as
+          &ldquo;resource exhaustion&rdquo; is wrong).</p>
+        <p><b>REx loop</b>: wrap a <i>frozen</i> model &mdash; propose &rarr; harness feedback &rarr; refine,
+          behind a safety gate. No fine-tuning of the policy.</p>
+        <p class="src">src: rex/scoring.py &middot; rex/loop.py &middot; rex/frontier.py</p>
+      </section>
+
+      <section class="card">
+        <h2>Two-tier reality contract</h2>
+        <ul>
+          <li><b>Tier-A &mdash; sim</b> (<code>sim/engine.py</code>): free, deterministic, seedable; generates the
+            bulk of trajectories; <b>one-command reproducible</b>.</li>
+          <li><b>Tier-B &mdash; M-real GKE</b> (<code>mreal/</code>): real services over HTTP;
+            Prometheus/Alertmanager fire on the victim; <b>validates the mechanism</b> &mdash; faulting one node
+            propagates to a downstream victim on a real cluster.</li>
+        </ul>
+        <p>We do <b>not</b> claim Tier-A numbers equal cluster numbers beyond the pinned mechanisms.</p>
+        <p class="src">src: ARCHITECTURE.md &middot; docs/ENVIRONMENT_DESIGN.md</p>
+      </section>
+
+      <section class="card">
+        <h2>Benchmark</h2>
+        <ul>
+          <li><b>Catalog</b>: 9 CIDG generated incidents + reconstructed real-outage cascades; difficulty gradient
+            from single-leaf (alert = cause) to multi-hop (alert = victim).</li>
+          <li><b>Models</b>: 5 frozen frontier policies, 4 providers, one interface (Claude Opus 4.8 / Haiku 4.5,
+            gpt-5.5, gemini-3.1-pro, deepseek-v4-pro via the HUD gateway).</li>
+        </ul>
+        <p><b>One-shot honest band:</b> 20&ndash;50% reward with real variance, cleanly separating weak from strong:
+          <b>haiku 0.27 vs opus 0.50</b> mean.</p>
+        <p class="src">src: docs/headline_insights.md &middot; agent/llm.py</p>
+      </section>
+    </div>
+
+    <!-- ===== COLUMN 3 ===== -->
+    <div>
+      <section class="card">
+        <h2>Results &mdash; frontier sweep</h2>
+        <p class="label">REx as a deployment wrapper (demo claim). Same 5 incidents, same reward,
+          baseline = one zero-shot answer.</p>
+        <table>
+          <tr><th>Model</th><th>Base</th><th>REx</th><th>Lift</th></tr>
+          <tr><td>claude-haiku-4-5</td><td>0.63</td><td>0.86</td><td class="lift">+0.23</td></tr>
+          <tr><td>gpt-5.5</td><td>0.63</td><td>0.86</td><td class="lift">+0.23</td></tr>
+          <tr><td>gemini-3.1-pro</td><td>0.75</td><td>0.86</td><td class="lift">+0.11</td></tr>
+          <tr><td>deepseek-v4-pro</td><td>0.81</td><td>0.86</td><td class="lift">+0.05</td></tr>
+          <tr><td>claude-opus-4-8</td><td>0.81</td><td>0.86</td><td class="lift">+0.05</td></tr>
+        </table>
+        <p>All five frozen models converge to <b>0.86</b> = the <b>designed safe ceiling</b> = (4&times;1.0 + 0.30)/5:
+          solve the 4 solvable incidents and <b>correctly escalate</b> the 1 unsolvable one. Small + REx
+          (haiku 0.86) &gt; opus zero-shot (0.81).</p>
+        <p class="src">src: ARCHITECTURE.md</p>
+      </section>
+
+      <section class="card rigor">
+        <h2>&#9888; Rigor check &mdash; ablation</h2>
+        <div class="warnbox">
+          <p>A fair-control test shows the headline REx lift was mostly <b>oracle-feedback leakage</b>.
+            Strip the root-cause hint and:</p>
+          <ul>
+            <li>REx <b>0.25</b> &asymp; zero-shot <b>0.24</b></li>
+            <li>best-of-N <b>0.24</b> &middot; outcome-only retry <b>0.23</b> &rarr; ~0 gain</li>
+          </ul>
+          <p>The defensible contributions are the <b>verifiable environment</b> and the <b>searched verifier</b>,
+            not the refinement loop. We report this at <b>equal weight</b>.</p>
+        </div>
+        <p class="src">src: docs/headline_insights.md &middot; rex/runs/ablation.json</p>
+      </section>
+
+      <section class="card">
+        <h2>Takeaways</h2>
+        <ul>
+          <li>You can improve models at anything you can <b>verify</b> &mdash; and here the verifier itself is
+            searched and <b>generalizes</b> to held-out incidents (0.90 vs 0.95).</li>
+          <li>A root-cause-aware reward + trap penalty gives <b>within-group signal</b> &ldquo;did it come back up?&rdquo; cannot.</li>
+          <li>As a wrapper, REx converges 5 frozen models to the safe ceiling and <b>escalates instead of flailing</b>.</li>
+          <li>Honest ablation moved the rigor to the <b>env + verifier</b>; reported at equal weight.</li>
+          <li>Two-tier contract: sim numbers reproduce; the GKE tier validates the <b>mechanism</b>, not magnitudes.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Reproduce</h2>
+        <pre>HUD_API_KEY=&hellip; python3 -m rex.frontier
+python3 -m rex.harness_synth
+# ablation: rex/runs/ablation.json
+# design:   docs/ENVIRONMENT_DESIGN.md</pre>
+      </section>
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    Poster source: <code>experiments/ralph_outputs/F13/artifacts/poster.md</code>.
+    All numbers grounded in <code>ARCHITECTURE.md</code> and <code>docs/headline_insights.md</code>.
+    Final raster (300&nbsp;dpi) / CMYK conversion is a downstream design step.
+  </footer>
+
+</div>
+</body>
+</html>

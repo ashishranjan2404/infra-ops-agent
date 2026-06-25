@@ -1,0 +1,420 @@
+{
+  "schema": "sre-degrees.promotion-manifest/v1",
+  "generated_at": "2026-06-25T08:17:19+00:00",
+  "gate": {
+    "promote_p1": 0.8,
+    "promote_ci_lo": 0.7,
+    "min_lift_over_baseline": 0.2
+  },
+  "families": [
+    "simple",
+    "cascade",
+    "novel"
+  ],
+  "sources": {
+    "A1": "ralph_outputs/A1/artifacts/summary_table.json (glm-5p2, 630 episodes)",
+    "A2": "ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json (750 episodes)"
+  },
+  "candidates": [
+    {
+      "id": "glm-5p2/zero_shot",
+      "model": "glm-5p2",
+      "condition": "zero_shot",
+      "source": "A1",
+      "n": 126,
+      "passes": 29,
+      "pass_at_1": 0.2302,
+      "ci_lo": 0.1653,
+      "ci_hi": 0.311,
+      "pass_at_2": 0.4088,
+      "pass_at_5": 0.7361,
+      "lift_over_baseline": 0.0,
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "pass_at_1": 0.5556,
+          "ci_lo": 0.3958,
+          "ci_hi": 0.7046
+        },
+        "cascade": {
+          "n": 60,
+          "pass_at_1": 0.0667,
+          "ci_lo": 0.0262,
+          "ci_hi": 0.1593
+        },
+        "novel": {
+          "n": 30,
+          "pass_at_1": 0.1667,
+          "ci_lo": 0.0734,
+          "ci_hi": 0.3356
+        }
+      },
+      "decision": "REJECT",
+      "reasons": [
+        "pass@1 0.23 < 0.80",
+        "CI_lo 0.17 < 0.70",
+        "lift 0.00 < 0.20"
+      ]
+    },
+    {
+      "id": "glm-5p2/best_of_n",
+      "model": "glm-5p2",
+      "condition": "best_of_n",
+      "source": "A1",
+      "n": 126,
+      "passes": 43,
+      "pass_at_1": 0.3413,
+      "ci_lo": 0.2643,
+      "ci_hi": 0.4277,
+      "pass_at_2": 0.5679,
+      "pass_at_5": 0.8811,
+      "lift_over_baseline": 0.1111,
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "pass_at_1": 0.75,
+          "ci_lo": 0.5893,
+          "ci_hi": 0.8625
+        },
+        "cascade": {
+          "n": 60,
+          "pass_at_1": 0.15,
+          "ci_lo": 0.081,
+          "ci_hi": 0.2611
+        },
+        "novel": {
+          "n": 30,
+          "pass_at_1": 0.2333,
+          "ci_lo": 0.1179,
+          "ci_hi": 0.4093
+        }
+      },
+      "decision": "REJECT",
+      "reasons": [
+        "pass@1 0.34 < 0.80",
+        "CI_lo 0.26 < 0.70",
+        "lift 0.11 < 0.20"
+      ]
+    },
+    {
+      "id": "glm-5p2/retry_realistic",
+      "model": "glm-5p2",
+      "condition": "retry_realistic",
+      "source": "A1",
+      "n": 126,
+      "passes": 44,
+      "pass_at_1": 0.3492,
+      "ci_lo": 0.2715,
+      "ci_hi": 0.4358,
+      "pass_at_2": 0.5783,
+      "pass_at_5": 0.8883,
+      "lift_over_baseline": 0.119,
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "pass_at_1": 0.6944,
+          "ci_lo": 0.5314,
+          "ci_hi": 0.82
+        },
+        "cascade": {
+          "n": 60,
+          "pass_at_1": 0.2,
+          "ci_lo": 0.1183,
+          "ci_hi": 0.3178
+        },
+        "novel": {
+          "n": 30,
+          "pass_at_1": 0.2333,
+          "ci_lo": 0.1179,
+          "ci_hi": 0.4093
+        }
+      },
+      "decision": "REJECT",
+      "reasons": [
+        "pass@1 0.35 < 0.80",
+        "CI_lo 0.27 < 0.70",
+        "lift 0.12 < 0.20"
+      ]
+    },
+    {
+      "id": "glm-5p2/rex",
+      "model": "glm-5p2",
+      "condition": "rex",
+      "source": "A1",
+      "n": 126,
+      "passes": 113,
+      "pass_at_1": 0.8968,
+      "ci_lo": 0.8315,
+      "ci_hi": 0.9387,
+      "pass_at_2": 0.9901,
+      "pass_at_5": 1.0,
+      "lift_over_baseline": 0.6666,
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "pass_at_1": 0.8889,
+          "ci_lo": 0.7468,
+          "ci_hi": 0.9559
+        },
+        "cascade": {
+          "n": 60,
+          "pass_at_1": 0.85,
+          "ci_lo": 0.7389,
+          "ci_hi": 0.919
+        },
+        "novel": {
+          "n": 30,
+          "pass_at_1": 1.0,
+          "ci_lo": 0.8865,
+          "ci_hi": 1.0
+        }
+      },
+      "decision": "PROMOTE",
+      "reasons": [
+        "pass@1 0.90 >= 0.80",
+        "CI_lo 0.83 >= 0.70",
+        "lift 0.67 >= 0.20"
+      ]
+    },
+    {
+      "id": "glm-5p2/rex_no_oracle",
+      "model": "glm-5p2",
+      "condition": "rex_no_oracle",
+      "source": "A1",
+      "n": 126,
+      "passes": 42,
+      "pass_at_1": 0.3333,
+      "ci_lo": 0.257,
+      "ci_hi": 0.4195,
+      "pass_at_2": 0.5573,
+      "pass_at_5": 0.8736,
+      "lift_over_baseline": 0.1031,
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "pass_at_1": 0.7222,
+          "ci_lo": 0.5601,
+          "ci_hi": 0.8415
+        },
+        "cascade": {
+          "n": 60,
+          "pass_at_1": 0.15,
+          "ci_lo": 0.081,
+          "ci_hi": 0.2611
+        },
+        "novel": {
+          "n": 30,
+          "pass_at_1": 0.2333,
+          "ci_lo": 0.1179,
+          "ci_hi": 0.4093
+        }
+      },
+      "decision": "REJECT",
+      "reasons": [
+        "pass@1 0.33 < 0.80",
+        "CI_lo 0.26 < 0.70",
+        "lift 0.10 < 0.20"
+      ]
+    },
+    {
+      "id": "deepseek-v4-pro/zero_shot",
+      "model": "deepseek-v4-pro",
+      "condition": "zero_shot",
+      "source": "A2",
+      "n": 150,
+      "passes": 36,
+      "pass_at_1": 0.24,
+      "ci_lo": 0.1787,
+      "ci_hi": 0.3143,
+      "pass_at_2": 0.4236,
+      "pass_at_5": 0.7519,
+      "lift_over_baseline": 0.0,
+      "by_family": {
+        "simple": {
+          "n": 50,
+          "pass_at_1": 0.62,
+          "ci_lo": 0.4815,
+          "ci_hi": 0.7414
+        },
+        "cascade": {
+          "n": 50,
+          "pass_at_1": 0.02,
+          "ci_lo": 0.0035,
+          "ci_hi": 0.105
+        },
+        "novel": {
+          "n": 50,
+          "pass_at_1": 0.08,
+          "ci_lo": 0.0315,
+          "ci_hi": 0.1884
+        }
+      },
+      "decision": "REJECT",
+      "reasons": [
+        "pass@1 0.24 < 0.80",
+        "CI_lo 0.18 < 0.70",
+        "lift 0.00 < 0.20"
+      ]
+    },
+    {
+      "id": "deepseek-v4-pro/best_of_n",
+      "model": "deepseek-v4-pro",
+      "condition": "best_of_n",
+      "source": "A2",
+      "n": 150,
+      "passes": 46,
+      "pass_at_1": 0.3067,
+      "ci_lo": 0.2385,
+      "ci_hi": 0.3845,
+      "pass_at_2": 0.5207,
+      "pass_at_5": 0.8446,
+      "lift_over_baseline": 0.0667,
+      "by_family": {
+        "simple": {
+          "n": 50,
+          "pass_at_1": 0.74,
+          "ci_lo": 0.6045,
+          "ci_hi": 0.8413
+        },
+        "cascade": {
+          "n": 50,
+          "pass_at_1": 0.08,
+          "ci_lo": 0.0315,
+          "ci_hi": 0.1884
+        },
+        "novel": {
+          "n": 50,
+          "pass_at_1": 0.1,
+          "ci_lo": 0.0435,
+          "ci_hi": 0.2136
+        }
+      },
+      "decision": "REJECT",
+      "reasons": [
+        "pass@1 0.31 < 0.80",
+        "CI_lo 0.24 < 0.70",
+        "lift 0.07 < 0.20"
+      ]
+    },
+    {
+      "id": "deepseek-v4-pro/retry_realistic",
+      "model": "deepseek-v4-pro",
+      "condition": "retry_realistic",
+      "source": "A2",
+      "n": 150,
+      "passes": 47,
+      "pass_at_1": 0.3133,
+      "ci_lo": 0.2445,
+      "ci_hi": 0.3914,
+      "pass_at_2": 0.5299,
+      "pass_at_5": 0.852,
+      "lift_over_baseline": 0.0733,
+      "by_family": {
+        "simple": {
+          "n": 50,
+          "pass_at_1": 0.7,
+          "ci_lo": 0.5625,
+          "ci_hi": 0.809
+        },
+        "cascade": {
+          "n": 50,
+          "pass_at_1": 0.12,
+          "ci_lo": 0.0562,
+          "ci_hi": 0.2381
+        },
+        "novel": {
+          "n": 50,
+          "pass_at_1": 0.12,
+          "ci_lo": 0.0562,
+          "ci_hi": 0.2381
+        }
+      },
+      "decision": "REJECT",
+      "reasons": [
+        "pass@1 0.31 < 0.80",
+        "CI_lo 0.24 < 0.70",
+        "lift 0.07 < 0.20"
+      ]
+    },
+    {
+      "id": "deepseek-v4-pro/rex",
+      "model": "deepseek-v4-pro",
+      "condition": "rex",
+      "source": "A2",
+      "n": 150,
+      "passes": 134,
+      "pass_at_1": 0.8933,
+      "ci_lo": 0.8338,
+      "ci_hi": 0.9333,
+      "pass_at_2": 0.9893,
+      "pass_at_5": 1.0,
+      "lift_over_baseline": 0.6533,
+      "by_family": {
+        "simple": {
+          "n": 50,
+          "pass_at_1": 1.0,
+          "ci_lo": 0.9286,
+          "ci_hi": 1.0
+        },
+        "cascade": {
+          "n": 50,
+          "pass_at_1": 0.68,
+          "ci_lo": 0.5419,
+          "ci_hi": 0.7924
+        },
+        "novel": {
+          "n": 50,
+          "pass_at_1": 1.0,
+          "ci_lo": 0.9286,
+          "ci_hi": 1.0
+        }
+      },
+      "decision": "PROMOTE",
+      "reasons": [
+        "pass@1 0.89 >= 0.80",
+        "CI_lo 0.83 >= 0.70",
+        "lift 0.65 >= 0.20"
+      ]
+    },
+    {
+      "id": "deepseek-v4-pro/rex_no_oracle",
+      "model": "deepseek-v4-pro",
+      "condition": "rex_no_oracle",
+      "source": "A2",
+      "n": 150,
+      "passes": 43,
+      "pass_at_1": 0.2867,
+      "ci_lo": 0.2203,
+      "ci_hi": 0.3637,
+      "pass_at_2": 0.4925,
+      "pass_at_5": 0.8203,
+      "lift_over_baseline": 0.0467,
+      "by_family": {
+        "simple": {
+          "n": 50,
+          "pass_at_1": 0.74,
+          "ci_lo": 0.6045,
+          "ci_hi": 0.8413
+        },
+        "cascade": {
+          "n": 50,
+          "pass_at_1": 0.02,
+          "ci_lo": 0.0035,
+          "ci_hi": 0.105
+        },
+        "novel": {
+          "n": 50,
+          "pass_at_1": 0.1,
+          "ci_lo": 0.0435,
+          "ci_hi": 0.2136
+        }
+      },
+      "decision": "REJECT",
+      "reasons": [
+        "pass@1 0.29 < 0.80",
+        "CI_lo 0.22 < 0.70",
+        "lift 0.05 < 0.20"
+      ]
+    }
+  ]
+}

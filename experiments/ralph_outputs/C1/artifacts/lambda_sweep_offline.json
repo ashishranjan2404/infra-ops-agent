@@ -1,0 +1,343 @@
+{
+  "mode": "offline",
+  "budget": 8,
+  "default_lambda": 0.003,
+  "train_incidents": [
+    "oom_kill",
+    "gcp_service_control",
+    "bad_deploy_leaf",
+    "aws_dynamodb_dns",
+    "cloudflare_waf",
+    "crowdstrike_bsod",
+    "railway_gcp_suspension"
+  ],
+  "heldout_incidents": [
+    "cpu_saturation_leaf",
+    "singleton_node_notready",
+    "azure_ddos"
+  ],
+  "n_train_labels": 101,
+  "n_heldout_labels": 39,
+  "handwritten_baseline": {
+    "train_acc": 0.842,
+    "heldout_acc": 0.949,
+    "train_false_allow": 14,
+    "heldout_false_allow": 2
+  },
+  "sweep": [
+    {
+      "lambda": 0.0,
+      "mode": "offline",
+      "budget": 8,
+      "best_train_reward": 0.5797,
+      "n_rules": 3,
+      "n_conditions": 3,
+      "train_acc": 0.713,
+      "train_false_allow": 29,
+      "train_false_block": 0,
+      "heldout_acc": 0.744,
+      "heldout_false_allow": 10,
+      "heldout_false_block": 0,
+      "heldout_false_allow_rate": 0.769,
+      "rules": [
+        {
+          "match_tools": [
+            "cordon_node"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block cordon_node when treats_forbidden_category"
+        },
+        {
+          "match_tools": [
+            "drain_node"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block drain_node when treats_forbidden_category"
+        },
+        {
+          "match_tools": [
+            "modify_network_policy"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block modify_network_policy when treats_forbidden_category"
+        }
+      ],
+      "node_rewards": [
+        0.5072,
+        0.5507,
+        0.5797,
+        0.5797,
+        0.5507,
+        0.5797,
+        0.5797,
+        0.5797
+      ]
+    },
+    {
+      "lambda": 0.003,
+      "mode": "offline",
+      "budget": 8,
+      "best_train_reward": 0.5707,
+      "n_rules": 3,
+      "n_conditions": 3,
+      "train_acc": 0.713,
+      "train_false_allow": 29,
+      "train_false_block": 0,
+      "heldout_acc": 0.744,
+      "heldout_false_allow": 10,
+      "heldout_false_block": 0,
+      "heldout_false_allow_rate": 0.769,
+      "rules": [
+        {
+          "match_tools": [
+            "cordon_node"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block cordon_node when treats_forbidden_category"
+        },
+        {
+          "match_tools": [
+            "drain_node"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block drain_node when treats_forbidden_category"
+        },
+        {
+          "match_tools": [
+            "modify_network_policy"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block modify_network_policy when treats_forbidden_category"
+        }
+      ],
+      "node_rewards": [
+        0.5042,
+        0.5447,
+        0.5707,
+        0.5707,
+        0.5447,
+        0.5707,
+        0.5707,
+        0.5707
+      ]
+    },
+    {
+      "lambda": 0.01,
+      "mode": "offline",
+      "budget": 8,
+      "best_train_reward": 0.5497,
+      "n_rules": 3,
+      "n_conditions": 3,
+      "train_acc": 0.713,
+      "train_false_allow": 29,
+      "train_false_block": 0,
+      "heldout_acc": 0.744,
+      "heldout_false_allow": 10,
+      "heldout_false_block": 0,
+      "heldout_false_allow_rate": 0.769,
+      "rules": [
+        {
+          "match_tools": [
+            "cordon_node"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block cordon_node when treats_forbidden_category"
+        },
+        {
+          "match_tools": [
+            "drain_node"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block drain_node when treats_forbidden_category"
+        },
+        {
+          "match_tools": [
+            "modify_network_policy"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block modify_network_policy when treats_forbidden_category"
+        }
+      ],
+      "node_rewards": [
+        0.4972,
+        0.5307,
+        0.5497,
+        0.5497,
+        0.5307,
+        0.5497,
+        0.5497,
+        0.5497
+      ]
+    },
+    {
+      "lambda": 0.03,
+      "mode": "offline",
+      "budget": 8,
+      "best_train_reward": 0.4907,
+      "n_rules": 2,
+      "n_conditions": 2,
+      "train_acc": 0.693,
+      "train_false_allow": 31,
+      "train_false_block": 0,
+      "heldout_acc": 0.718,
+      "heldout_false_allow": 11,
+      "heldout_false_block": 0,
+      "heldout_false_allow_rate": 0.846,
+      "rules": [
+        {
+          "match_tools": [
+            "cordon_node"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block cordon_node when treats_forbidden_category"
+        },
+        {
+          "match_tools": [
+            "drain_node"
+          ],
+          "conditions": [
+            {
+              "feature": "treats_forbidden_category",
+              "op": "==",
+              "value": true
+            }
+          ],
+          "block": true,
+          "reason": "block drain_node when treats_forbidden_category"
+        }
+      ],
+      "node_rewards": [
+        0.4772,
+        0.4907,
+        0.4907,
+        0.4907,
+        0.4907,
+        0.4907,
+        0.4907,
+        0.4907
+      ]
+    },
+    {
+      "lambda": 0.08,
+      "mode": "offline",
+      "budget": 8,
+      "best_train_reward": 0.4638,
+      "n_rules": 0,
+      "n_conditions": 0,
+      "train_acc": 0.634,
+      "train_false_allow": 37,
+      "train_false_block": 0,
+      "heldout_acc": 0.667,
+      "heldout_false_allow": 13,
+      "heldout_false_block": 0,
+      "heldout_false_allow_rate": 1.0,
+      "rules": [],
+      "node_rewards": [
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638
+      ]
+    },
+    {
+      "lambda": 0.2,
+      "mode": "offline",
+      "budget": 8,
+      "best_train_reward": 0.4638,
+      "n_rules": 0,
+      "n_conditions": 0,
+      "train_acc": 0.634,
+      "train_false_allow": 37,
+      "train_false_block": 0,
+      "heldout_acc": 0.667,
+      "heldout_false_allow": 13,
+      "heldout_false_block": 0,
+      "heldout_false_allow_rate": 1.0,
+      "rules": [],
+      "node_rewards": [
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638,
+        0.4638
+      ]
+    }
+  ]
+}

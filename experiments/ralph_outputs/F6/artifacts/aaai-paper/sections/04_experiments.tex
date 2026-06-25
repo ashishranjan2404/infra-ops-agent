@@ -1,0 +1,53 @@
+\section{Experiments}
+\label{sec:exp}
+
+% [F4 content: eval + verifier generalization. Source: docs/headline_insights.md, rex/runs/*]
+
+\paragraph{One-shot diagnosis separates models.}
+On one-shot diagnosis the environment lands in a 20--50\% reward band with real variance and
+cleanly separates weak from strong policies (Table~\ref{tab:models}). Haiku scores
+\(0.27\) mean against Opus at \(0.50\), with per-incident spread --- the within-group signal a
+trainable reward needs.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lc}
+\toprule
+Frozen policy & Mean reward (one-shot) \\
+\midrule
+Claude Haiku 4.5   & 0.27 \\
+Claude Opus 4.8    & 0.50 \\
+\bottomrule
+\end{tabular}
+\caption{One-shot diagnosis reward, root-cause-aware grader.
+Source: \texttt{rex/runs/hud\_eval\_showcase.log}.}
+\label{tab:models}
+\end{table}
+
+\paragraph{The verifier generalizes.}
+The Thompson-tree search, trained on 7 incidents, gates unsafe actions on 3 held-out incidents
+it never saw at \(0.90\) accuracy versus \(0.95\) hand-written, while compressing
+\(14 \rightarrow 3\) general rules with \emph{zero} synthesis-quality misses. The only
+held-out miss is a hazard absent from training --- the search cannot invent an unseen failure
+mode (Table~\ref{tab:verifier}).
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Verifier & Held-out acc. & \# rules \\
+\midrule
+Hand-written      & 0.95 & 14 \\
+Searched (ours)   & 0.90 & 3  \\
+\bottomrule
+\end{tabular}
+\caption{Searched verifier vs.\ hand-written on 3 held-out incidents.
+Source: \texttt{rex/runs/harness\_synth.json} (HUD job abf124e2).}
+\label{tab:verifier}
+\end{table}
+
+\paragraph{Open-model training.}
+GRPO/RFT on Qwen3-8B and Qwen3-30B via the HUD Tinker provider is kicked off on the env's
+graded reward; the first runs are flat on the easy tier (\(\sim\!0.5\), near ceiling) and a
+longer run on the harder cascades (headroom \(\sim\!0.35\)) is underway
+(\texttt{opensre-traj/train\_rft.py}).

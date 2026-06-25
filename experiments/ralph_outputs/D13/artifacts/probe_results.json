@@ -1,0 +1,444 @@
+{
+  "summary": {
+    "scenarios_probed": 42,
+    "attacks_per_scenario": 7,
+    "total_diagnosis_probes": 294,
+    "total_fooled": 201,
+    "fool_rate_by_attack": {
+      "gold_plus_all_herrings": {
+        "fooled": 39,
+        "total": 42,
+        "rate": 0.929
+      },
+      "homoglyph_herring_evasion": {
+        "fooled": 36,
+        "total": 42,
+        "rate": 0.857
+      },
+      "negated_gold": {
+        "fooled": 42,
+        "total": 42,
+        "rate": 1.0
+      },
+      "single_gold_token": {
+        "fooled": 42,
+        "total": 42,
+        "rate": 1.0
+      },
+      "verbatim_gold_echo": {
+        "fooled": 0,
+        "total": 42,
+        "rate": 0.0
+      },
+      "whitespace_only": {
+        "fooled": 0,
+        "total": 42,
+        "rate": 0.0
+      },
+      "wrong_component_right_mechanism": {
+        "fooled": 42,
+        "total": 42,
+        "rate": 1.0
+      }
+    },
+    "max_hedge_with_correct_fix_score": 0.55,
+    "scenarios_where_hedge_scores_diagnosis_credit": 38
+  },
+  "fooled_examples": [
+    {
+      "scenario": "oom_kill",
+      "attack": "gold_plus_all_herrings",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 0.619,
+      "judge_fooled": true,
+      "stated_excerpt": "a per-process memory leak on 'image-resizer': its RSS climbs past the container memory lim\u2026"
+    },
+    {
+      "scenario": "oom_kill",
+      "attack": "single_gold_token",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the issue is related to climb somehow, unclear"
+    },
+    {
+      "scenario": "oom_kill",
+      "attack": "negated_gold",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "this is definitely NOT a per-process memory leak on 'image-resizer': its RSS climbs past t\u2026"
+    },
+    {
+      "scenario": "oom_kill",
+      "attack": "wrong_component_right_mechanism",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the unrelated-bystander-service exhibits climb container kernel kill leak limit memori oom\u2026"
+    },
+    {
+      "scenario": "oom_kill",
+      "attack": "homoglyph_herring_evasion",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "\u0430 p\u0435r-pr\u043ec\u0435ss m\u0435m\u043ery l\u0435\u0430k \u043en 'im\u0430g\u0435-r\u0435siz\u0435r': its RSS climbs p\u0430st th\u0435 c\u043ent\u0430in\u0435r m\u0435m\u043ery lim\u2026"
+    },
+    {
+      "scenario": "gcp_service_control",
+      "attack": "single_gold_token",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the issue is related to 503s somehow, unclear"
+    },
+    {
+      "scenario": "gcp_service_control",
+      "attack": "negated_gold",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "this is definitely NOT the 'service-control' control plane is crash-looping from a bad/bla\u2026"
+    },
+    {
+      "scenario": "gcp_service_control",
+      "attack": "wrong_component_right_mechanism",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the unrelated-bystander-service exhibits 503s blank config crash downstream failur loop nu\u2026"
+    },
+    {
+      "scenario": "gcp_service_control",
+      "attack": "homoglyph_herring_evasion",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "th\u0435 's\u0435rvic\u0435-c\u043entr\u043el' c\u043entr\u043el pl\u0430n\u0435 is cr\u0430sh-l\u043e\u043eping fr\u043em \u0430 b\u0430d/bl\u0430nk qu\u043et\u0430-p\u043elicy c\u043enfig \u2026"
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "attack": "single_gold_token",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the issue is related to capacity somehow, unclear"
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "attack": "negated_gold",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "this is definitely NOT 'thumbnailer' is CPU-starved (cpu_starve): its CPU is saturated so \u2026"
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "attack": "wrong_component_right_mechanism",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the unrelated-bystander-service exhibits capacity climb cpu latency saturat starv thumbnai\u2026"
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "attack": "homoglyph_herring_evasion",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 0.6667,
+      "judge_fooled": true,
+      "stated_excerpt": "'thumbn\u0430il\u0435r' is CPU-st\u0430rv\u0435d (cpu_st\u0430rv\u0435): its CPU is s\u0430tur\u0430t\u0435d s\u043e l\u0430t\u0435ncy climbs; it n\u0435\u0435d\u2026"
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "attack": "gold_plus_all_herrings",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 0.6842,
+      "judge_fooled": true,
+      "stated_excerpt": "'checkout-api' is failing due to a bad deployment (a bad revision): the error rate spiked \u2026"
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "attack": "single_gold_token",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the issue is related to after somehow, unclear"
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "attack": "negated_gold",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "this is definitely NOT 'checkout-api' is failing due to a bad deployment (a bad revision):\u2026"
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "attack": "wrong_component_right_mechanism",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the unrelated-bystander-service exhibits after api bad checkout deployment due error fail \u2026"
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "attack": "homoglyph_herring_evasion",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "'ch\u0435ck\u043eut-\u0430pi' is f\u0430iling du\u0435 t\u043e \u0430 b\u0430d d\u0435pl\u043eym\u0435nt (\u0430 b\u0430d r\u0435visi\u043en): th\u0435 \u0435rr\u043er r\u0430t\u0435 spik\u0435d \u2026"
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "attack": "gold_plus_all_herrings",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 0.6579,
+      "judge_fooled": true,
+      "stated_excerpt": "a DNS Planner/Enactor race published an empty DNS record for the regional DynamoDB endpoin\u2026"
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "attack": "single_gold_token",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the issue is related to 5xx somehow, unclear"
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "attack": "negated_gold",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "this is definitely NOT a DNS Planner/Enactor race published an empty DNS record for the re\u2026"
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "attack": "wrong_component_right_mechanism",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the unrelated-bystander-service exhibits 5xx aws backlog becam control depend dns downstre\u2026"
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "attack": "homoglyph_herring_evasion",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "\u0430 DNS Pl\u0430nn\u0435r/En\u0430ct\u043er r\u0430c\u0435 publish\u0435d \u0430n \u0435mpty DNS r\u0435c\u043erd f\u043er th\u0435 r\u0435gi\u043en\u0430l Dyn\u0430m\u043eDB \u0435ndp\u043ein\u2026"
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "attack": "gold_plus_all_herrings",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 0.6786,
+      "judge_fooled": true,
+      "stated_excerpt": "a WAF security-rule change activated a latent broken code path in 'edge-waf', crashing edg\u2026"
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "attack": "single_gold_token",
+      "judge_correct": true,
+      "human_oracle": false,
+      "mechanism_score": 1.0,
+      "judge_fooled": true,
+      "stated_excerpt": "the issue is related to activat somehow, unclear"
+    }
+  ],
+  "score_probe": [
+    {
+      "scenario": "oom_kill",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "gcp_service_control",
+      "hedge_with_correct_fix_score": 0.25
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "hedge_with_correct_fix_score": 0.25
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "crowdstrike_bsod",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "railway_gcp_suspension",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "azure_ddos",
+      "hedge_with_correct_fix_score": 0.0
+    },
+    {
+      "scenario": "singleton_node_notready",
+      "hedge_with_correct_fix_score": 0.25
+    },
+    {
+      "scenario": "redis_cache_flush",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "billing_disk_fill",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "auth_cert_expiry",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "checkout_bad_rollout",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "search_cpu_starve",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "ingest_fd_exhaust",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "media_oom_leak",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "payments_dep_revoked",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "circleci_kubeproxy_iptables",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "datadog_systemd_cilium",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "incidentio_anetd_cpu",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "slack_tgw_fd_exhaustion",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "slack_consul_cache_db",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "github_network_partition",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "github_proxysql_fd_limit",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "github_mysql_semaphore_rename",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "cloudflare_zonemd_stale_cache",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "cloudflare_byzantine_switch",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "cloudflare_bgp_reorder",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "github_dns_zone_corruption",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "launchdarkly_cold_cache",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "aws_kinesis_cell_manager",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "facebook_bgp_backbone",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "cloudflare_leap_second",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "knight_capital_conflict",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "azure_leapyear_cert",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "github_zk_splitbrain",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "firefox_addon_cert",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "cloudflare_waf_regex",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "gke_ip_exhaustion",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "kafka_poison_pill",
+      "hedge_with_correct_fix_score": 0.55
+    },
+    {
+      "scenario": "conntrack_exhaustion",
+      "hedge_with_correct_fix_score": 0.55
+    }
+  ]
+}

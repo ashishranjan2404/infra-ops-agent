@@ -1,0 +1,69 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SRE-Degrees / opensre-REx --- AAAI-2026 camera-ready skeleton
+% Requires the official AAAI style file: aaai2026.sty (+ aaai2026.bst).
+% Compile with:  pdflatex main && bibtex main && pdflatex main && pdflatex main
+%
+% NOTE: aaai2026.sty is NOT redistributed here (AAAI license). Drop it next to
+% this file before compiling. A structural stand-in (aaai2026-stub.sty) is shipped
+% so the document parses/compiles in an environment without the official style.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+
+% --- AAAI 2026 style. Falls back to the shipped stub if the real one is absent.
+\IfFileExists{aaai2026.sty}{%
+  \usepackage{aaai2026}      % official AAAI 2026 style
+}{%
+  \usepackage{aaai2026-stub} % structural stand-in for toolchain-free parse/compile
+}
+
+\usepackage{times}             % AAAI mandates Times
+\usepackage{helvet}            % and Helvetica for sans
+\usepackage{courier}           % and Courier for mono
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{newfloat}
+\usepackage{listings}
+\frenchspacing                 % required by AAAI
+\setlength{\pdfpagewidth}{8.5in}
+\setlength{\pdfpageheight}{11in}
+
+% --- AAAI 2026 metadata commands (no-ops under the stub) ---
+\pdfinfo{
+/Title (SRE-Degrees: A Verifiable Environment and Searched Verifier for Safe Incident Remediation)
+/Author (Anonymous Submission)
+/TemplateVersion (2026.1)
+}
+
+% --- DO NOT use these AAAI-forbidden packages: enumerate, geometry, fullpage,
+%     layout, etc. The style enforces the AAAI margins.
+
+\setcounter{secnumdepth}{0}    % AAAI: no section numbers
+
+\title{SRE-Degrees: A Verifiable Environment and a Searched Verifier\\
+       for Safe Incident Remediation under Cascading Failure}
+
+\author{}                      % Anonymous for review; fill for camera-ready.
+\affiliations{Anonymous Submission}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{sections/00_abstract}
+\end{abstract}
+
+\input{sections/01_introduction}        % F1: framing + thesis
+\input{sections/02_environment}          % F2: the CIDG environment + sim
+\input{sections/03_reward_verifier}      % F3: root-cause reward + searched verifier
+\input{sections/04_experiments}          % F4: eval + verifier generalization
+\input{sections/05_ablation_limits}      % F5: honest ablation + limitations
+\input{sections/06_conclusion}
+
+\bibliographystyle{aaai2026}
+\bibliography{references}
+
+\end{document}

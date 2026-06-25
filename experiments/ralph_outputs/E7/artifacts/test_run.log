@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.7, pytest-9.0.2, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/mei/rl
+plugins: langsmith-0.8.18, anyio-4.13.0
+collecting ... collected 12 items
+
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_all_domains_registered PASSED [  8%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_adapt_produces_canonical[textworld] PASSED [ 16%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_adapt_produces_canonical[jericho] PASSED [ 25%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_adapt_produces_canonical[alfworld] PASSED [ 33%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_adapt_produces_canonical[sre] PASSED [ 41%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_step_indices_are_contiguous PASSED [ 50%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_actions_view PASSED [ 58%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_missing_gold_target_rejected PASSED [ 66%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_unknown_domain_raises PASSED [ 75%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_sre_scoring_inputs_shape PASSED [ 83%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_adapted_game_traj_scorable_by_real_sre_judge PASSED [ 91%]
+experiments/ralph_outputs/E7/artifacts/test_trajectory_adapter.py::test_distractors_flow_as_red_herrings PASSED [100%]
+
+============================== 12 passed in 0.06s ==============================

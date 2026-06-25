@@ -1,0 +1,11 @@
+meta: {id: bad-schema}
+topology:
+  nodes:
+  - {name: svc-a, kind: NOT_A_KIND}
+  edges:
+  - {from: svc-a, to: ghost, type: required}
+root_cause: {location: nowhere, kind: not_a_kind}
+fault: {chaos_kind: exec}
+slo:
+- {metric: error_rate_pct, node: svc-a, direction: sideways, threshold: 5}
+canonical_fix: {steps: []}

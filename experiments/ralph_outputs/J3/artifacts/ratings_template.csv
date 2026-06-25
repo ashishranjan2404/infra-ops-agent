@@ -1,0 +1,13 @@
+rater_id,item_id,correctness,usefulness,safety,confident_root_cause,free_text
+<your_id>,DX01,,,,,
+<your_id>,DX02,,,,,
+<your_id>,DX03,,,,,
+<your_id>,DX04,,,,,
+<your_id>,DX05,,,,,
+<your_id>,DX06,,,,,
+<your_id>,DX07,,,,,
+<your_id>,DX08,,,,,
+<your_id>,DX09,,,,,
+<your_id>,DX10,,,,,
+<your_id>,DX11,,,,,
+<your_id>,DX12,,,,,

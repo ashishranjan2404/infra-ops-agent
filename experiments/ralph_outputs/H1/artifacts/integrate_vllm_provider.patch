@@ -1,0 +1,52 @@
+# PROPOSED patch (NOT applied — H1 must not edit shared core files).
+# Adds a first-class "vllm" provider to agent/llm.py + a roster row to agent/models.py,
+# so the existing rex/eval_pass_at_k.py `--model vllm-local` works with no shim import.
+# The standalone H1/artifacts/vllm_client.py already provides the same behavior as a
+# drop-in `call`; this patch is the "merge into core" path once H1 is greenlit.
+#
+# Apply from repo root with:  git apply experiments/ralph_outputs/H1/artifacts/integrate_vllm_provider.patch
+
+--- a/agent/models.py
++++ b/agent/models.py
+@@ ROSTER add a local vLLM row
+     "grok-4.3": {
+         "provider": "gateway", "model": "grok-4.3", "anchor": "strong", "no_temperature": True,
+     },
++    # --- local vLLM (OpenAI-compatible), served by H1/artifacts/serve_vllm.sh ---
++    # Fast, no API latency/rate-limits — fixes the ablation stall. `model` is the
++    # --served-model-name passed to vllm; override host/port via VLLM_BASE_URL.
++    "vllm-local": {
++        "provider": "vllm", "model": "vllm-local", "anchor": "weak",
++    },
+ }
+
+--- a/agent/llm.py
++++ b/agent/llm.py
+@@ add a local endpoint constant
+ _GATEWAY_URL = "https://inference.beta.hud.ai/v1/chat/completions"
++_VLLM_BASE = os.environ.get("VLLM_BASE_URL", "http://127.0.0.1:8000/v1").rstrip("/")
+ _ANTHROPIC_VERSION = "2023-06-01"
+
+@@ in build_request(), before the final `raise ValueError`
++    if provider == "vllm":
++        # Local vLLM OpenAI-compatible chat. Same wire format as the gateway, but
++        # bearer is VLLM_API_KEY (vLLM accepts any token when started with --api-key).
++        headers = {
++            "Authorization": f"Bearer {os.environ.get('VLLM_API_KEY', 'local-key')}",
++            "Content-Type": "application/json",
++        }
++        messages = ([{"role": "system", "content": system}] if system else []) + \
++                   [{"role": "user", "content": prompt}]
++        payload = {"model": model, "max_tokens": max_tokens, "messages": messages,
++                   "temperature": temperature}
++        if stop:
++            payload["stop"] = stop
++        return f"{_VLLM_BASE}/chat/completions", headers, payload
++
+     raise ValueError(f"unknown provider {provider!r} for model {name!r}")
+
+@@ in _extract(), the vllm branch reuses the gateway (OpenAI) parser
+-    if provider == "gateway":
++    if provider in ("gateway", "vllm"):
+         msg = (resp.get("choices") or [{}])[0].get("message", {}) or {}
+         return msg.get("content", "") or ""

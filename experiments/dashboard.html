@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SRE-Degrees — Ralph Loop Overnight Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: #0a0e1a; color: #e0e7ef; min-height: 100vh; padding: 20px;
+  }
+  .header { text-align: center; margin-bottom: 24px; }
+  .header h1 { font-size: 22px; color: #60a5fa; font-weight: 700; }
+  .header .subtitle { font-size: 13px; color: #94a3b8; margin-top: 4px; }
+  .progress-bar { 
+    background: #1e293b; border-radius: 8px; height: 24px; margin: 16px auto;
+    max-width: 800px; overflow: hidden; position: relative;
+  }
+  .progress-fill { 
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6); height: 100%;
+    transition: width 0.5s ease; display: flex; align-items: center;
+    justify-content: center; font-size: 11px; font-weight: 700; color: white;
+  }
+  .stats { 
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+    max-width: 800px; margin: 0 auto 24px;
+  }
+  .stat-card { 
+    background: #1e293b; border-radius: 8px; padding: 12px; text-align: center;
+    border: 1px solid #334155;
+  }
+  .stat-num { font-size: 24px; font-weight: 800; }
+  .stat-label { font-size: 10px; color: #94a3b8; margin-top: 4px; text-transform: uppercase; }
+  .stat-completed .stat-num { color: #4ade80; }
+  .stat-failed .stat-num { color: #f87171; }
+  .stat-skipped .stat-num { color: #fbbf24; }
+  .stat-current .stat-num { color: #60a5fa; font-size: 16px; }
+  .stat-total .stat-num { color: #e0e7ef; }
+  .current-task { 
+    background: #1e293b; border-radius: 8px; padding: 16px; max-width: 800px;
+    margin: 0 auto 24px; border: 1px solid #334155;
+  }
+  .current-task h3 { color: #60a5fa; font-size: 14px; margin-bottom: 8px; }
+  .current-step { 
+    display: inline-block; background: #3b82f6; color: white; padding: 4px 12px;
+    border-radius: 4px; font-size: 12px; font-weight: 600;
+  }
+  .task-desc { font-size: 13px; color: #cbd5e1; margin-top: 8px; }
+  .categories { max-width: 800px; margin: 0 auto; }
+  .category { 
+    background: #1e293b; border-radius: 8px; margin-bottom: 8px;
+    border: 1px solid #334155; overflow: hidden;
+  }
+  .category-header { 
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 16px; cursor: pointer; 
+  }
+  .category-name { font-size: 14px; font-weight: 600; color: #e0e7ef; }
+  .category-progress { font-size: 12px; color: #94a3b8; }
+  .category-bar { 
+    height: 3px; background: #334155; 
+  }
+  .category-bar-fill { height: 100%; background: #4ade80; transition: width 0.3s; }
+  .tasks-list { display: none; padding: 8px 16px; }
+  .tasks-list.show { display: block; }
+  .task-item { 
+    display: flex; align-items: center; padding: 4px 0; font-size: 12px;
+  }
+  .task-status { 
+    width: 16px; height: 16px; border-radius: 50%; margin-right: 8px;
+    border: 2px solid #475569; flex-shrink: 0;
+  }
+  .task-status.completed { background: #4ade80; border-color: #4ade80; }
+  .task-status.failed { background: #f87171; border-color: #f87171; }
+  .task-status.skipped { background: #fbbf24; border-color: #fbbf24; }
+  .task-status.in_progress { background: #3b82f6; border-color: #3b82f6; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .task-id { color: #60a5fa; font-weight: 600; width: 40px; }
+  .task-text { color: #94a3b8; }
+  .log { 
+    max-width: 800px; margin: 16px auto; background: #0d1117; border-radius: 8px;
+    padding: 12px; font-family: 'SF Mono', monospace; font-size: 11px;
+    color: #94a3b8; max-height: 200px; overflow-y: auto; border: 1px solid #334155;
+  }
+  .log-entry { padding: 2px 0; }
+  .log-time { color: #475569; }
+  .footer { text-align: center; font-size: 11px; color: #475569; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SRE-Degrees — Ralph Loop Overnight</h1>
+  <div class="subtitle" id="lastUpdated">Loading...</div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+</div>
+
+<div class="stats">
+  <div class="stat-card stat-current">
+    <div class="stat-num" id="currentTask">—</div>
+    <div class="stat-label">Current Task</div>
+  </div>
+  <div class="stat-card stat-completed">
+    <div class="stat-num" id="completedCount">0</div>
+    <div class="stat-label">Completed</div>
+  </div>
+  <div class="stat-card stat-failed">
+    <div class="stat-num" id="failedCount">0</div>
+    <div class="stat-label">Failed</div>
+  </div>
+  <div class="stat-card stat-skipped">
+    <div class="stat-num" id="skippedCount">0</div>
+    <div class="stat-label">Skipped</div>
+  </div>
+  <div class="stat-card stat-total">
+    <div class="stat-num">120</div>
+    <div class="stat-label">Total Tasks</div>
+  </div>
+</div>
+
+<div class="current-task">
+  <h3>Current Activity</h3>
+  <div class="current-step" id="currentStep">—</div>
+  <div class="task-desc" id="currentDesc">Waiting to start...</div>
+</div>
+
+<div class="categories" id="categories"></div>
+
+<div class="log" id="log"></div>
+
+<div class="footer">SRE-Degrees Ralph Loop Dashboard — auto-refreshes every 5 seconds</div>
+
+<script>
+const CATEGORIES = [
+  {id: 'A', name: 'Benchmark & Data', count: 18, color: '#3b82f6'},
+  {id: 'B', name: 'Evaluation & Metrics', count: 15, color: '#8b5cf6'},
+  {id: 'C', name: 'Harness Synthesis', count: 12, color: '#06b6d4'},
+  {id: 'D', name: 'RLVR / Training', count: 14, color: '#10b981'},
+  {id: 'E', name: 'Fireball Transfer', count: 10, color: '#f59e0b'},
+  {id: 'F', name: 'Paper Writing', count: 15, color: '#ef4444'},
+  {id: 'G', name: 'Competitive Analysis', count: 8, color: '#ec4899'},
+  {id: 'H', name: 'Infrastructure', count: 10, color: '#6366f1'},
+  {id: 'I', name: 'Theory & Analysis', count: 8, color: '#14b8a6'},
+  {id: 'J', name: 'Real-World Validation', count: 10, color: '#f97316'},
+];
+
+const STEP_NAMES = {
+  1: 'Planning', 2: 'Grilling (Ralph Loop)', 3: 'Improving Plan',
+  4: 'Creating Specs', 5: 'Ouroboros Filter', 6: 'Implementing',
+  7: 'Testing', 8: 'Verifying', 9: 'Critiquing', 10: 'Feedback'
+};
+
+let logEntries = [];
+
+function renderCategories(status) {
+  const container = document.getElementById('categories');
+  const completed = status.completed || [];
+  const failed = status.failed || [];
+  const skipped = status.skipped || [];
+  const current = status.current_task;
+
+  container.innerHTML = CATEGORIES.map(cat => {
+    const tasks = [];
+    let done = 0;
+    for (let i = 1; i <= cat.count; i++) {
+      const taskId = `${cat.id}${i}`;
+      const isDone = completed.includes(taskId);
+      const isFailed = failed.includes(taskId);
+      const isSkipped = skipped.includes(taskId);
+      const isCurrent = current === taskId;
+      if (isDone || isFailed || isSkipped) done++;
+      let statusClass = '';
+      if (isDone) statusClass = 'completed';
+      else if (isFailed) statusClass = 'failed';
+      else if (isSkipped) statusClass = 'skipped';
+      else if (isCurrent) statusClass = 'in_progress';
+      tasks.push(`<div class="task-item"><div class="task-status ${statusClass}"></div><div class="task-id">${taskId}</div></div>`);
+    }
+    const pct = (done / cat.count * 100).toFixed(0);
+    return `
+      <div class="category">
+        <div class="category-header" onclick="this.nextElementSibling.nextElementSibling.classList.toggle('show')">
+          <div class="category-name" style="color: ${cat.color}">${cat.id}. ${cat.name}</div>
+          <div class="category-progress">${done}/${cat.count}</div>
+        </div>
+        <div class="category-bar"><div class="category-bar-fill" style="width: ${pct}%; background: ${cat.color}"></div></div>
+        <div class="tasks-list">${tasks.join('')}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function refresh() {
+  try {
+    const resp = await fetch('ralph_status.json?t=' + Date.now());
+    const status = await resp.json();
+    
+    const total = 120;
+    const done = (status.completed || []).length;
+    const failed = (status.failed || []).length;
+    const skipped = (status.skipped || []).length;
+    const pct = ((done + failed + skipped) / total * 100).toFixed(1);
+    
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressFill').textContent = pct + '%';
+    document.getElementById('currentTask').textContent = status.current_task || '—';
+    document.getElementById('completedCount').textContent = done;
+    document.getElementById('failedCount').textContent = failed;
+    document.getElementById('skippedCount').textContent = skipped;
+    document.getElementById('currentStep').textContent = 
+      status.current_step ? `Step ${status.current_step}: ${STEP_NAMES[status.current_step] || ''}` : '—';
+    document.getElementById('currentDesc').textContent = status.current_desc || 'Processing...';
+    document.getElementById('lastUpdated').textContent = 
+      'Last updated: ' + (status.last_updated || '—') + ' | Started: ' + (status.started_at || '—');
+    
+    renderCategories(status);
+    
+    if (status.current_task && status.current_step) {
+      const entry = `[${new Date().toLocaleTimeString()}] ${status.current_task} — Step ${status.current_step}`;
+      if (logEntries[logEntries.length - 1] !== entry) {
+        logEntries.push(entry);
+        if (logEntries.length > 50) logEntries.shift();
+        document.getElementById('log').innerHTML = 
+          logEntries.map(e => `<div class="log-entry">${e}</div>`).join('');
+        document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight;
+      }
+    }
+  } catch (e) {
+    document.getElementById('currentDesc').textContent = 'Waiting for ralph_status.json...';
+  }
+}
+
+refresh();
+setInterval(refresh, 5000);
+</script>
+
+</body>
+</html>

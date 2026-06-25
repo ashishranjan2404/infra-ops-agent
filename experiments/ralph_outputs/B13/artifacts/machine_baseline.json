@@ -1,0 +1,21 @@
+{
+  "n_episodes": 126,
+  "judge1_vs_judge1": {
+    "description": "deterministic_judge re-run on identical inputs (idempotence check)",
+    "cohen_kappa": 1.0,
+    "percent_agreement": 1.0
+  },
+  "judge1_vs_judge2": {
+    "description": "deterministic_judge vs mechanism_score>=0.5 (two different graders)",
+    "cohen_kappa": 0.917,
+    "percent_agreement": 0.9603
+  },
+  "label_distribution_judge1": {
+    "CORRECT": 47,
+    "WRONG": 79
+  },
+  "label_distribution_judge2": {
+    "CORRECT": 52,
+    "WRONG": 74
+  }
+}

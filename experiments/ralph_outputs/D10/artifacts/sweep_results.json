@@ -1,0 +1,3438 @@
+{
+  "default_weights": {
+    "W_ROOT": 0.3,
+    "W_FIX": 0.25,
+    "W_RESOLVED": 0.45,
+    "TRAP_PENALTY": 0.6
+  },
+  "n_scenarios": 42,
+  "n_rollouts": 292,
+  "sweep": [
+    {
+      "weighting": "default",
+      "weights": {
+        "W_ROOT": 0.3,
+        "W_FIX": 0.25,
+        "W_RESOLVED": 0.45,
+        "TRAP_PENALTY": 0.6
+      },
+      "mean_composite": 0.3186,
+      "composite_spread": 1.0,
+      "mean_kendall_tau_vs_default": 0.8317,
+      "argmax_flip_rate": 0.0,
+      "argmax_flips": 0,
+      "n_scenarios": 42
+    },
+    {
+      "weighting": "diagnosis_heavy",
+      "weights": {
+        "W_ROOT": 0.6,
+        "W_FIX": 0.2,
+        "W_RESOLVED": 0.2,
+        "TRAP_PENALTY": 0.6
+      },
+      "mean_composite": 0.4051,
+      "composite_spread": 1.0,
+      "mean_kendall_tau_vs_default": 0.766,
+      "argmax_flip_rate": 0.0,
+      "argmax_flips": 0,
+      "n_scenarios": 42
+    },
+    {
+      "weighting": "fix_heavy",
+      "weights": {
+        "W_ROOT": 0.2,
+        "W_FIX": 0.55,
+        "W_RESOLVED": 0.25,
+        "TRAP_PENALTY": 0.6
+      },
+      "mean_composite": 0.3133,
+      "composite_spread": 1.0,
+      "mean_kendall_tau_vs_default": 0.8306,
+      "argmax_flip_rate": 0.0,
+      "argmax_flips": 0,
+      "n_scenarios": 42
+    },
+    {
+      "weighting": "resolution_only",
+      "weights": {
+        "W_ROOT": 0.0,
+        "W_FIX": 0.0,
+        "W_RESOLVED": 1.0,
+        "TRAP_PENALTY": 0.6
+      },
+      "mean_composite": 0.211,
+      "composite_spread": 1.0,
+      "mean_kendall_tau_vs_default": 0.4059,
+      "argmax_flip_rate": 0.0238,
+      "argmax_flips": 1,
+      "n_scenarios": 42
+    },
+    {
+      "weighting": "equal_thirds",
+      "weights": {
+        "W_ROOT": 0.333,
+        "W_FIX": 0.333,
+        "W_RESOLVED": 0.334,
+        "TRAP_PENALTY": 0.6
+      },
+      "mean_composite": 0.3351,
+      "composite_spread": 1.0,
+      "mean_kendall_tau_vs_default": 0.8317,
+      "argmax_flip_rate": 0.0,
+      "argmax_flips": 0,
+      "n_scenarios": 42
+    },
+    {
+      "weighting": "no_trap_penalty",
+      "weights": {
+        "W_ROOT": 0.3,
+        "W_FIX": 0.25,
+        "W_RESOLVED": 0.45,
+        "TRAP_PENALTY": 0.0
+      },
+      "mean_composite": 0.3832,
+      "composite_spread": 1.0,
+      "mean_kendall_tau_vs_default": 0.7229,
+      "argmax_flip_rate": 0.0238,
+      "argmax_flips": 1,
+      "n_scenarios": 42
+    },
+    {
+      "weighting": "harsh_trap",
+      "weights": {
+        "W_ROOT": 0.3,
+        "W_FIX": 0.25,
+        "W_RESOLVED": 0.45,
+        "TRAP_PENALTY": 1.0
+      },
+      "mean_composite": 0.2799,
+      "composite_spread": 1.0,
+      "mean_kendall_tau_vs_default": 0.6707,
+      "argmax_flip_rate": 0.0,
+      "argmax_flips": 0,
+      "n_scenarios": 42
+    },
+    {
+      "weighting": "diag_then_resolve",
+      "weights": {
+        "W_ROOT": 0.5,
+        "W_FIX": 0.05,
+        "W_RESOLVED": 0.45,
+        "TRAP_PENALTY": 0.8
+      },
+      "mean_composite": 0.3432,
+      "composite_spread": 1.0,
+      "mean_kendall_tau_vs_default": 0.766,
+      "argmax_flip_rate": 0.0,
+      "argmax_flips": 0,
+      "n_scenarios": 42
+    }
+  ],
+  "example_ranking_default": {
+    "auth_cert_expiry": [
+      [
+        "correct_full",
+        1.0
+      ],
+      [
+        "fix_wrong_target",
+        0.425
+      ],
+      [
+        "fix_plus_trap",
+        0.4
+      ],
+      [
+        "good_diag_no_fix",
+        0.3
+      ],
+      [
+        "wrong_diag_no_fix",
+        0.0
+      ],
+      [
+        "empty",
+        0.0
+      ],
+      [
+        "trap_only",
+        0.0
+      ]
+    ],
+    "aws_dynamodb_dns": [
+      [
+        "correct_full",
+        1.0
+      ],
+      [
+        "fix_wrong_target",
+        0.425
+      ],
+      [
+        "fix_plus_trap",
+        0.4
+      ],
+      [
+        "good_diag_no_fix",
+        0.3
+      ],
+      [
+        "wrong_diag_no_fix",
+        0.0
+      ],
+      [
+        "empty",
+        0.0
+      ],
+      [
+        "trap_only",
+        0.0
+      ]
+    ],
+    "aws_kinesis_cell_manager": [
+      [
+        "correct_full",
+        1.0
+      ],
+      [
+        "fix_wrong_target",
+        0.425
+      ],
+      [
+        "fix_plus_trap",
+        0.4
+      ],
+      [
+        "good_diag_no_fix",
+        0.3
+      ],
+      [
+        "wrong_diag_no_fix",
+        0.0
+      ],
+      [
+        "empty",
+        0.0
+      ],
+      [
+        "trap_only",
+        0.0
+      ]
+    ]
+  },
+  "rollout_bank": [
+    {
+      "scenario": "auth_cert_expiry",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "auth_cert_expiry",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "auth_cert_expiry",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "auth_cert_expiry",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "auth_cert_expiry",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "auth_cert_expiry",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "auth_cert_expiry",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "aws_dynamodb_dns",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "aws_kinesis_cell_manager",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "aws_kinesis_cell_manager",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "aws_kinesis_cell_manager",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "aws_kinesis_cell_manager",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "aws_kinesis_cell_manager",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "aws_kinesis_cell_manager",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "aws_kinesis_cell_manager",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "azure_ddos",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "azure_ddos",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "azure_ddos",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "azure_ddos",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "azure_ddos",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "azure_ddos",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.1
+    },
+    {
+      "scenario": "azure_ddos",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "azure_leapyear_cert",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "azure_leapyear_cert",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "azure_leapyear_cert",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "azure_leapyear_cert",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "azure_leapyear_cert",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "azure_leapyear_cert",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "azure_leapyear_cert",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "bad_deploy_leaf",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "billing_disk_fill",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "billing_disk_fill",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "billing_disk_fill",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "billing_disk_fill",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "billing_disk_fill",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "billing_disk_fill",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "billing_disk_fill",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "checkout_bad_rollout",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "checkout_bad_rollout",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "checkout_bad_rollout",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "checkout_bad_rollout",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "checkout_bad_rollout",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "checkout_bad_rollout",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "checkout_bad_rollout",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "circleci_kubeproxy_iptables",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "circleci_kubeproxy_iptables",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "circleci_kubeproxy_iptables",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "circleci_kubeproxy_iptables",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "circleci_kubeproxy_iptables",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "circleci_kubeproxy_iptables",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "circleci_kubeproxy_iptables",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "cloudflare_bgp_reorder",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "cloudflare_bgp_reorder",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "cloudflare_bgp_reorder",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_bgp_reorder",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_bgp_reorder",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "cloudflare_bgp_reorder",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_bgp_reorder",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "cloudflare_byzantine_switch",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "cloudflare_byzantine_switch",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "cloudflare_byzantine_switch",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_byzantine_switch",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_byzantine_switch",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "cloudflare_byzantine_switch",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_byzantine_switch",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "cloudflare_leap_second",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "cloudflare_leap_second",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "cloudflare_leap_second",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_leap_second",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_leap_second",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "cloudflare_leap_second",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_leap_second",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.55
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_waf",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_waf_regex",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "cloudflare_waf_regex",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "cloudflare_waf_regex",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_waf_regex",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_waf_regex",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "cloudflare_waf_regex",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_waf_regex",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "cloudflare_zonemd_stale_cache",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "cloudflare_zonemd_stale_cache",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "cloudflare_zonemd_stale_cache",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_zonemd_stale_cache",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_zonemd_stale_cache",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "cloudflare_zonemd_stale_cache",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cloudflare_zonemd_stale_cache",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "conntrack_exhaustion",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "conntrack_exhaustion",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "conntrack_exhaustion",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "conntrack_exhaustion",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "conntrack_exhaustion",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "conntrack_exhaustion",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "conntrack_exhaustion",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "cpu_saturation_leaf",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "crowdstrike_bsod",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.55
+    },
+    {
+      "scenario": "crowdstrike_bsod",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "crowdstrike_bsod",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "crowdstrike_bsod",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "crowdstrike_bsod",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "crowdstrike_bsod",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "crowdstrike_bsod",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "datadog_systemd_cilium",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "datadog_systemd_cilium",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "datadog_systemd_cilium",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "datadog_systemd_cilium",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "datadog_systemd_cilium",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "datadog_systemd_cilium",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "datadog_systemd_cilium",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "facebook_bgp_backbone",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "facebook_bgp_backbone",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "facebook_bgp_backbone",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "facebook_bgp_backbone",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "facebook_bgp_backbone",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "facebook_bgp_backbone",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "facebook_bgp_backbone",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "firefox_addon_cert",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "firefox_addon_cert",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "firefox_addon_cert",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "firefox_addon_cert",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "firefox_addon_cert",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "firefox_addon_cert",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "firefox_addon_cert",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "gcp_service_control",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "gcp_service_control",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "gcp_service_control",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "gcp_service_control",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "gcp_service_control",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "gcp_service_control",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "gcp_service_control",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "github_dns_zone_corruption",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "github_dns_zone_corruption",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "github_dns_zone_corruption",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_dns_zone_corruption",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_dns_zone_corruption",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "github_dns_zone_corruption",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_dns_zone_corruption",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "github_mysql_semaphore_rename",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "github_mysql_semaphore_rename",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "github_mysql_semaphore_rename",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_mysql_semaphore_rename",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_mysql_semaphore_rename",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "github_mysql_semaphore_rename",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_mysql_semaphore_rename",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "github_network_partition",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "github_network_partition",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "github_network_partition",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_network_partition",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_network_partition",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "github_network_partition",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_network_partition",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "github_proxysql_fd_limit",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "github_proxysql_fd_limit",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "github_proxysql_fd_limit",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_proxysql_fd_limit",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_proxysql_fd_limit",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "github_proxysql_fd_limit",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_proxysql_fd_limit",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "github_zk_splitbrain",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "github_zk_splitbrain",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "github_zk_splitbrain",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_zk_splitbrain",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_zk_splitbrain",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "github_zk_splitbrain",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "github_zk_splitbrain",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "gke_ip_exhaustion",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "gke_ip_exhaustion",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "gke_ip_exhaustion",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "gke_ip_exhaustion",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "gke_ip_exhaustion",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "gke_ip_exhaustion",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "gke_ip_exhaustion",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "incidentio_anetd_cpu",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "incidentio_anetd_cpu",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "incidentio_anetd_cpu",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "incidentio_anetd_cpu",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "incidentio_anetd_cpu",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "incidentio_anetd_cpu",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "incidentio_anetd_cpu",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "ingest_fd_exhaust",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "ingest_fd_exhaust",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "ingest_fd_exhaust",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "ingest_fd_exhaust",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "ingest_fd_exhaust",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "ingest_fd_exhaust",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "ingest_fd_exhaust",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "kafka_poison_pill",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "kafka_poison_pill",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "kafka_poison_pill",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "kafka_poison_pill",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "kafka_poison_pill",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "kafka_poison_pill",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "kafka_poison_pill",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "knight_capital_conflict",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "knight_capital_conflict",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "knight_capital_conflict",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "knight_capital_conflict",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "knight_capital_conflict",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "knight_capital_conflict",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "knight_capital_conflict",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "launchdarkly_cold_cache",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "launchdarkly_cold_cache",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "launchdarkly_cold_cache",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "launchdarkly_cold_cache",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "launchdarkly_cold_cache",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "launchdarkly_cold_cache",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "launchdarkly_cold_cache",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "media_oom_leak",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "media_oom_leak",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "media_oom_leak",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "media_oom_leak",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "media_oom_leak",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "media_oom_leak",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "media_oom_leak",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "oom_kill",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "oom_kill",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "oom_kill",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "oom_kill",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "oom_kill",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "oom_kill",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "oom_kill",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "payments_dep_revoked",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "payments_dep_revoked",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "payments_dep_revoked",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "payments_dep_revoked",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "payments_dep_revoked",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "payments_dep_revoked",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "payments_dep_revoked",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "railway_gcp_suspension",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "railway_gcp_suspension",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "railway_gcp_suspension",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "railway_gcp_suspension",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "railway_gcp_suspension",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "railway_gcp_suspension",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "railway_gcp_suspension",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "redis_cache_flush",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "redis_cache_flush",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "redis_cache_flush",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "redis_cache_flush",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "redis_cache_flush",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "redis_cache_flush",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "redis_cache_flush",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "search_cpu_starve",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "search_cpu_starve",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "search_cpu_starve",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "search_cpu_starve",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "search_cpu_starve",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "search_cpu_starve",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "search_cpu_starve",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "singleton_node_notready",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "singleton_node_notready",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "singleton_node_notready",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "singleton_node_notready",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "singleton_node_notready",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "slack_consul_cache_db",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "slack_consul_cache_db",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "slack_consul_cache_db",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "slack_consul_cache_db",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "slack_consul_cache_db",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "slack_consul_cache_db",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "slack_consul_cache_db",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    },
+    {
+      "scenario": "slack_tgw_fd_exhaustion",
+      "candidate": "correct_full",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 1.0
+    },
+    {
+      "scenario": "slack_tgw_fd_exhaustion",
+      "candidate": "fix_wrong_target",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.5,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.425
+    },
+    {
+      "scenario": "slack_tgw_fd_exhaustion",
+      "candidate": "wrong_diag_no_fix",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "slack_tgw_fd_exhaustion",
+      "candidate": "empty",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "slack_tgw_fd_exhaustion",
+      "candidate": "good_diag_no_fix",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": false
+      },
+      "score_plan_default": 0.3
+    },
+    {
+      "scenario": "slack_tgw_fd_exhaustion",
+      "candidate": "trap_only",
+      "primitives": {
+        "diag_ok": false,
+        "fix": 0.0,
+        "resolved": 0.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.0
+    },
+    {
+      "scenario": "slack_tgw_fd_exhaustion",
+      "candidate": "fix_plus_trap",
+      "primitives": {
+        "diag_ok": true,
+        "fix": 1.0,
+        "resolved": 1.0,
+        "trap_hit": true
+      },
+      "score_plan_default": 0.4
+    }
+  ]
+}

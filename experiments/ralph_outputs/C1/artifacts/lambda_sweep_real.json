@@ -1,0 +1,10 @@
+{
+  "mode": "real",
+  "status": "blocked",
+  "blocker": "Anthropic API returned HTTP 400 invalid_request_error: 'Your credit balance is too low to access the Anthropic API.' (request_id req_011CcPbZYYTRetEHnoX1EyeT). The --real path of lambda_sweep.py invokes harness_synth.propose_ruleset -> agent.llm.call('claude-haiku-4-5', ...). Code path is correct; the block is account billing, not a bug. This matches the project memory note 'Anthropic out of credits'.",
+  "model_attempted": "claude-haiku-4-5-20251001",
+  "lambdas_attempted": [0.003, 0.08],
+  "budget": 4,
+  "remediation": "Add Anthropic credits OR point agent/models.py roster at the HUD gateway / a Fireworks model that has credit, then re-run: python3 lambda_sweep.py --real --budget 8 --lambdas 0.0,0.003,0.01,0.03,0.08,0.2",
+  "sweep": []
+}

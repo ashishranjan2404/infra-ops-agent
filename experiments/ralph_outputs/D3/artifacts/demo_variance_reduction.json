@@ -1,0 +1,30 @@
+{
+  "setup": {
+    "n_scenarios": 10,
+    "group_size": 6,
+    "within_scenario_std_target": 0.17,
+    "difficulties": [
+      0.2,
+      0.267,
+      0.333,
+      0.4,
+      0.467,
+      0.533,
+      0.6,
+      0.667,
+      0.733,
+      0.8
+    ]
+  },
+  "metrics": {
+    "mixed_msq": 0.074762,
+    "same_msq": 0.031423,
+    "reduction_factor": 2.379202,
+    "between_scenario_var": 0.043339,
+    "within_scenario_var": 0.031423,
+    "n_rollouts": 60,
+    "n_scenarios": 10
+  },
+  "sign_flip_rate_mixed_vs_same": 0.2833,
+  "interpretation": "Same-scenario grouping removes the between-scenario advantage variance (0.0433), shrinking the advantage second moment by 2.38x (from 0.0748 to 0.0314). 28% of rollouts had their advantage SIGN corrected \u2014 under mixed baselining their gradient pushed the wrong direction."
+}

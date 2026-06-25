@@ -1,0 +1,55 @@
+# D7 — Cascade-only "training" config (frozen-LLM / code-as-policy regime)
+#
+# In this project the policy is a FROZEN LLM driven by an in-context prompt; the
+# only knob that plays the role of "training data" is the EXEMPLAR POOL that gets
+# few-shot–injected into the proposer prompt. "Train on cascade incidents only"
+# therefore means: the exemplar pool is drawn EXCLUSIVELY from the cascade family.
+#
+# This config is consumed by artifacts/d7_train_eval.py. It is intentionally a
+# data file (no shared core code is edited).
+
+name: d7_cascade_only
+
+# Which family the exemplars (the "training set") are drawn from.
+train_family: cascade
+
+# Number of in-context exemplars injected into the proposer prompt.
+# Capped at the size of the train family; 3 keeps the prompt small + within the
+# ~15 min compute cap for a per-family eval.
+n_exemplars: 3
+
+# Held-out eval: we measure pass@1 on BOTH families to see transfer.
+#   - cascade  -> in-distribution (does cascade-only help cascade?)
+#   - simple   -> out-of-distribution (does cascade-only HURT simple?)
+eval_families: [simple, cascade]
+
+# Per family, how many distinct held-out incidents to evaluate, and how many
+# seeds (independent samples) per incident. Episodes = sum over families of
+# (n_eval_incidents * seeds). Keep this small for the compute cap.
+n_eval_incidents: 4
+seeds: 3
+
+# Leakage guard: exemplars are removed from the eval set so we never test on a
+# "training" incident. Enforced in code, declared here for the record.
+no_leakage: true
+
+# Proposer model (frozen). Override on the CLI with --model.
+model: glm-5p2
+temperature: 0.7
+max_tokens: 1400
+
+# Baseline to compare against: the SAME eval, exemplar pool = mixed (all families)
+# and = none (zero exemplars). The contrast (cascade-only vs mixed vs none) is the
+# experiment. 'none' isolates the pure frozen prior.
+baselines: [mixed, none]
+
+# Deterministic judge threshold for a binary pass (matches rex.eval_pass_at_k).
+pass_threshold: 0.8
+
+# A run is "completed" if it produces real pass@1 + Wilson CI per (config, family).
+# The HYPOTHESIS this config tests:
+#   H1 (helps cascade):  pass@1(cascade | train=cascade) >= pass@1(cascade | train=none)
+#   H2 (hurts simple):   pass@1(simple  | train=cascade) <  pass@1(simple  | train=mixed)
+# Both are reported with CIs; with the tiny default budget they are likely
+# CI-overlapping (under-powered) — the config exposes knobs to scale the budget
+# when more compute is available.

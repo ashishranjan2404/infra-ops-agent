@@ -1,0 +1,46 @@
+{
+  "input": "fixture_fireball.jsonl",
+  "n_input": 2,
+  "variants": {
+    "full": {
+      "out": "./_variants/full.jsonl",
+      "stats": {
+        "n_records": 2,
+        "total_steps": 10,
+        "mean_steps": 5,
+        "assistant_steps": 6,
+        "tool_steps": 4,
+        "records_with_state_transition": 2,
+        "records_with_canonical_fix": 2,
+        "records_with_evidence": 2
+      }
+    },
+    "state_only": {
+      "out": "./_variants/state_only.jsonl",
+      "stats": {
+        "n_records": 2,
+        "total_steps": 4,
+        "mean_steps": 2,
+        "assistant_steps": 0,
+        "tool_steps": 4,
+        "records_with_state_transition": 2,
+        "records_with_canonical_fix": 0,
+        "records_with_evidence": 2
+      }
+    },
+    "action_only": {
+      "out": "./_variants/action_only.jsonl",
+      "stats": {
+        "n_records": 2,
+        "total_steps": 6,
+        "mean_steps": 3,
+        "assistant_steps": 6,
+        "tool_steps": 0,
+        "records_with_state_transition": 0,
+        "records_with_canonical_fix": 2,
+        "records_with_evidence": 0
+      }
+    }
+  },
+  "blocker": "Model train/eval per variant is blocked: real FIREBALL D&D corpus and fireball-trained slug are not in the repo (see P7_fireball_status.md, E2). Data-transform layer is complete and tested."
+}

@@ -1,0 +1,224 @@
+{
+  "threshold": 0.8,
+  "seeds": 2,
+  "n_incidents": 10,
+  "novel_set": [
+    "azure_leapyear_cert",
+    "conntrack_exhaustion",
+    "facebook_bgp_backbone",
+    "firefox_addon_cert",
+    "gke_ip_exhaustion",
+    "kafka_poison_pill",
+    "knight_capital_conflict",
+    "auth_cert_expiry",
+    "billing_disk_fill",
+    "checkout_bad_rollout"
+  ],
+  "source": "A8 heldout_manifest.json (held_out==true)",
+  "policies": {
+    "empty": {
+      "kind": "control",
+      "status": "ok",
+      "per_incident": {
+        "azure_leapyear_cert": [
+          0.0,
+          0.0
+        ],
+        "conntrack_exhaustion": [
+          0.0,
+          0.0
+        ],
+        "facebook_bgp_backbone": [
+          0.0,
+          0.0
+        ],
+        "firefox_addon_cert": [
+          0.0,
+          0.0
+        ],
+        "gke_ip_exhaustion": [
+          0.0,
+          0.0
+        ],
+        "kafka_poison_pill": [
+          0.0,
+          0.0
+        ],
+        "knight_capital_conflict": [
+          0.0,
+          0.0
+        ],
+        "auth_cert_expiry": [
+          0.0,
+          0.0
+        ],
+        "billing_disk_fill": [
+          0.0,
+          0.0
+        ],
+        "checkout_bad_rollout": [
+          0.0,
+          0.0
+        ]
+      },
+      "error": null,
+      "summary": {
+        "n": 20,
+        "passes": 0,
+        "pass@1": 0.0,
+        "ci95": [
+          0.0,
+          0.1611
+        ],
+        "mean_reward": 0.0,
+        "reward_std": 0.0
+      }
+    },
+    "oracle": {
+      "kind": "control",
+      "status": "ok",
+      "per_incident": {
+        "azure_leapyear_cert": [
+          1.0,
+          1.0
+        ],
+        "conntrack_exhaustion": [
+          1.0,
+          1.0
+        ],
+        "facebook_bgp_backbone": [
+          1.0,
+          1.0
+        ],
+        "firefox_addon_cert": [
+          1.0,
+          1.0
+        ],
+        "gke_ip_exhaustion": [
+          1.0,
+          1.0
+        ],
+        "kafka_poison_pill": [
+          1.0,
+          1.0
+        ],
+        "knight_capital_conflict": [
+          1.0,
+          1.0
+        ],
+        "auth_cert_expiry": [
+          1.0,
+          1.0
+        ],
+        "billing_disk_fill": [
+          1.0,
+          1.0
+        ],
+        "checkout_bad_rollout": [
+          1.0,
+          1.0
+        ]
+      },
+      "error": null,
+      "summary": {
+        "n": 20,
+        "passes": 20,
+        "pass@1": 1.0,
+        "ci95": [
+          0.8389,
+          1.0
+        ],
+        "mean_reward": 1.0,
+        "reward_std": 0.0
+      }
+    },
+    "glm-5p2": {
+      "kind": "baseline",
+      "status": "ok",
+      "per_incident": {
+        "azure_leapyear_cert": [
+          0.3,
+          0.3
+        ],
+        "conntrack_exhaustion": [
+          0.3,
+          0.0
+        ],
+        "facebook_bgp_backbone": [
+          0.0,
+          0.75
+        ],
+        "firefox_addon_cert": [
+          0.0,
+          0.0
+        ],
+        "gke_ip_exhaustion": [
+          0.3,
+          0.3
+        ],
+        "kafka_poison_pill": [
+          0.3,
+          0.0
+        ],
+        "knight_capital_conflict": [
+          0.3,
+          0.3
+        ],
+        "auth_cert_expiry": [
+          1.0,
+          1.0
+        ],
+        "billing_disk_fill": [
+          0.0,
+          1.0
+        ],
+        "checkout_bad_rollout": [
+          1.0,
+          1.0
+        ]
+      },
+      "error": null,
+      "summary": {
+        "n": 20,
+        "passes": 5,
+        "pass@1": 0.25,
+        "ci95": [
+          0.1119,
+          0.4687
+        ],
+        "mean_reward": 0.4075,
+        "reward_std": 0.3848
+      }
+    },
+    "fireball": {
+      "kind": "fireball",
+      "status": "blocked",
+      "per_incident": {
+        "azure_leapyear_cert": [],
+        "conntrack_exhaustion": [],
+        "facebook_bgp_backbone": [],
+        "firefox_addon_cert": [],
+        "gke_ip_exhaustion": [],
+        "kafka_poison_pill": [],
+        "knight_capital_conflict": [],
+        "auth_cert_expiry": [],
+        "billing_disk_fill": [],
+        "checkout_bad_rollout": []
+      },
+      "error": "KeyError: 'fireball'",
+      "summary": {
+        "n": 0,
+        "pass@1": null,
+        "ci95": null,
+        "mean_reward": null,
+        "reward_std": null
+      }
+    }
+  },
+  "floor_ceiling": {
+    "empty_mean": 0.0,
+    "oracle_mean": 1.0,
+    "floor_ok": true,
+    "ceiling_ok": true
+  }
+}

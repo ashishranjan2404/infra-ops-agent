@@ -1,0 +1,350 @@
+{
+  "name": "opensre-42-incident",
+  "env_module": "hud_env_v2.py",
+  "env_template": "investigate_v2",
+  "scenario_arg": "scenario_id",
+  "count": 42,
+  "n_canonical": 34,
+  "n_variants": 8,
+  "n_real_postmortem": 19,
+  "n_synthetic": 23,
+  "corpus": "/Users/mei/rl/opensre-traj/out/trajectories.jsonl",
+  "tasks": [
+    {
+      "index": 0,
+      "scenario_id": "001-oom_kill",
+      "category": "resource_exhaustion",
+      "difficulty": 3,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 1,
+      "scenario_id": "002-cpu_saturation",
+      "category": "saturation",
+      "difficulty": 3,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 2,
+      "scenario_id": "003-disk_pressure",
+      "category": "resource_exhaustion",
+      "difficulty": 3,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 3,
+      "scenario_id": "004-crashloop",
+      "category": "unknown",
+      "difficulty": 3,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 4,
+      "scenario_id": "005-latency_spike",
+      "category": "network_fault",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 5,
+      "scenario_id": "006-dns_failure",
+      "category": "network_fault",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 6,
+      "scenario_id": "007-memory_leak",
+      "category": "resource_exhaustion",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 7,
+      "scenario_id": "008-cert_expiry",
+      "category": "config_error",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 8,
+      "scenario_id": "009-cache_stampede",
+      "category": "saturation",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 9,
+      "scenario_id": "010-upstream_5xx",
+      "category": "dependency_failure",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 10,
+      "scenario_id": "011-bad_deploy_errors",
+      "category": "bad_deploy",
+      "difficulty": 3,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 11,
+      "scenario_id": "012-db_pool_exhaustion",
+      "category": "saturation",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 12,
+      "scenario_id": "013-node_not_ready",
+      "category": "node_failure",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 13,
+      "scenario_id": "014-consumer_lag",
+      "category": "saturation",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 14,
+      "scenario_id": "015-stuck_rollout",
+      "category": "bad_deploy",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "synthetic"
+    },
+    {
+      "index": 15,
+      "scenario_id": "101-circleci_kubeproxy_iptables",
+      "category": "network_fault",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 16,
+      "scenario_id": "102-datadog_systemd_cilium",
+      "category": "config_error",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 17,
+      "scenario_id": "103-incidentio_anetd_cpu",
+      "category": "saturation",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 18,
+      "scenario_id": "104-slack_tgw_fd_exhaustion",
+      "category": "network_fault",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 19,
+      "scenario_id": "105-slack_consul_cache_db_metastable",
+      "category": "dependency_failure",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 20,
+      "scenario_id": "106-github_network_partition_orchestrator",
+      "category": "network_fault",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 21,
+      "scenario_id": "107-github_mlag_stonith_splitbrain",
+      "category": "network_fault",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 22,
+      "scenario_id": "108-github_dns_zone_corruption",
+      "category": "config_error",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 23,
+      "scenario_id": "109-github_proxysql_fd_limit",
+      "category": "config_error",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 24,
+      "scenario_id": "110-github_mysql_semaphore_rename",
+      "category": "resource_exhaustion",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 25,
+      "scenario_id": "111-github_git_failover_rollback",
+      "category": "config_error",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 26,
+      "scenario_id": "112-github_cache_ttl_read_explosion",
+      "category": "saturation",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 27,
+      "scenario_id": "113-cloudflare_1111_zonemd_stale_cache",
+      "category": "config_error",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 28,
+      "scenario_id": "114-cloudflare_byzantine_switch",
+      "category": "network_fault",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 29,
+      "scenario_id": "115-circleci_waf_manual_edit",
+      "category": "config_error",
+      "difficulty": 4,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 30,
+      "scenario_id": "116-aws_dynamodb_dns_enactor",
+      "category": "dependency_failure",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 31,
+      "scenario_id": "117-aws_kinesis_cell_manager",
+      "category": "saturation",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 32,
+      "scenario_id": "118-cloudflare_bgp_reorder_withdraw",
+      "category": "config_error",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 33,
+      "scenario_id": "119-launchdarkly_legacy_routing_cold_cache",
+      "category": "dependency_failure",
+      "difficulty": 5,
+      "kind": "canonical",
+      "origin": "real_postmortem"
+    },
+    {
+      "index": 34,
+      "scenario_id": "001-oom_kill-s019",
+      "category": "resource_exhaustion",
+      "difficulty": 3,
+      "kind": "variant",
+      "origin": "synthetic"
+    },
+    {
+      "index": 35,
+      "scenario_id": "002-cpu_saturation-s019",
+      "category": "saturation",
+      "difficulty": 3,
+      "kind": "variant",
+      "origin": "synthetic"
+    },
+    {
+      "index": 36,
+      "scenario_id": "003-disk_pressure-s019",
+      "category": "resource_exhaustion",
+      "difficulty": 3,
+      "kind": "variant",
+      "origin": "synthetic"
+    },
+    {
+      "index": 37,
+      "scenario_id": "004-crashloop-s019",
+      "category": "unknown",
+      "difficulty": 3,
+      "kind": "variant",
+      "origin": "synthetic"
+    },
+    {
+      "index": 38,
+      "scenario_id": "005-latency_spike-s019",
+      "category": "network_fault",
+      "difficulty": 4,
+      "kind": "variant",
+      "origin": "synthetic"
+    },
+    {
+      "index": 39,
+      "scenario_id": "006-dns_failure-s019",
+      "category": "network_fault",
+      "difficulty": 4,
+      "kind": "variant",
+      "origin": "synthetic"
+    },
+    {
+      "index": 40,
+      "scenario_id": "007-memory_leak-s019",
+      "category": "resource_exhaustion",
+      "difficulty": 4,
+      "kind": "variant",
+      "origin": "synthetic"
+    },
+    {
+      "index": 41,
+      "scenario_id": "008-cert_expiry-s019",
+      "category": "config_error",
+      "difficulty": 4,
+      "kind": "variant",
+      "origin": "synthetic"
+    }
+  ]
+}

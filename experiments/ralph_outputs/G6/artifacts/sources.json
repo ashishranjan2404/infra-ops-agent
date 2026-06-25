@@ -1,0 +1,10 @@
+{
+  "sources": [
+    {"id": "S1", "kind": "primary", "title": "Introducing Bits AI SRE, your AI on-call teammate", "url": "https://www.datadoghq.com/blog/bits-ai-sre/", "accessed": "2026-06-25"},
+    {"id": "S2", "kind": "primary", "title": "How we built an AI SRE agent that investigates like a team of engineers", "url": "https://www.datadoghq.com/blog/building-bits-ai-sre/", "accessed": "2026-06-25"},
+    {"id": "S3", "kind": "primary", "title": "The new Bits AI SRE: Deeper reasoning, twice as fast", "url": "https://www.datadoghq.com/blog/bits-ai-sre-deeper-reasoning/", "accessed": "2026-06-25"},
+    {"id": "S4", "kind": "primary", "title": "Datadog Launches Bits AI SRE Agent to Resolve Incidents Faster (press release)", "url": "https://www.datadoghq.com/about/latest-news/press-releases/datadog-launches-bits-ai-sre-agent-to-resolve-incidents-faster/", "accessed": "2026-06-25"},
+    {"id": "S5", "kind": "primary", "title": "Bits AI SRE — Investigate Issues (docs)", "url": "https://docs.datadoghq.com/bits_ai/bits_ai_sre/investigate_issues/", "accessed": "2026-06-25"},
+    {"id": "S6", "kind": "independent", "title": "Datadog introduces Bits AI SRE to automate alert investigation and root cause analysis", "url": "https://www.helpnetsecurity.com/2025/12/03/datadog-bits-ai-sre-agent/", "accessed": "2026-06-25"}
+  ]
+}

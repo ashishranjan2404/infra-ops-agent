@@ -1,0 +1,39 @@
+{
+  "paradigms": ["code_as_policy", "rlhf", "constitutional_ai"],
+  "axes": ["knowledge_location", "verifiability", "sample_efficiency", "safety_guarantees", "interpretability"],
+  "cells": {
+    "code_as_policy": {
+      "knowledge_location": "Explicit, version-controlled code around a frozen model: the weighted reward (rex/scoring.py), the rejection/safety gate and trust-tier registry (rex/harness.py, tools_registry.json), and the search loop (rex/tree.py, rex/loop.py). The norm IS the artifact; nothing latent in weights.",
+      "verifiability": "Ground-truth in this domain: a fix counts only if the SLO metric crosses back AND the diagnosis matches the gold mechanism AND no trap was tripped (rex/scoring.py: 0.30 diagnosis + 0.25 fix + 0.45 resolved - 0.60 trap). resolved alone caps at 0.45 (anti-reward-hacking). Caveat: this is task-conferred, not method-conferred.",
+      "sample_efficiency": "Zero preference labels, zero training (capex ~0). Cost is paid per incident at inference: the REx loop issues multiple model calls (propose -> run -> score -> refine). Opex-heavy; re-paid on every query.",
+      "safety_guarantees": "Hard, pre-execution gate: unsafe remediations are rejected before they run (autonomous/approval/blocked tiers, rex/harness.py); when no safe fix exists the agent escalates to a human (e.g. singleton_node_notready) instead of guessing. A guarantee about ACTIONS taken, not text generated.",
+      "interpretability": "High: the operative norm is git-diffable, reviewable, and reversible — read the reward weights, the safety predicate, the tool tiers; change one and roll back. Interpretability is coupled to reversibility."
+    },
+    "rlhf": {
+      "knowledge_location": "Model weights, as an opaque distillation of a LEARNED reward model trained on human pairwise preferences. You observe behavior, not the rule.",
+      "verifiability": "Learned approximation of human preference; no oracle. The reward model can be and is gamed (sycophancy, verbosity, reward hacking). A KL penalty to the reference policy limits drift but does not make the signal ground-truth.",
+      "sample_efficiency": "Large upfront cost: on the order of tens of thousands of human pairwise comparisons (varies by setup) plus reward-model training plus a PPO run. Cheap at inference (one forward pass). Capex-heavy, opex-light.",
+      "safety_guarantees": "Statistical and post-hoc: the model is less likely to misbehave but there is no hard guarantee; jailbreaks and edge cases persist because the constraint lives in soft weights.",
+      "interpretability": "Low: the operative norm is latent in weights via a learned reward proxy; debugging is by probing behavior."
+    },
+    "constitutional_ai": {
+      "knowledge_location": "Model weights, but a privileged human-readable slice of the specification — the constitution (written principles) — is explicit text. Intent is auditable even though its weight imprint is not.",
+      "verifiability": "Learned AI-preference proxy guided by principles (RLAIF), preceded by supervised self-critique-and-revise (SL-CAI). Replaces the human label with an AI label conditioned on the constitution — still a proxy, not an oracle.",
+      "sample_efficiency": "Removes most human preference labels (the AI generates comparisons) — a real win on the most expensive input — but still pays for two training stages (SL-CAI then RLAIF). Capex-medium, opex-light.",
+      "safety_guarantees": "Statistical and post-hoc like RLHF; the constraint lives in soft weights. Harmlessness is improved via AI feedback but not hard-guaranteed.",
+      "interpretability": "Mixed: the constitution is the most legible statement of intent of the three (plain-English principles), yet its imprint on weights is as opaque as RLHF's. Legible specification, opaque mechanism."
+    }
+  },
+  "repo_citations": [
+    "agent/llm.py",
+    "agent/models.py",
+    "rex/harness.py",
+    "rex/loop.py",
+    "rex/tree.py",
+    "rex/scoring.py",
+    "sim/engine.py",
+    "ARCHITECTURE.md"
+  ],
+  "not_a_scorecard": true,
+  "key_caveat": "Code-as-policy only applies where a verifier exists. RLHF and CAI exist for the verifier-free regime (tone, helpfulness, harmlessness, honesty). The axes are not a competition won 4/5 by any column; each paradigm is best in its native domain."
+}

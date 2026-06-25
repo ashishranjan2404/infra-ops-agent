@@ -1,0 +1,87 @@
+# H2 — CI pipeline for the SRE-Degrees eval suite.
+#
+# This file is the DELIVERABLE. It is intentionally kept under the task artifacts
+# directory and is NOT installed into .github/workflows/ (per the Ralph parallel-safety
+# rules: do not touch shared/.github paths). To activate, a maintainer copies it to
+# .github/workflows/eval-ci.yml.
+#
+# What it does on every PR / push to main:
+#   1. checks out the repo and sets up Python 3.13
+#   2. installs the rex runtime deps (requirements-rex.txt) + pytest
+#   3. runs the deterministic, LLM-free test suite (pytest)
+#   4. runs a small deterministic pass@k smoke (no API key, no network)
+#   5. uploads the smoke JSON report as a build artifact
+#
+# The full model pass@k sweep (rex/eval_pass_at_k.py) needs a gateway API key and is
+# deliberately NOT run here — it belongs in a gated/nightly job. CI must stay fast,
+# hermetic, and non-flaky, so it only runs the deterministic substrate checks.
+name: eval-ci
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eval-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  eval-suite:
+    name: pytest + pass@k smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # rex runtime deps (pyyaml, requests, numpy, matplotlib)
+          pip install -r requirements-rex.txt
+          pip install pytest
+
+      - name: Run test suite (deterministic, LLM-free)
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          # The judge/scoring/harness/tree tests are deterministic and need no API key.
+          # test_llm.py talks to a live gateway, so exclude it from CI.
+          pytest -q \
+            tests/test_rex_scoring.py \
+            tests/test_rex_harness.py \
+            tests/test_rex_tree.py \
+            tests/test_rex_loop.py \
+            tests/test_rex_safety.py \
+            tests/test_rex_deterministic_judge.py \
+            tests/test_rex_escalate.py \
+            tests/test_spec.py \
+            tests/test_engine.py
+
+      - name: Run pass@k smoke (deterministic gold-vs-empty)
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python experiments/ralph_outputs/H2/artifacts/passk_smoke.py \
+            --per-family 3 \
+            --out passk_smoke_report.json
+
+      - name: Upload pass@k smoke report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: passk-smoke-report
+          path: passk_smoke_report.json
+          if-no-files-found: warn

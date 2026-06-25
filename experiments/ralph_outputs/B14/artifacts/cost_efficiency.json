@@ -1,0 +1,215 @@
+{
+  "metric": "pass@1 per dollar of estimated API spend",
+  "definition": "pass@1 / (estimated USD per incident under the condition)",
+  "cost_basis": "ESTIMATED (tokens not logged); see cost_model.py for prices + call shape",
+  "output_token_utilization_assumed": 0.6,
+  "sources": [
+    "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+    "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json"
+  ],
+  "price_table": {
+    "claude-opus-4-8": {
+      "in_per_m": 5.0,
+      "out_per_m": 25.0,
+      "assumed": false,
+      "note": "Anthropic price sheet"
+    },
+    "claude-sonnet-4-6": {
+      "in_per_m": 3.0,
+      "out_per_m": 15.0,
+      "assumed": false,
+      "note": "Anthropic price sheet"
+    },
+    "claude-haiku-4-5": {
+      "in_per_m": 1.0,
+      "out_per_m": 5.0,
+      "assumed": false,
+      "note": "Anthropic price sheet"
+    },
+    "glm-5p2": {
+      "in_per_m": 0.6,
+      "out_per_m": 2.2,
+      "assumed": true,
+      "note": "ASSUMED frontier-mid (Fireworks-class)"
+    },
+    "minimax-m3": {
+      "in_per_m": 0.3,
+      "out_per_m": 1.2,
+      "assumed": true,
+      "note": "ASSUMED mid tier (Fireworks-class)"
+    },
+    "deepseek-v4-pro": {
+      "in_per_m": 0.8,
+      "out_per_m": 2.4,
+      "assumed": true,
+      "note": "ASSUMED frontier-mid (gateway)"
+    },
+    "gpt-5.5": {
+      "in_per_m": 5.0,
+      "out_per_m": 15.0,
+      "assumed": true,
+      "note": "ASSUMED frontier (gateway)"
+    },
+    "gemini-3.1-pro": {
+      "in_per_m": 2.5,
+      "out_per_m": 10.0,
+      "assumed": true,
+      "note": "ASSUMED frontier (gateway)"
+    },
+    "grok-4.3": {
+      "in_per_m": 3.0,
+      "out_per_m": 15.0,
+      "assumed": true,
+      "note": "ASSUMED frontier (gateway)"
+    }
+  },
+  "proposer_calls_per_condition": {
+    "zero_shot": 1.0,
+    "best_of_n": 4.0,
+    "retry_realistic": 2.3,
+    "rex": 4.0,
+    "rex_no_oracle": 4.0
+  },
+  "rows": [
+    {
+      "model": "glm-5p2",
+      "condition": "zero_shot",
+      "n_incidents": 42,
+      "pass@1": 0.2302,
+      "proposer_calls_per_job": 1.0,
+      "est_input_tokens_per_job": 1200,
+      "est_output_tokens_per_job": 840,
+      "price_assumed": true,
+      "usd_per_incident": 0.002568,
+      "usd_per_100_incidents": 0.2568,
+      "cost_mult_vs_zero_shot": 1.0,
+      "pass@1_per_dollar": 89.64
+    },
+    {
+      "model": "glm-5p2",
+      "condition": "best_of_n",
+      "n_incidents": 42,
+      "pass@1": 0.3413,
+      "proposer_calls_per_job": 4.0,
+      "est_input_tokens_per_job": 4800,
+      "est_output_tokens_per_job": 3360,
+      "price_assumed": true,
+      "usd_per_incident": 0.010272,
+      "usd_per_100_incidents": 1.0272,
+      "cost_mult_vs_zero_shot": 4.0,
+      "pass@1_per_dollar": 33.23
+    },
+    {
+      "model": "glm-5p2",
+      "condition": "retry_realistic",
+      "n_incidents": 42,
+      "pass@1": 0.3492,
+      "proposer_calls_per_job": 2.3,
+      "est_input_tokens_per_job": 2760,
+      "est_output_tokens_per_job": 1932,
+      "price_assumed": true,
+      "usd_per_incident": 0.005906,
+      "usd_per_100_incidents": 0.5906,
+      "cost_mult_vs_zero_shot": 2.3,
+      "pass@1_per_dollar": 59.12
+    },
+    {
+      "model": "glm-5p2",
+      "condition": "rex",
+      "n_incidents": 42,
+      "pass@1": 0.8968,
+      "proposer_calls_per_job": 4.0,
+      "est_input_tokens_per_job": 4800,
+      "est_output_tokens_per_job": 3360,
+      "price_assumed": true,
+      "usd_per_incident": 0.010272,
+      "usd_per_100_incidents": 1.0272,
+      "cost_mult_vs_zero_shot": 4.0,
+      "pass@1_per_dollar": 87.31
+    },
+    {
+      "model": "glm-5p2",
+      "condition": "rex_no_oracle",
+      "n_incidents": 42,
+      "pass@1": 0.3333,
+      "proposer_calls_per_job": 4.0,
+      "est_input_tokens_per_job": 4800,
+      "est_output_tokens_per_job": 3360,
+      "price_assumed": true,
+      "usd_per_incident": 0.010272,
+      "usd_per_100_incidents": 1.0272,
+      "cost_mult_vs_zero_shot": 4.0,
+      "pass@1_per_dollar": 32.45
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "condition": "zero_shot",
+      "n_incidents": 30,
+      "pass@1": 0.24,
+      "proposer_calls_per_job": 1.0,
+      "est_input_tokens_per_job": 1200,
+      "est_output_tokens_per_job": 840,
+      "price_assumed": true,
+      "usd_per_incident": 0.002976,
+      "usd_per_100_incidents": 0.2976,
+      "cost_mult_vs_zero_shot": 1.0,
+      "pass@1_per_dollar": 80.65
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "condition": "best_of_n",
+      "n_incidents": 30,
+      "pass@1": 0.3067,
+      "proposer_calls_per_job": 4.0,
+      "est_input_tokens_per_job": 4800,
+      "est_output_tokens_per_job": 3360,
+      "price_assumed": true,
+      "usd_per_incident": 0.011904,
+      "usd_per_100_incidents": 1.1904,
+      "cost_mult_vs_zero_shot": 4.0,
+      "pass@1_per_dollar": 25.76
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "condition": "retry_realistic",
+      "n_incidents": 30,
+      "pass@1": 0.3133,
+      "proposer_calls_per_job": 2.3,
+      "est_input_tokens_per_job": 2760,
+      "est_output_tokens_per_job": 1932,
+      "price_assumed": true,
+      "usd_per_incident": 0.006845,
+      "usd_per_100_incidents": 0.6845,
+      "cost_mult_vs_zero_shot": 2.3,
+      "pass@1_per_dollar": 45.77
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "condition": "rex",
+      "n_incidents": 30,
+      "pass@1": 0.8933,
+      "proposer_calls_per_job": 4.0,
+      "est_input_tokens_per_job": 4800,
+      "est_output_tokens_per_job": 3360,
+      "price_assumed": true,
+      "usd_per_incident": 0.011904,
+      "usd_per_100_incidents": 1.1904,
+      "cost_mult_vs_zero_shot": 4.0,
+      "pass@1_per_dollar": 75.04
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "condition": "rex_no_oracle",
+      "n_incidents": 30,
+      "pass@1": 0.2867,
+      "proposer_calls_per_job": 4.0,
+      "est_input_tokens_per_job": 4800,
+      "est_output_tokens_per_job": 3360,
+      "price_assumed": true,
+      "usd_per_incident": 0.011904,
+      "usd_per_100_incidents": 1.1904,
+      "cost_mult_vs_zero_shot": 4.0,
+      "pass@1_per_dollar": 24.08
+    }
+  ]
+}

@@ -1,0 +1,3710 @@
+{
+ "summary": {
+  "n_rows": 72,
+  "counts": {
+   "solvable": 64,
+   "unsolvable": 7,
+   "partially": 1
+  },
+  "unsolvable": [
+   "deepseek-v4-pro:azure_ddos",
+   "deepseek-v4-pro:cloudflare_waf",
+   "deepseek-v4-pro:crowdstrike_bsod",
+   "glm-5p2:azure_ddos",
+   "glm-5p2:cloudflare_waf",
+   "glm-5p2:crowdstrike_bsod",
+   "glm-5p2:singleton_node_notready"
+  ],
+  "partially": [
+   "glm-5p2:payments_dep_revoked"
+  ],
+  "by_family": {
+   "simple": {
+    "solvable": 20,
+    "partially": 1,
+    "unsolvable": 1
+   },
+   "cascade": {
+    "solvable": 24,
+    "unsolvable": 6
+   },
+   "novel": {
+    "solvable": 20
+   }
+  }
+ },
+ "rows": [
+  {
+   "incident": "auth_cert_expiry",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "aws_dynamodb_dns",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.3333
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.6667
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.5333
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.8
+    }
+   }
+  },
+  {
+   "incident": "aws_kinesis_cell_manager",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.5
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "azure_ddos",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 0.0,
+   "solvability": "unsolvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.1667
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.55
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.4667
+    },
+    "rex": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.55
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.4167
+    }
+   }
+  },
+  {
+   "incident": "azure_leapyear_cert",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "bad_deploy_leaf",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "billing_disk_fill",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "checkout_bad_rollout",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.6667
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "circleci_kubeproxy_iptables",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_bgp_reorder",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.6
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_byzantine_switch",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_leap_second",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.5
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.6
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.6
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_waf",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 0.0,
+   "solvability": "unsolvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3667
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.55
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.55
+    },
+    "rex": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.55
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.55
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_waf_regex",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3417
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3417
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.5333
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_zonemd_stale_cache",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.35
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "conntrack_exhaustion",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "cpu_saturation_leaf",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.6667
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "crowdstrike_bsod",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 0.0,
+   "solvability": "unsolvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.1
+    },
+    "rex": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.425
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.1
+    }
+   }
+  },
+  {
+   "incident": "datadog_systemd_cilium",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "facebook_bgp_backbone",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.35
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "firefox_addon_cert",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "gcp_service_control",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.15
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.25
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.45
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "github_dns_zone_corruption",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.25
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "github_mysql_semaphore_rename",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.7667
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "github_network_partition",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.1
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "github_proxysql_fd_limit",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.4333
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.9
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.7667
+    }
+   }
+  },
+  {
+   "incident": "github_zk_splitbrain",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "gke_ip_exhaustion",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.7667
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "incidentio_anetd_cpu",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.4333
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.9
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.5667
+    }
+   }
+  },
+  {
+   "incident": "ingest_fd_exhaust",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.6
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.8333
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.8333
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "kafka_poison_pill",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3417
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.575
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3417
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3417
+    }
+   }
+  },
+  {
+   "incident": "knight_capital_conflict",
+   "family": "novel",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2417
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.575
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3417
+    }
+   }
+  },
+  {
+   "incident": "launchdarkly_cold_cache",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.6
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "media_oom_leak",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "oom_kill",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3667
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.8
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.4
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.8
+    }
+   }
+  },
+  {
+   "incident": "payments_dep_revoked",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 0.6667,
+   "solvability": "partially",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 2,
+     "pass@1": 0.6667,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.7667
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "railway_gcp_suspension",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "redis_cache_flush",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 1,
+     "pass@1": 0.3333,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 0.3333
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "search_cpu_starve",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "singleton_node_notready",
+   "family": "simple",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 0.0,
+   "solvability": "unsolvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "slack_consul_cache_db",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.25
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "slack_tgw_fd_exhaustion",
+   "family": "cascade",
+   "source_model": "glm-5p2",
+   "source_label": "glm-5p2 (full-42)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 3,
+     "passes": 3,
+     "pass@1": 1.0,
+     "pass@3": 1.0,
+     "k": 3,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 3,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@3": 0.0,
+     "k": 3,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "auth_cert_expiry",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "aws_dynamodb_dns",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 1,
+     "pass@1": 0.2,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.46
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 4,
+     "pass@1": 0.8,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.8
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 4,
+     "pass@1": 0.8,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.8
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 1,
+     "pass@1": 0.2,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.48
+    }
+   }
+  },
+  {
+   "incident": "aws_kinesis_cell_manager",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "azure_ddos",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 0.0,
+   "solvability": "unsolvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.1
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.38
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.11
+    },
+    "rex": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.43
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.22
+    }
+   }
+  },
+  {
+   "incident": "azure_leapyear_cert",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "bad_deploy_leaf",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "billing_disk_fill",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 4,
+     "pass@1": 0.8,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.86
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 4,
+     "pass@1": 0.8,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.86
+    }
+   }
+  },
+  {
+   "incident": "checkout_bad_rollout",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "circleci_kubeproxy_iptables",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.24
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 1,
+     "pass@1": 0.2,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.44
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.24
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_bgp_reorder",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.45
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.66
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_byzantine_switch",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.24
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_leap_second",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.21
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.6
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.66
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.57
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_waf",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 0.0,
+   "solvability": "unsolvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.11
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.33
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.28
+    },
+    "rex": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.55
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.195
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_waf_regex",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.18
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "cloudflare_zonemd_stale_cache",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.57
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.66
+    }
+   }
+  },
+  {
+   "incident": "conntrack_exhaustion",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.18
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 1,
+     "pass@1": 0.2,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.465
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.325
+    }
+   }
+  },
+  {
+   "incident": "cpu_saturation_leaf",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "crowdstrike_bsod",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 0.0,
+   "solvability": "unsolvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.0
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.12
+    },
+    "rex": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.06
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.06
+    }
+   }
+  },
+  {
+   "incident": "datadog_systemd_cilium",
+   "family": "cascade",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.45
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "facebook_bgp_backbone",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.6
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.66
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "firefox_addon_cert",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "github_zk_splitbrain",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.18
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    }
+   }
+  },
+  {
+   "incident": "gke_ip_exhaustion",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 4,
+     "pass@1": 0.8,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.8
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "ingest_fd_exhaust",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 1,
+     "pass@1": 0.2,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.65
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 2,
+     "pass@1": 0.4,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.85
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 3,
+     "pass@1": 0.6,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.9
+    }
+   }
+  },
+  {
+   "incident": "kafka_poison_pill",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.325
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.325
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.325
+    }
+   }
+  },
+  {
+   "incident": "knight_capital_conflict",
+   "family": "novel",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.24
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.3
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.325
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.325
+    }
+   }
+  },
+  {
+   "incident": "media_oom_leak",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 4,
+     "pass@1": 0.8,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.86
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "oom_kill",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 2,
+     "pass@1": 0.4,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 0.64
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  {
+   "incident": "payments_dep_revoked",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.39
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.57
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.66
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.75
+    }
+   }
+  },
+  {
+   "incident": "redis_cache_flush",
+   "family": "simple",
+   "source_model": "deepseek-v4-pro",
+   "source_label": "deepseek-v4-pro (A2)",
+   "threshold": 0.8,
+   "best_pass@1": 1.0,
+   "solvability": "solvable",
+   "by_condition": {
+    "zero_shot": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.2
+    },
+    "best_of_n": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.24
+    },
+    "retry_realistic": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.26
+    },
+    "rex": {
+     "n": 5,
+     "passes": 5,
+     "pass@1": 1.0,
+     "pass@5": 1.0,
+     "k": 5,
+     "mean_reward": 1.0
+    },
+    "rex_no_oracle": {
+     "n": 5,
+     "passes": 0,
+     "pass@1": 0.0,
+     "pass@5": 0.0,
+     "k": 5,
+     "mean_reward": 0.32
+    }
+   }
+  }
+ ]
+}

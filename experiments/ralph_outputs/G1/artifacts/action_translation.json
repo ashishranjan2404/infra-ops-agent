@@ -1,0 +1,84 @@
+{
+  "_doc": "Maps our agent's remediation tools (rex.loop._remediation_tools / tools_registry.json) onto SREGym cluster-control (kubectl/MCP) command TEMPLATES. {ns}/{kind}/{name} are filled at run time by a TargetResolver (kubectl get) — this file encodes ONLY tool semantics, not per-problem resource bindings. expressible=false means our abstract tool has no faithful GENERIC kubectl mapping (the real fix is a problem-specific NetworkPolicy/Secret/cache endpoint), so the action is reported as out-of-action-space rather than faked.",
+  "tools": {
+    "restart_pod": {
+      "expressible": true,
+      "argv_template": ["kubectl", "-n", "{ns}", "rollout", "restart", "{kind}/{name}"],
+      "treats": null,
+      "reason": null
+    },
+    "restart_service": {
+      "expressible": true,
+      "argv_template": ["kubectl", "-n", "{ns}", "rollout", "restart", "{kind}/{name}"],
+      "treats": null,
+      "reason": null
+    },
+    "scale_deployment": {
+      "expressible": true,
+      "argv_template": ["kubectl", "-n", "{ns}", "scale", "{kind}/{name}", "--replicas", "{replicas}"],
+      "treats": "saturation",
+      "reason": null
+    },
+    "scale_consumers": {
+      "expressible": true,
+      "argv_template": ["kubectl", "-n", "{ns}", "scale", "{kind}/{name}", "--replicas", "{replicas}"],
+      "treats": "saturation",
+      "reason": null
+    },
+    "rollback_deployment": {
+      "expressible": true,
+      "argv_template": ["kubectl", "-n", "{ns}", "rollout", "undo", "{kind}/{name}"],
+      "treats": "bad_deploy",
+      "reason": null
+    },
+    "increase_memory_limit": {
+      "expressible": true,
+      "argv_template": ["kubectl", "-n", "{ns}", "patch", "{kind}/{name}", "--type", "json", "-p",
+        "__MEM_PATCH__"],
+      "treats": "resource_exhaustion",
+      "reason": null
+    },
+    "rotate_logs": {
+      "expressible": true,
+      "argv_template": ["kubectl", "-n", "{ns}", "exec", "{kind}/{name}", "--", "logrotate", "-f", "/etc/logrotate.conf"],
+      "treats": "resource_exhaustion",
+      "reason": "best-effort; real path is container-specific"
+    },
+    "cordon_node": {
+      "expressible": true,
+      "argv_template": ["kubectl", "cordon", "{name}"],
+      "treats": "node_failure",
+      "reason": "target is a NODE, not a workload — resolver must resolve to a node name"
+    },
+    "drain_node": {
+      "expressible": true,
+      "argv_template": ["kubectl", "drain", "{name}", "--ignore-daemonsets", "--delete-emptydir-data"],
+      "treats": "node_failure",
+      "reason": "target is a NODE"
+    },
+    "failover_service": {
+      "expressible": false,
+      "argv_template": null,
+      "treats": "dependency_failure",
+      "reason": "no generic kubectl: failover target/endpoint is problem-specific (DNS/Service selector swap)"
+    },
+    "modify_network_policy": {
+      "expressible": false,
+      "argv_template": null,
+      "treats": "network_fault",
+      "reason": "no generic kubectl: the specific NetworkPolicy / quota-policy to disable is problem-specific"
+    },
+    "renew_certificate": {
+      "expressible": false,
+      "argv_template": null,
+      "treats": "config_error",
+      "reason": "no generic kubectl: the Secret/cert and CA are problem-specific"
+    },
+    "clear_cache": {
+      "expressible": false,
+      "argv_template": null,
+      "treats": "saturation",
+      "reason": "no generic kubectl: cache endpoint / flush command is app-specific (Redis/Memcached)"
+    }
+  }
+}

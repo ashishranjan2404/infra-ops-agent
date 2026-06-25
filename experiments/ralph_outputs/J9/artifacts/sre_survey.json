@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "title": "On-call incident response — practitioner reality check",
+  "target_minutes": 12,
+  "intro": "We build training scenarios for autonomous incident-response agents. We want on-call SREs to tell us where our scenarios feel real and where they feel fake. ~12 min. No proprietary or employer-confidential details, please — keep examples generic. CONFLICT OF INTEREST: we built the system you are evaluating; please be brutal.",
+  "scales": {
+    "likert5_agree": ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],
+    "freq5": ["Never", "Rarely", "A few times", "Often", "Constantly"],
+    "realism4": ["Toy/contrived", "Somewhat off", "Plausible", "This literally happened to me"]
+  },
+  "pages": [
+    {
+      "name": "screener",
+      "questions": [
+        {"id": "S1_oncall", "type": "single", "required": true, "claim": null,
+         "text": "Are you currently in an on-call / pager rotation for production systems?",
+         "options": ["Yes, primary on-call", "Yes, secondary/backup", "Not currently but within last 12 months", "No"],
+         "screen_out": ["No"]},
+        {"id": "S2_years", "type": "single", "required": true, "claim": null,
+         "text": "Years of hands-on production on-call experience?",
+         "options": ["<1", "1-3", "3-7", "7+"]},
+        {"id": "S3_scale", "type": "single", "required": false, "claim": null,
+         "text": "Roughly how many services are in the system you're paged for?",
+         "options": ["1-5", "6-20", "21-100", "100+ / microservices"]}
+      ]
+    },
+    {
+      "name": "warstory_open_elicitation",
+      "note": "Open elicitation comes FIRST, before any of our framing is revealed.",
+      "questions": [
+        {"id": "Q_warstory", "type": "longtext", "required": true, "claim": "C1_cascade_realism",
+         "text": "Tell us about an incident where the LOUDEST alert pointed at the wrong service — the page fired on something that was actually a downstream victim of the real cause. What happened? (Generic, no confidential details.)"},
+        {"id": "Q_elicit_good_bad", "type": "longtext", "required": true, "claim": "C3_resolution_ordering",
+         "text": "In your own words, before we tell you ours: what separates a GOOD incident resolution from a BAD one that merely 'looks resolved'? Rank the kinds of outcomes from best to worst."},
+        {"id": "Q_trap_example", "type": "longtext", "required": false, "claim": "C2_naive_fix_trap",
+         "text": "Describe a time the OBVIOUS fix made things worse (e.g. a restart/rollback/scale-up that deepened the outage)."}
+      ]
+    },
+    {
+      "name": "pattern_frequency",
+      "questions": [
+        {"id": "Q_loudest_alert_freq", "type": "single", "required": true, "claim": "C1_cascade_realism",
+         "scale": "freq5",
+         "text": "How often does the loudest alert point at a victim rather than the root cause?"},
+        {"id": "Q_trap_seen", "type": "single", "required": true, "claim": "C2_naive_fix_trap",
+         "scale": "freq5",
+         "text": "How often does the naive/obvious remediation make an incident worse?"}
+      ]
+    },
+    {
+      "name": "scenario_realism",
+      "note": "Respondent is shown 3 anonymized CIDG scenario summaries (rotated from the 33).",
+      "questions": [
+        {"id": "Q_scenario_realism", "type": "matrix", "required": true, "claim": "C4_scenario_specificity",
+         "scale": "realism4", "rows": ["scenario_A", "scenario_B", "scenario_C"],
+         "text": "For each scenario summary, how realistic is it?"},
+        {"id": "Q_scenario_bs", "type": "longtext", "required": false, "claim": "C4_scenario_specificity",
+         "text": "Which of the three (if any) would you call BS on, and why? What's missing or wrong?"}
+      ]
+    },
+    {
+      "name": "reward_compare_and_trust",
+      "note": "OUR reward tiers are revealed here for the FIRST time, after elicitation above.",
+      "questions": [
+        {"id": "Q_tier_compare", "type": "single", "required": true, "claim": "C3_resolution_ordering",
+         "scale": "likert5_agree", "reverse_coded": false,
+         "text": "We grade: clean root-cause fix = best; symptom suppressed but cause still live = partial; obvious-fix-made-it-worse = penalised. Does this ordering match how you'd grade it?"},
+        {"id": "Q_tier_worse_case", "type": "longtext", "required": false, "claim": "C3_resolution_ordering",
+         "text": "Is there an outcome WORSE than 'made it worse', or a case our ordering gets wrong?"},
+        {"id": "Q_trust_agent", "type": "single", "required": true, "claim": "C5_agent_value",
+         "scale": "likert5_agree", "reverse_coded": false,
+         "text": "An agent that reliably names the root cause + a safe fix + avoids the trap would be a useful on-call triage co-pilot for me."},
+        {"id": "Q_trust_reverse", "type": "single", "required": true, "claim": "C5_agent_value",
+         "scale": "likert5_agree", "reverse_coded": true,
+         "text": "I would not act on such an agent's diagnosis without fully re-verifying it myself. (reverse-coded)"},
+        {"id": "Q_trust_conditions", "type": "longtext", "required": false, "claim": "C5_agent_value",
+         "text": "What would the agent have to prove before you'd trust it during a real page?"}
+      ]
+    }
+  ]
+}

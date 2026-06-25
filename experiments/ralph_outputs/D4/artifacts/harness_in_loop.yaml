@@ -1,0 +1,40 @@
+# D4 — harness-in-the-loop RFT config (consumed by harness_in_loop.HarnessInLoopConfig
+# and by the documented train_rft wire-in patch in 06_implementation.md).
+#
+# Semantics: during rollout collection, every candidate action is gated by the REAL
+# rex/harness.py::is_safe. Blocked actions are filtered from world execution AND the
+# rollout reward is penalized per blocked action, so the policy gradient sees the cost.
+
+reward_shaping:
+  unsafe_penalty: 0.25      # reward subtracted per unsafe action proposed
+  reward_floor: -1.0        # lower clamp (keeps GRPO advantages well-conditioned)
+  filter_unsafe: true       # drop blocked actions before world execution (harness-native)
+  count_only_executed_block: true
+
+# Which safety layers of is_safe are active (documentation; is_safe applies all).
+safety_layers:
+  - category_block          # Layer 1: action treats a ruled-out (forbidden) category
+  - state_conditional_traps # Layer 2: mem_leak restart, last-Ready-node drain, replica cap, stale rollback
+
+# Training tasks (scenario names resolvable by rex.harness.load_scenario). A mix of
+# simple leaves, cascades (loud != root), and the held-out escalation case so the
+# penalty term has within-group spread.
+train_scenarios:
+  - oom_kill
+  - cpu_saturation_leaf
+  - bad_deploy_leaf
+  - gcp_service_control
+  - aws_dynamodb_dns
+  - singleton_node_notready   # no safe in-band fix -> is_safe blocks drain/cordon
+
+# Backend (HUD/Tinker) — see 07/09 blocker. These mirror train_rft_v2.py defaults.
+backend:
+  provider: hud_tinker
+  env_module: hud_env_v2.py
+  group: 6
+  steps: 30
+  lr: 1.0e-5
+  note: >
+    The scalar shaped reward from harness_in_loop_reward replaces the raw env reward
+    fed to TrainingClient.step. A live GRPO run requires HUD_API_KEY + a forked
+    trainable Qwen slug + the .venv-hud (3.12) interpreter; not run here (compute cap).

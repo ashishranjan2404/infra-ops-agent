@@ -1,0 +1,53 @@
+# D6 — DPO training config (preference pairs from override/reward data)
+# Counterpart to opensre-traj/train_rft.py (GRPO). DPO trains on static
+# preference triples produced by build_dpo_pairs.py — no env rollouts needed.
+#
+# Backend: same constraint as GRPO — you can only fine-tune an OPEN model.
+# Fork a trainable base first:  hud models fork Qwen/Qwen3-8B --name opensre-dpo-qwen3-8b
+# Closed models (Claude/GPT/Gemini) are eval baselines only; they produced the
+# *preference signal* here but cannot be the policy under DPO.
+
+run_name: opensre-dpo-v1
+
+data:
+  pairs_file: dpo_pairs.jsonl        # produced by build_dpo_pairs.py
+  prompt_key: prompt
+  chosen_key: chosen
+  rejected_key: rejected
+  min_margin: 0.10                   # drop near-ties (reward judge noise)
+  max_pairs_per_scenario: 4          # avoid over-weighting any one incident
+  val_split: 0.15
+  shuffle_seed: 7
+
+model:
+  # a forked Qwen slug from `hud models fork`; closed models are NOT trainable
+  base_model: opensre-dpo-qwen3-8b
+  max_prompt_length: 1024
+  max_length: 2048
+
+dpo:
+  beta: 0.1                          # KL strength to the frozen reference policy
+  loss_type: sigmoid                 # standard DPO; "ipo"/"kto" also valid
+  reference_free: false
+  label_smoothing: 0.0
+
+train:
+  learning_rate: 5.0e-7
+  num_train_epochs: 1
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 8
+  warmup_ratio: 0.1
+  lr_scheduler_type: cosine
+  bf16: true
+  gradient_checkpointing: true
+  logging_steps: 5
+  eval_steps: 20
+  save_steps: 40
+  output_dir: runs/dpo_opensre
+
+# After training, eval the policy on held-out incidents with the SAME judge that
+# produced the preference signal, so DPO improvement is measured on its own metric:
+#   python rex/eval_pass_at_k.py --model <dpo-slug> --scenarios scenarios/cidg/generated
+eval:
+  judge: rex/scoring.py
+  scenarios: scenarios/cidg/generated

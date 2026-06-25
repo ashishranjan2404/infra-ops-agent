@@ -1,0 +1,50 @@
+=== A2 fast ablation: model=deepseek-v4-pro target=750 episodes (5 cond x 30 inc x 5 seeds) budget=3300.0s ===
+  [progress] 50/750 new episodes  (68s, 0 errors)
+  [progress] 100/750 new episodes  (165s, 0 errors)
+  [progress] 150/750 new episodes  (200s, 0 errors)
+  [progress] 200/750 new episodes  (457s, 0 errors)
+  [progress] 250/750 new episodes  (717s, 0 errors)
+  [progress] 300/750 new episodes  (997s, 0 errors)
+  [progress] 350/750 new episodes  (1134s, 0 errors)
+  [progress] 400/750 new episodes  (1375s, 0 errors)
+  [progress] 450/750 new episodes  (1659s, 0 errors)
+  [progress] 500/750 new episodes  (1704s, 0 errors)
+  [progress] 550/750 new episodes  (1925s, 0 errors)
+  [progress] 600/750 new episodes  (1961s, 0 errors)
+  [progress] 650/750 new episodes  (2139s, 0 errors)
+  [progress] 700/750 new episodes  (2431s, 0 errors)
+  [progress] 750/750 new episodes  (2710s, 0 errors)
+
+====================================================================================
+pass@k — model=deepseek-v4-pro (A2)  seeds=5  threshold=0.8  (2709.6s, 0 errors)
+====================================================================================
+floor check: empty_plan_max=0.0 trap_max=0.1 -> OK (cheapest path stays below floor)
+
+condition           pass@1          95% CI  pass@2  pass@5   mean    std    n
+------------------------------------------------------------------------------------
+zero_shot            0.240     [0.18,0.31]   0.424   0.752   0.48   0.37  150
+best_of_n            0.307     [0.24,0.38]   0.521   0.845   0.61   0.33  150
+retry_realistic      0.313     [0.24,0.39]   0.530   0.852   0.62   0.33  150
+rex                  0.893     [0.83,0.93]   0.989   1.000   0.93   0.22  150
+rex_no_oracle        0.287     [0.22,0.36]   0.492   0.820   0.59   0.33  150
+
+condition         family      pass@1  pass@2  pass@5   mean    std    n
+------------------------------------------------------------------------------------
+zero_shot         simple       0.620   0.860   0.995   0.76   0.35   50
+zero_shot         cascade      0.020   0.040   0.100   0.34   0.32   50
+zero_shot         novel        0.080   0.155   0.353   0.33   0.28   50
+best_of_n         simple       0.740   0.936   0.999   0.87   0.26   50
+best_of_n         cascade      0.080   0.155   0.353   0.51   0.31   50
+best_of_n         novel        0.100   0.192   0.423   0.44   0.25   50
+retry_realistic   simple       0.700   0.914   0.999   0.87   0.24   50
+retry_realistic   cascade      0.120   0.228   0.487   0.51   0.34   50
+retry_realistic   novel        0.120   0.228   0.487   0.47   0.26   50
+rex               simple       1.000   1.000   1.000   1.00   0.00   50
+rex               cascade      0.680   0.902   0.998   0.78   0.34   50
+rex               novel        1.000   1.000   1.000   1.00   0.00   50
+rex_no_oracle     simple       0.740   0.936   0.999   0.88   0.23   50
+rex_no_oracle     cascade      0.020   0.040   0.100   0.44   0.30   50
+rex_no_oracle     novel        0.100   0.192   0.423   0.45   0.24   50
+
+[a2] completed 750/750 episodes (FULL) in 2709.8s
+-> /Users/mei/rl/experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json

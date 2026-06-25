@@ -1,0 +1,378 @@
+{
+ "schema": {
+  "type": "simple|cascade|novel  (primary-type: novel>cascade>simple)",
+  "source_tier": "registry|a8|name-rule|real-outage|mechanics",
+  "difficulty": "A7 bucket easy|medium|hard if id matched, else null"
+ },
+ "count": 51,
+ "by_type": {
+  "simple": 11,
+  "cascade": 20,
+  "novel": 20
+ },
+ "by_source_tier": {
+  "registry": 32,
+  "real-outage": 10,
+  "mechanics": 3,
+  "name-rule": 6
+ },
+ "incidents": [
+  {
+   "file": "50-circleci-kubeproxy-iptables.yaml",
+   "incident_id": "circleci-kubeproxy-iptables",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "hard"
+  },
+  {
+   "file": "51-datadog-systemd-cilium.yaml",
+   "incident_id": "datadog-systemd-cilium",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "hard"
+  },
+  {
+   "file": "52-incidentio-anetd-cpu.yaml",
+   "incident_id": "incidentio-anetd-cpu",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "53-slack-tgw-fd-exhaustion.yaml",
+   "incident_id": "slack-tgw-fd-exhaustion",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "hard"
+  },
+  {
+   "file": "54-slack-consul-cache-db.yaml",
+   "incident_id": "slack-consul-cache-db",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "55-github-network-partition.yaml",
+   "incident_id": "github-network-partition",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "hard"
+  },
+  {
+   "file": "56-github-proxysql-fd-limit.yaml",
+   "incident_id": "github-proxysql-fd-limit",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "57-github-mysql-semaphore-rename.yaml",
+   "incident_id": "github-mysql-semaphore-rename",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "58-cloudflare-zonemd-stale-cache.yaml",
+   "incident_id": "cloudflare-zonemd-stale-cache",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "59-cloudflare-byzantine-switch.yaml",
+   "incident_id": "cloudflare-byzantine-switch",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "hard"
+  },
+  {
+   "file": "60-cloudflare-bgp-reorder.yaml",
+   "incident_id": "cloudflare-bgp-reorder",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "hard"
+  },
+  {
+   "file": "61-github-dns-zone-corruption.yaml",
+   "incident_id": "github-dns-zone-corruption",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "62-launchdarkly-cold-cache.yaml",
+   "incident_id": "launchdarkly-cold-cache",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "hard"
+  },
+  {
+   "file": "63-aws-kinesis-cell-manager.yaml",
+   "incident_id": "aws-kinesis-cell-manager",
+   "type": "cascade",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "80-multi-cert-poolleak.yaml",
+   "incident_id": "multi-cert-poolleak",
+   "type": "cascade",
+   "source_tier": "mechanics",
+   "difficulty": null
+  },
+  {
+   "file": "81-multi-rollout-cacheflush.yaml",
+   "incident_id": "multi-rollout-cacheflush",
+   "type": "cascade",
+   "source_tier": "mechanics",
+   "difficulty": null
+  },
+  {
+   "file": "82-multi-fdexhaust-cpustarve.yaml",
+   "incident_id": "multi-fdexhaust-cpustarve",
+   "type": "cascade",
+   "source_tier": "mechanics",
+   "difficulty": null
+  },
+  {
+   "file": "a11-pair-cert-expire-cascade-ingress.yaml",
+   "incident_id": "cert-expire-cascade-ingress",
+   "type": "cascade",
+   "source_tier": "name-rule",
+   "difficulty": "medium"
+  },
+  {
+   "file": "a11-pair-fd-exhaust-cascade-gw.yaml",
+   "incident_id": "fd-exhaust-cascade-gw",
+   "type": "cascade",
+   "source_tier": "name-rule",
+   "difficulty": "medium"
+  },
+  {
+   "file": "a11-pair-mem-leak-cascade-cache.yaml",
+   "incident_id": "mem-leak-cascade-cache",
+   "type": "cascade",
+   "source_tier": "name-rule",
+   "difficulty": "medium"
+  },
+  {
+   "file": "70-facebook-bgp-backbone.yaml",
+   "incident_id": "facebook-bgp-backbone",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "hard"
+  },
+  {
+   "file": "71-cloudflare-leap-second.yaml",
+   "incident_id": "cloudflare-leap-second",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "72-knight-capital-conflict.yaml",
+   "incident_id": "knight-capital-conflict",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "73-azure-leapyear-cert.yaml",
+   "incident_id": "azure-leapyear-cert",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "74-github-zk-splitbrain.yaml",
+   "incident_id": "github-zk-splitbrain",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "75-firefox-addon-cert.yaml",
+   "incident_id": "firefox-addon-cert",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "76-cloudflare-waf-regex.yaml",
+   "incident_id": "cloudflare-waf-regex",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "77-gke-ip-exhaustion.yaml",
+   "incident_id": "gke-ip-exhaustion",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "78-kafka-poison-pill.yaml",
+   "incident_id": "kafka-poison-pill",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "79-conntrack-exhaustion.yaml",
+   "incident_id": "conntrack-exhaustion",
+   "type": "novel",
+   "source_tier": "registry",
+   "difficulty": "medium"
+  },
+  {
+   "file": "80-gitlab-db-deletion.yaml",
+   "incident_id": "gitlab-db-deletion",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "hard"
+  },
+  {
+   "file": "81-cloudbleed-parser-overrun.yaml",
+   "incident_id": "cloudbleed-parser-overrun",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "medium"
+  },
+  {
+   "file": "82-travis-ci-leaked-secret.yaml",
+   "incident_id": "travis-ci-leaked-secret",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "medium"
+  },
+  {
+   "file": "83-roblox-consul-streaming.yaml",
+   "incident_id": "roblox-consul-streaming",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "hard"
+  },
+  {
+   "file": "84-fastly-pop-config.yaml",
+   "incident_id": "fastly-pop-config",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "hard"
+  },
+  {
+   "file": "85-reddit-piday-k8s-route.yaml",
+   "incident_id": "reddit-piday-k8s-route",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "hard"
+  },
+  {
+   "file": "86-honeycomb-retry-storm.yaml",
+   "incident_id": "honeycomb-retry-storm",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "medium"
+  },
+  {
+   "file": "87-aws-s3-typo-capacity.yaml",
+   "incident_id": "aws-s3-typo-capacity",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "hard"
+  },
+  {
+   "file": "88-stripe-redis-fork-latency.yaml",
+   "incident_id": "stripe-redis-fork-latency",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "medium"
+  },
+  {
+   "file": "89-monzo-cassandra-compaction.yaml",
+   "incident_id": "monzo-cassandra-compaction",
+   "type": "novel",
+   "source_tier": "real-outage",
+   "difficulty": "hard"
+  },
+  {
+   "file": "40-redis-cache-flush.yaml",
+   "incident_id": "redis-cache-flush",
+   "type": "simple",
+   "source_tier": "registry",
+   "difficulty": "easy"
+  },
+  {
+   "file": "41-billing-disk-fill.yaml",
+   "incident_id": "billing-disk-fill",
+   "type": "simple",
+   "source_tier": "registry",
+   "difficulty": "easy"
+  },
+  {
+   "file": "42-auth-cert-expiry.yaml",
+   "incident_id": "auth-cert-expiry",
+   "type": "simple",
+   "source_tier": "registry",
+   "difficulty": "easy"
+  },
+  {
+   "file": "43-checkout-bad-rollout.yaml",
+   "incident_id": "checkout-bad-rollout",
+   "type": "simple",
+   "source_tier": "registry",
+   "difficulty": "easy"
+  },
+  {
+   "file": "44-search-cpu-starve.yaml",
+   "incident_id": "search-cpu-starve",
+   "type": "simple",
+   "source_tier": "registry",
+   "difficulty": "easy"
+  },
+  {
+   "file": "45-ingest-fd-exhaust.yaml",
+   "incident_id": "ingest-fd-exhaust",
+   "type": "simple",
+   "source_tier": "registry",
+   "difficulty": "easy"
+  },
+  {
+   "file": "46-media-oom-leak.yaml",
+   "incident_id": "media-oom-leak",
+   "type": "simple",
+   "source_tier": "registry",
+   "difficulty": "easy"
+  },
+  {
+   "file": "47-payments-dep-revoked.yaml",
+   "incident_id": "payments-dep-revoked",
+   "type": "simple",
+   "source_tier": "registry",
+   "difficulty": "easy"
+  },
+  {
+   "file": "a11-pair-cert-expire-leaf-sidecar.yaml",
+   "incident_id": "cert-expire-leaf-sidecar",
+   "type": "simple",
+   "source_tier": "name-rule",
+   "difficulty": "easy"
+  },
+  {
+   "file": "a11-pair-fd-exhaust-leaf-shipper.yaml",
+   "incident_id": "fd-exhaust-leaf-shipper",
+   "type": "simple",
+   "source_tier": "name-rule",
+   "difficulty": "easy"
+  },
+  {
+   "file": "a11-pair-mem-leak-leaf-transcoder.yaml",
+   "incident_id": "mem-leak-leaf-transcoder",
+   "type": "simple",
+   "source_tier": "name-rule",
+   "difficulty": "easy"
+  }
+ ]
+}

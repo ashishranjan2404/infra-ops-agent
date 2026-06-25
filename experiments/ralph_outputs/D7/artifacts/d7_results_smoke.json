@@ -1,0 +1,134 @@
+{
+  "_meta": {
+    "model": "glm-5p2",
+    "dry_run": false,
+    "train_family": "cascade",
+    "n_exemplars": 3,
+    "train_names": [
+      "github_network_partition",
+      "aws_kinesis_cell_manager",
+      "azure_ddos"
+    ],
+    "configs": [
+      "cascade",
+      "mixed",
+      "none"
+    ],
+    "seeds": 2,
+    "n_eval_incidents": 2,
+    "threshold": 0.8
+  },
+  "cascade": {
+    "simple": {
+      "n": 4,
+      "passes": 4,
+      "pass@1": 1.0,
+      "ci95": [
+        0.5101,
+        1.0
+      ],
+      "mean_reward": 1.0,
+      "reward_std": 0.0,
+      "eval_incidents": [
+        "billing_disk_fill",
+        "search_cpu_starve"
+      ]
+    },
+    "cascade": {
+      "n": 4,
+      "passes": 0,
+      "pass@1": 0.0,
+      "ci95": [
+        0.0,
+        0.4899
+      ],
+      "mean_reward": 0.0,
+      "reward_std": 0.0,
+      "eval_incidents": [
+        "datadog_systemd_cilium",
+        "crowdstrike_bsod"
+      ]
+    }
+  },
+  "mixed": {
+    "simple": {
+      "n": 4,
+      "passes": 4,
+      "pass@1": 1.0,
+      "ci95": [
+        0.5101,
+        1.0
+      ],
+      "mean_reward": 1.0,
+      "reward_std": 0.0,
+      "eval_incidents": [
+        "billing_disk_fill",
+        "search_cpu_starve"
+      ]
+    },
+    "cascade": {
+      "n": 4,
+      "passes": 0,
+      "pass@1": 0.0,
+      "ci95": [
+        0.0,
+        0.4899
+      ],
+      "mean_reward": 0.375,
+      "reward_std": 0.375,
+      "eval_incidents": [
+        "datadog_systemd_cilium",
+        "crowdstrike_bsod"
+      ]
+    }
+  },
+  "none": {
+    "simple": {
+      "n": 4,
+      "passes": 4,
+      "pass@1": 1.0,
+      "ci95": [
+        0.5101,
+        1.0
+      ],
+      "mean_reward": 1.0,
+      "reward_std": 0.0,
+      "eval_incidents": [
+        "billing_disk_fill",
+        "search_cpu_starve"
+      ]
+    },
+    "cascade": {
+      "n": 4,
+      "passes": 0,
+      "pass@1": 0.0,
+      "ci95": [
+        0.0,
+        0.4899
+      ],
+      "mean_reward": 0.1875,
+      "reward_std": 0.3248,
+      "eval_incidents": [
+        "datadog_systemd_cilium",
+        "crowdstrike_bsod"
+      ]
+    }
+  },
+  "transfer": {
+    "H1_helps_cascade_vs_none": 0.0,
+    "H2_hurts_simple_vs_mixed": 0.0,
+    "cascade_only": {
+      "simple_p1": 1.0,
+      "cascade_p1": 0.0
+    },
+    "mixed": {
+      "simple_p1": 1.0,
+      "cascade_p1": 0.0
+    },
+    "none": {
+      "simple_p1": 1.0,
+      "cascade_p1": 0.0
+    },
+    "note": "Positive H1 => cascade-only training helps cascade. Negative H2 => it hurts simple."
+  }
+}

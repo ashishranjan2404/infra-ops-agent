@@ -1,0 +1,7 @@
+HTTP error from HUD SDK: Request failed: Model opensre-qwen3-8b not found | URL: https://api.beta.hud.ai/v2/models/resolve?model=opensre-qwen3-8b | Status: 404 | Response: {"error":"not_found","detail":"Model opensre-qwen3-8b not found"}
+v2  model=opensre-qwen3-8b  tasks=[0, 1]  group=8  steps=1  lr=1e-05
+env=hud_env_v2.py (P0 deterministic mechanism reward)  reset_head=False
+job: https://hud.ai/jobs/bd56f612aa8e4efcb074938ffdf3dd4b
+[smoke] rollouts=16 rewards=[0.588, 0.588, 0.588, 0.624, 0.588, 0.588, 0.571, 0.588, 0.675, 0.323, 0.707, 0.662, 0.731, 0.707, 0.707, 0.695] spread=0.094
+step   0  mean_reward=0.6207  spread=0.094  n=16  loss=None
+SMOKE OK: rollouts -> reward (v2 grader) -> forward/backward -> logged.

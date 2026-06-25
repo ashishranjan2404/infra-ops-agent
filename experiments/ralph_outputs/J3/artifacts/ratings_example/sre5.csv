@@ -1,0 +1,13 @@
+rater_id,item_id,correctness,usefulness,safety,confident_root_cause,free_text
+sre5,DX01,4,4,4,1,
+sre5,DX02,2,2,1,0,
+sre5,DX03,2,2,1,0,
+sre5,DX04,1,2,2,0,
+sre5,DX05,3,4,3,1,
+sre5,DX06,4,3,5,1,
+sre5,DX07,2,2,3,0,
+sre5,DX08,4,4,4,1,
+sre5,DX09,4,4,4,1,
+sre5,DX10,1,1,2,0,
+sre5,DX11,3,2,2,0,
+sre5,DX12,3,3,4,1,

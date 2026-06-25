@@ -1,0 +1,136 @@
+{
+  "threshold": 0.8,
+  "seeds": 3,
+  "budget": 3,
+  "scenarios": [
+    "oom_kill",
+    "gcp_service_control"
+  ],
+  "models_requested": [
+    "deepseek-v4-pro",
+    "gpt-5.5"
+  ],
+  "elapsed_s": 558.7,
+  "models": [
+    {
+      "model": "deepseek-v4-pro",
+      "seeds": 3,
+      "budget": 3,
+      "threshold": 0.8,
+      "baseline": {
+        "n": 6,
+        "passes": 1,
+        "pass@1": 0.1667,
+        "ci95": [
+          0.0301,
+          0.5635
+        ],
+        "pass@2": 0.3333,
+        "pass@5": 0.8333,
+        "mean_reward": 0.575,
+        "reward_std": 0.225
+      },
+      "rex": {
+        "n": 6,
+        "passes": 6,
+        "pass@1": 1.0,
+        "ci95": [
+          0.6097,
+          1.0
+        ],
+        "pass@2": 1.0,
+        "pass@5": 1.0,
+        "mean_reward": 1.0,
+        "reward_std": 0.0
+      },
+      "pass1_lift": 0.8333,
+      "mean_lift": 0.425,
+      "baseline_per_incident": {
+        "oom_kill": [
+          1.0,
+          0.4,
+          0.4
+        ],
+        "gcp_service_control": [
+          0.45,
+          0.75,
+          0.45
+        ]
+      },
+      "rex_per_incident": {
+        "oom_kill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "gcp_service_control": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "errors": [],
+      "n_errors": 0
+    },
+    {
+      "model": "gpt-5.5",
+      "seeds": 3,
+      "budget": 3,
+      "threshold": 0.8,
+      "baseline": {
+        "n": 6,
+        "passes": 0,
+        "pass@1": 0.0,
+        "ci95": [
+          0.0,
+          0.3903
+        ],
+        "pass@2": 0.0,
+        "pass@5": 0.0,
+        "mean_reward": 0.35,
+        "reward_std": 0.1581
+      },
+      "rex": {
+        "n": 6,
+        "passes": 6,
+        "pass@1": 1.0,
+        "ci95": [
+          0.6097,
+          1.0
+        ],
+        "pass@2": 1.0,
+        "pass@5": 1.0,
+        "mean_reward": 1.0,
+        "reward_std": 0.0
+      },
+      "pass1_lift": 1.0,
+      "mean_lift": 0.65,
+      "baseline_per_incident": {
+        "oom_kill": [
+          0.4,
+          0.4,
+          0.4
+        ],
+        "gcp_service_control": [
+          0.45,
+          0.0,
+          0.45
+        ]
+      },
+      "rex_per_incident": {
+        "oom_kill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "gcp_service_control": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "errors": [],
+      "n_errors": 0
+    }
+  ]
+}

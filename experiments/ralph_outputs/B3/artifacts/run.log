@@ -1,0 +1,45 @@
+# Wilson 95% CIs over 40 pass@1 cells from 2 file(s)
+condition                         scope        n   pass@1  Wilson 95% CI            ±   match?
+----------------------------------------------------------------------------------------------
+glm-5p2 (full-42) / zero_shot     overall    126    0.230  [0.165, 0.311]       0.073       ok
+glm-5p2 (full-42) / zero_shot     simple      36    0.556  [0.396, 0.705]       0.154       ok
+glm-5p2 (full-42) / zero_shot     cascade     60    0.067  [0.026, 0.159]       0.067       ok
+glm-5p2 (full-42) / zero_shot     novel       30    0.167  [0.073, 0.336]       0.131       ok
+glm-5p2 (full-42) / best_of_n     overall    126    0.341  [0.264, 0.428]       0.082       ok
+glm-5p2 (full-42) / best_of_n     simple      36    0.750  [0.589, 0.863]       0.137       ok
+glm-5p2 (full-42) / best_of_n     cascade     60    0.150  [0.081, 0.261]       0.090       ok
+glm-5p2 (full-42) / best_of_n     novel       30    0.233  [0.118, 0.409]       0.146       ok
+glm-5p2 (full-42) / retry_realisticoverall    126    0.349  [0.272, 0.436]       0.082       ok
+glm-5p2 (full-42) / retry_realisticsimple      36    0.694  [0.531, 0.820]       0.144       ok
+glm-5p2 (full-42) / retry_realisticcascade     60    0.200  [0.118, 0.318]       0.100       ok
+glm-5p2 (full-42) / retry_realisticnovel       30    0.233  [0.118, 0.409]       0.146       ok
+glm-5p2 (full-42) / rex           overall    126    0.897  [0.832, 0.939]       0.054       ok
+glm-5p2 (full-42) / rex           simple      36    0.889  [0.747, 0.956]       0.104       ok
+glm-5p2 (full-42) / rex           cascade     60    0.850  [0.739, 0.919]       0.090       ok
+glm-5p2 (full-42) / rex           novel       30    1.000  [0.886, 1.000]       0.057       ok
+glm-5p2 (full-42) / rex_no_oracle overall    126    0.333  [0.257, 0.419]       0.081       ok
+glm-5p2 (full-42) / rex_no_oracle simple      36    0.722  [0.560, 0.842]       0.141       ok
+glm-5p2 (full-42) / rex_no_oracle cascade     60    0.150  [0.081, 0.261]       0.090       ok
+glm-5p2 (full-42) / rex_no_oracle novel       30    0.233  [0.118, 0.409]       0.146       ok
+deepseek-v4-pro (A2) / zero_shot  overall    150    0.240  [0.179, 0.314]       0.068       ok
+deepseek-v4-pro (A2) / zero_shot  simple      50    0.620  [0.481, 0.741]       0.130       ok
+deepseek-v4-pro (A2) / zero_shot  cascade     50    0.020  [0.004, 0.105]       0.051       ok
+deepseek-v4-pro (A2) / zero_shot  novel       50    0.080  [0.032, 0.188]       0.078       ok
+deepseek-v4-pro (A2) / best_of_n  overall    150    0.307  [0.238, 0.385]       0.073       ok
+deepseek-v4-pro (A2) / best_of_n  simple      50    0.740  [0.605, 0.841]       0.118       ok
+deepseek-v4-pro (A2) / best_of_n  cascade     50    0.080  [0.032, 0.188]       0.078       ok
+deepseek-v4-pro (A2) / best_of_n  novel       50    0.100  [0.043, 0.214]       0.085       ok
+deepseek-v4-pro (A2) / retry_realisticoverall    150    0.313  [0.244, 0.391]       0.073       ok
+deepseek-v4-pro (A2) / retry_realisticsimple      50    0.700  [0.562, 0.809]       0.123       ok
+deepseek-v4-pro (A2) / retry_realisticcascade     50    0.120  [0.056, 0.238]       0.091       ok
+deepseek-v4-pro (A2) / retry_realisticnovel       50    0.120  [0.056, 0.238]       0.091       ok
+deepseek-v4-pro (A2) / rex        overall    150    0.893  [0.834, 0.933]       0.050       ok
+deepseek-v4-pro (A2) / rex        simple      50    1.000  [0.929, 1.000]       0.036       ok
+deepseek-v4-pro (A2) / rex        cascade     50    0.680  [0.542, 0.792]       0.125       ok
+deepseek-v4-pro (A2) / rex        novel       50    1.000  [0.929, 1.000]       0.036       ok
+deepseek-v4-pro (A2) / rex_no_oracleoverall    150    0.287  [0.220, 0.364]       0.072       ok
+deepseek-v4-pro (A2) / rex_no_oraclesimple      50    0.740  [0.605, 0.841]       0.118       ok
+deepseek-v4-pro (A2) / rex_no_oraclecascade     50    0.020  [0.004, 0.105]       0.051       ok
+deepseek-v4-pro (A2) / rex_no_oraclenovel       50    0.100  [0.043, 0.214]       0.085       ok
+
+wrote wilson_table.json

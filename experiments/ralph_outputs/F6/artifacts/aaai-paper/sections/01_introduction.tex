@@ -1,0 +1,35 @@
+\section{Introduction}
+\label{sec:intro}
+
+% [F1 content: framing + thesis. Source: ARCHITECTURE.md, docs/headline_insights.md]
+Autonomous incident response is an attractive target for LLM agents, yet most benchmarks
+reward only \emph{restoration of service}. Real production outages are harder along an axis
+those benchmarks ignore: failures \emph{cascade}, so the loudest alert fires on a victim
+service, not the cause, and the locally obvious remediation can deepen the incident.
+
+\paragraph{Thesis.}
+\emph{A real production cascade misleads even frontier models on the first try; a reward that
+grades root cause \(+\) correct fix \(+\) trap-avoidance (not just ``did it come back up'')
+produces trajectory data with genuine within-group signal.} We verify both halves: faulting
+one node propagates to a downstream victim on a real GKE cluster, and the grader cleanly
+separates ``looks resolved'' (reward \(0.45\)) from a clean win (\(1.0\)), with the trap
+penalised (\(-0.60\)).
+
+\paragraph{Contributions.}
+\begin{itemize}
+  \item A Cascading-Incident Dependency-Graph (CIDG) environment with two tiers: a free,
+        deterministic in-process simulator and a high-fidelity live-cluster tier
+        (Section~\ref{sec:env}).
+  \item A root-cause-aware graded reward with an explicit trap penalty and an
+        anti-reward-hacking LLM judge over the failure \emph{mechanism}
+        (Section~\ref{sec:reward}).
+  \item A \emph{searched} safety verifier --- a Thompson-sampling tree over rules-as-data ---
+        that generalizes to held-out incidents (Section~\ref{sec:exp}).
+  \item An honest fair-control ablation that relocates the headline lift to the environment
+        and verifier (Section~\ref{sec:ablation}).
+\end{itemize}
+
+\paragraph{Position.}
+The LLM is a frozen policy in the spirit of code-as-policy / auto-harness: we improve outcomes
+on anything we can \emph{verify}, and we make the verifier itself something that is learned
+rather than hand-written.

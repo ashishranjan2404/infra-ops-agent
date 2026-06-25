@@ -1,0 +1,7 @@
+company,contact_role,channel,status,probability,last_touch,next_action,notes
+CircleCI,Engineering Blog / DevRel,public_blog_contact,drafted,low,2026-06-24,verify-channel-then-send,scope to reliability NOT 2023 security breach; warm hook 50-circleci-kubeproxy-iptables
+CircleCI,SRE/Infra blog authors,public_byline,drafted,low,2026-06-24,verify-channel-then-send,approach team not personal email
+incident.io,DevRel / Partnerships,public_partnerships_form,drafted,high,2026-06-24,verify-channel-then-send,highest probability; product-fit; warm hook 52-incidentio-anetd-cpu
+incident.io,Engineering blog authors,public_byline,drafted,high,2026-06-24,verify-channel-then-send,stretch ask = co-design anonymized export
+Cloudflare,Cloudflare Research,research_public_contact,drafted,medium,2026-06-24,verify-channel-then-send,best fit; 5 scenarios 58/59/60/71/76
+Cloudflare,Engineering blog team,public_blog_contact,drafted,medium,2026-06-24,verify-channel-then-send,research-friendly but slow large org

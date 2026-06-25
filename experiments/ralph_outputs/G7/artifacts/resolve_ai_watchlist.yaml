@@ -1,0 +1,105 @@
+meta:
+  target: "Resolve.ai (Resolve AI, Inc.)"
+  as_of: "2026-06-25"
+  owner: "SRE-Degrees competitive intel"
+  review_cadence: "monthly"
+  note: >
+    Re-runnable monitoring policy for the closest commercial AI-SRE competitor.
+    'verifiability' encodes how much we can trust the signal independently:
+    high = filings/independent press/customer-confirmed; medium = primary vendor
+    page that is checkable over time; low = pure vendor marketing (track direction,
+    distrust numbers).
+
+watch_items:
+  - id: product-launches
+    what: "New product capabilities, agent types, and investigation architecture changes"
+    where:
+      - "https://www.prnewswire.com/news/resolve-ai/"
+      - "https://resolve.ai/blog"
+      - "https://resolve.ai/product/ai-sre"
+    signal: "A new launch post or a changed product page (e.g. new agent class, new architecture, GA of a feature)"
+    cadence: "weekly"
+    verifiability: "medium"
+    why_it_matters: "Decides our roadmap delta: if they ship a capability we lack (e.g. autonomous remediation/write-actions), our 'investigation-only' framing weakens and we must respond."
+
+  - id: accuracy-claims
+    what: "Root-cause accuracy / MTTR claims and their methodology"
+    where:
+      - "https://resolve.ai/blog"
+      - "https://www.prnewswire.com/news/resolve-ai/"
+    signal: "Any new numeric claim (e.g. '>2x', '87%') or, rarely, a published eval methodology"
+    cadence: "monthly"
+    verifiability: "low"
+    why_it_matters: "If they ever publish a real benchmark/methodology, it becomes the comparison bar we must beat; until then treat numbers as marketing and do not parrot them."
+
+  - id: funding-valuation
+    what: "New funding rounds, valuation, total raised"
+    where:
+      - "https://pitchbook.com/profiles/company/680347-72"
+      - "https://www.crunchbase.com/organization/resolve-ai"
+      - "https://techcrunch.com/tag/resolve-ai/"
+    signal: "A new round / valuation step / large secondary — corroborated by an independent outlet"
+    cadence: "monthly"
+    verifiability: "high"
+    why_it_matters: "Capital scale sets their hiring + GTM velocity; a Series B signals they are pulling ahead and reframes our build-vs-partner calculus."
+
+  - id: customer-logos
+    what: "Newly disclosed customers / case studies"
+    where:
+      - "https://resolve.ai/blog"
+      - "https://resolve.ai/customers"
+    signal: "A new named logo or case study, ideally one the customer also confirms publicly"
+    cadence: "monthly"
+    verifiability: "medium"
+    why_it_matters: "Logo momentum in our target segment (fintech/marketplaces/infra) signals where the market is consolidating and which design partners are already taken."
+
+  - id: integrations-ecosystem
+    what: "New integrations (observability, CI/CD, code, ITSM) and API/MCP surface"
+    where:
+      - "https://resolve.ai/blog/product-deep-dive"
+      - "https://resolve.ai/product/ai-sre"
+    signal: "A newly supported tool (e.g. PagerDuty/ServiceNow/OpenTelemetry-native) or expanded API/MCP"
+    cadence: "monthly"
+    verifiability: "medium"
+    why_it_matters: "Their vendor-neutral data-access breadth is their moat; each added integration widens deployability and raises the bar for our connector surface."
+
+  - id: leadership-hiring
+    what: "Executive hires, key eng/research hires, headcount signals"
+    where:
+      - "https://www.linkedin.com/company/resolve-ai/people/"
+      - "https://resolve.ai/about-us"
+    signal: "Named exec/research hire or visible hiring surge in ML/agents/SRE"
+    cadence: "monthly"
+    verifiability: "medium"
+    why_it_matters: "Senior research/ML hires foreshadow capability direction; GTM/sales hires foreshadow an enterprise land-grab in our market."
+
+  - id: founder-public-signal
+    what: "Founders' public statements on roadmap, strategy, thesis (talks, podcasts, posts)"
+    where:
+      - "https://x.com/spirosxanthos"
+      - "https://greylock.com/greymatter/"
+      - "https://lsvp.com/stories/"
+    signal: "A talk/post/podcast revealing roadmap intent (remediation, write-actions, autonomy level)"
+    cadence: "on-event"
+    verifiability: "low"
+    why_it_matters: "Earliest leading indicator of direction before it ships; lets us pre-position our differentiation narrative."
+
+  - id: positioning-shift
+    what: "Category/positioning language ('AI SRE' vs 'AI Production Engineer' vs 'AI for prod')"
+    where:
+      - "https://resolve.ai/"
+      - "https://resolve.ai/glossary/what-is-ai-sre"
+    signal: "Homepage/category language change indicating a market repositioning or expansion of scope"
+    cadence: "monthly"
+    verifiability: "high"
+    why_it_matters: "A positioning move (e.g. from 'SRE' to broader 'production operations') signals TAM expansion and tells us whether they are encroaching on adjacent budgets."
+
+not_publicly_knowable:
+  - "Pricing tiers / per-seat or usage cost — no public price list."
+  - "True root-cause accuracy and the methodology behind '2x'/'87%' claims — no benchmark or denominator published."
+  - "Model/provider stack (which foundation models, fine-tuning, orchestration framework)."
+  - "Actual agent topology beyond 'coordinated specialized agents investigating in parallel'."
+  - "Revenue / ARR / net retention / churn."
+  - "Paying-customer count vs. marketing logos shown."
+  - "Production false-positive rate and failure modes."
+  - "Exact headcount and org structure."

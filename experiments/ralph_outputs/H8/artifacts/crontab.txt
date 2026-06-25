@@ -1,0 +1,17 @@
+# H8 — Nightly pass@k eval crontab entry (NOT installed by this task).
+#
+# Install with:   crontab -l 2>/dev/null | cat - crontab.txt | crontab -
+# Verify with:    crontab -l
+# Remove with:    crontab -l | grep -v 'run_nightly_eval.sh' | crontab -
+#
+# Runs every night at 02:30 local time. cron mails stdout/stderr to MAILTO on
+# a non-zero exit (the wrapper redirects to a log file, but the python entry
+# point still exits non-zero on an eval error so failures surface).
+MAILTO=""
+SHELL=/bin/bash
+# m  h  dom mon dow   command
+30 2  *   *   *     /Users/mei/rl/experiments/ralph_outputs/H8/artifacts/run_nightly_eval.sh --model glm-5p2 --per-family 2 --seeds 2
+
+# Optional: a no-network self-test fire every morning at 06:00 to prove the
+# plumbing is healthy even when the gateway/API key is unavailable.
+0  6  *   *   *     /Users/mei/rl/experiments/ralph_outputs/H8/artifacts/run_nightly_eval.sh --dry-run

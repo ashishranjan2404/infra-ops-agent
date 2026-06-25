@@ -1,0 +1,73 @@
+{
+  "generated": "2026-06-25T08:03:46.256960Z",
+  "repo": "git@github.com:ashishranjan2404/infra-ops-agent.git",
+  "head_commit": "8a12b414652f6a014dac9abce1e1681067185db8",
+  "in_repo_grpo_assets": [
+    {
+      "path": "opensre-traj/train_rft.py",
+      "role": "GRPO/RFT driver v1 (HUD Tinker; rollouts->forward/backward; mean_reward log)",
+      "tracked": "untracked"
+    },
+    {
+      "path": "opensre-traj/train_rft_v2.py",
+      "role": "GRPO v2 driver (P0 deterministic judge in reward; within-group spread; --reset-head)",
+      "tracked": "untracked"
+    },
+    {
+      "path": "opensre-traj/hud_env_static.py",
+      "role": "training env for v1 GRPO",
+      "tracked": "untracked"
+    },
+    {
+      "path": "opensre-traj/hud_env_v2.py",
+      "role": "training env w/ deterministic-judge reward (v2; PARITY REFERENCE)",
+      "tracked": "untracked"
+    },
+    {
+      "path": "opensre-traj/runs/train_qwen3-8b.jsonl",
+      "role": "v1 8B run log (mean_reward only \u2014 insufficient for parity re-grade)",
+      "tracked": "untracked"
+    },
+    {
+      "path": "opensre-traj/runs/train_qwen3-8b_v2.jsonl",
+      "role": "v2 8B run log (mean_reward + reward_std)",
+      "tracked": "untracked"
+    },
+    {
+      "path": "opensre-traj/runs/train_qwen3-30b.jsonl",
+      "role": "v1 30B run log",
+      "tracked": "untracked"
+    },
+    {
+      "path": "rex/scoring.py",
+      "role": "in-repo deterministic judge (reward PARITY reference for gate-2)",
+      "tracked": "tracked"
+    },
+    {
+      "path": "rex/eval_pass_at_k.py",
+      "role": "cascade pass@k eval entrypoint (the claim-gate runner)",
+      "tracked": "untracked"
+    }
+  ],
+  "missing_for_claim2": [
+    "fireball_training_corpus",
+    "fireball_trained_model_slug_or_checkpoint",
+    "fireball_run_trajectories_or_grader",
+    "repro_metadata"
+  ],
+  "branch_search": {
+    "local_branches": [
+      "main",
+      "opensre-traj",
+      "rex-vertical-slice"
+    ],
+    "remote_branches": [
+      "origin",
+      "origin/main",
+      "origin/opensre-traj"
+    ],
+    "grpo_or_fireball_named_branches": [],
+    "note": "No branch matching grpo/wenji/fireball/rft exists on any local ref or on origin. Confirmed via git branch -a + git for-each-ref."
+  },
+  "parity_note": "v2/hud_env_v2.py + rex/scoring.py is THE deterministic parity reference. v1 (train_rft.py) used a different reward and is NOT the parity reference."
+}

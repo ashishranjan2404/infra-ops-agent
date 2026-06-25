@@ -1,0 +1,6 @@
+python 3.13.7  iters=200000  cases=6
+is_safe : mean=0.2704us  p50=0.2500us  p99=0.4160us
+no-op   : mean=0.0528us  p50=0.0420us  p99=0.0840us
+overhead: mean=0.2176us  p99=0.3320us  ratio=5.12x
+projected per 10-action plan: 2.70us
+wrote /Users/mei/rl/experiments/ralph_outputs/C10/artifacts/bench_results.json

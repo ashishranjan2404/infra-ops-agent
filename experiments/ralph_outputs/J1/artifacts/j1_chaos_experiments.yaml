@@ -1,0 +1,116 @@
+# J1 — Chaos Mesh experiments for the CIDG M-real call-mesh (namespace: cidg-mreal)
+#
+# These map the in-cluster /ctl/fault control plane and the sim/engine.py fault
+# taxonomy ("error" | "slow" | pool-exhaustion) onto REAL infrastructure faults
+# injected by Chaos Mesh (https://chaos-mesh.org). Each experiment is the
+# live-cluster twin of one sim fault class, so a REx/SRE agent can be evaluated
+# on genuine, Prometheus-observable cascades instead of scripted ones.
+#
+# Safety contract (enforced by every spec below):
+#   * scope is pinned to namespace cidg-mreal via `selector.namespaces` — never
+#     cluster-wide, never the kube-system / monitoring namespaces.
+#   * every experiment carries a bounded `duration` and (for schedules) a TTL, so
+#     a fault can never outlive the experiment window — auto-heal is structural.
+#   * `mode: one`/`fixed: 1` keeps blast radius to a single replica where the
+#     fault class allows it, matching the single-root-cause REx scenarios.
+#
+# Apply order: install Chaos Mesh in its own namespace first (see j1_chaos_plan.md),
+# then `kubectl apply -f j1_chaos_experiments.yaml`. Validate offline with:
+#   KUBECONFIG=/dev/null kubectl apply --dry-run=client -f j1_chaos_experiments.yaml
+# (CRDs must be registered for server-side dry-run; client-side validates shape.)
+---
+# (1) payments returns errors  ==  sim fault "error" at the cascade ROOT.
+# Twin of: POST payments:8080/ctl/fault?mode=error. Expected emergent cascade:
+# payments 500 -> checkout 500 -> gateway 500 (gateway = loud victim).
+apiVersion: chaos-mesh.org/v1alpha1
+kind: HTTPChaos
+metadata:
+  name: j1-payments-error
+  namespace: cidg-mreal
+  labels: { part-of: cidg-mreal, j1-experiment: payments-error }
+spec:
+  mode: all                       # both payments replicas, to defeat LB masking
+  selector:
+    namespaces: [cidg-mreal]
+    labelSelectors: { app: payments }
+  target: Request
+  port: 8080
+  abort: true                     # drop the request -> caller sees 5xx/timeout
+  duration: 90s
+---
+# (2) payments slow  ==  sim fault "slow" at the ROOT (latency cascade, not errors).
+# Twin of: ?mode=slow. Distinguishes "error" vs "latency" root cause for the agent.
+apiVersion: chaos-mesh.org/v1alpha1
+kind: HTTPChaos
+metadata:
+  name: j1-payments-latency
+  namespace: cidg-mreal
+  labels: { part-of: cidg-mreal, j1-experiment: payments-latency }
+spec:
+  mode: all
+  selector:
+    namespaces: [cidg-mreal]
+    labelSelectors: { app: payments }
+  target: Request
+  port: 8080
+  delay: 1200ms                   # matches server.py's 1.2s "slow" sleep
+  duration: 120s
+---
+# (3) db pool exhaustion via CPU stress  ==  sim "pool" fault (fan-in contention).
+# Stressing the single db replica starves the 8-slot semaphore -> BOTH payments
+# and orders degrade (fan-in). Tests whether the agent blames the shared dep, not
+# the loudest victim.
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata:
+  name: j1-db-pool-stress
+  namespace: cidg-mreal
+  labels: { part-of: cidg-mreal, j1-experiment: db-pool-stress }
+spec:
+  mode: one
+  selector:
+    namespaces: [cidg-mreal]
+    labelSelectors: { app: db }
+  stressors:
+    cpu: { workers: 2, load: 100 }
+  duration: 120s
+---
+# (4) network delay on checkout->payments edge  == partial-degradation red herring.
+# Only the checkout pods get egress latency; gateway sees slow checkout but
+# payments metrics look clean. Tests upstream-attribution under a misleading signal.
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: j1-checkout-egress-delay
+  namespace: cidg-mreal
+  labels: { part-of: cidg-mreal, j1-experiment: checkout-egress-delay }
+spec:
+  action: delay
+  mode: all
+  selector:
+    namespaces: [cidg-mreal]
+    labelSelectors: { app: checkout }
+  direction: to
+  target:
+    mode: all
+    selector:
+      namespaces: [cidg-mreal]
+      labelSelectors: { app: payments }
+  delay: { latency: 800ms, jitter: 100ms, correlation: "50" }
+  duration: 120s
+---
+# (5) kill one gateway replica  == crashloop/availability fault (NOT a cascade).
+# A self-inflicted victim fault: the agent must NOT chase upstreams here.
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: j1-gateway-pod-kill
+  namespace: cidg-mreal
+  labels: { part-of: cidg-mreal, j1-experiment: gateway-pod-kill }
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces: [cidg-mreal]
+    labelSelectors: { app: gateway }
+  # pod-kill is instantaneous; the Deployment reschedules. No duration field.

@@ -1,0 +1,193 @@
+{
+  "elapsed_sec": 5.2,
+  "n_incidents": 42,
+  "n_labeled_examples": 580,
+  "n_should_block": 253,
+  "small_split": {
+    "train": [
+      "oom_kill",
+      "gcp_service_control",
+      "bad_deploy_leaf",
+      "aws_dynamodb_dns",
+      "cloudflare_waf",
+      "crowdstrike_bsod",
+      "railway_gcp_suspension"
+    ],
+    "heldout": [
+      "cpu_saturation_leaf",
+      "singleton_node_notready",
+      "azure_ddos"
+    ],
+    "n_train_ex": 101,
+    "n_heldout_ex": 39
+  },
+  "full_split": {
+    "train": [
+      "auth_cert_expiry",
+      "aws_dynamodb_dns",
+      "azure_ddos",
+      "bad_deploy_leaf",
+      "billing_disk_fill",
+      "checkout_bad_rollout",
+      "circleci_kubeproxy_iptables",
+      "cloudflare_bgp_reorder",
+      "cloudflare_byzantine_switch",
+      "cloudflare_leap_second",
+      "cloudflare_waf",
+      "cloudflare_zonemd_stale_cache",
+      "conntrack_exhaustion",
+      "crowdstrike_bsod",
+      "datadog_systemd_cilium",
+      "firefox_addon_cert",
+      "gcp_service_control",
+      "github_mysql_semaphore_rename",
+      "gke_ip_exhaustion",
+      "incidentio_anetd_cpu",
+      "ingest_fd_exhaust",
+      "media_oom_leak",
+      "oom_kill",
+      "payments_dep_revoked",
+      "railway_gcp_suspension",
+      "redis_cache_flush",
+      "singleton_node_notready",
+      "slack_consul_cache_db",
+      "slack_tgw_fd_exhaustion"
+    ],
+    "heldout": [
+      "aws_kinesis_cell_manager",
+      "azure_leapyear_cert",
+      "cloudflare_waf_regex",
+      "cpu_saturation_leaf",
+      "facebook_bgp_backbone",
+      "github_dns_zone_corruption",
+      "github_network_partition",
+      "github_proxysql_fd_limit",
+      "github_zk_splitbrain",
+      "kafka_poison_pill",
+      "knight_capital_conflict",
+      "launchdarkly_cold_cache",
+      "search_cpu_starve"
+    ],
+    "n_train_ex": 400,
+    "n_heldout_ex": 180
+  },
+  "headline": {
+    "handwritten_is_safe": {
+      "small_split_10_incidents": {
+        "n": 140,
+        "accuracy": 0.871,
+        "false_allow": 16,
+        "false_block": 2
+      },
+      "full_42_incidents": {
+        "n": 580,
+        "accuracy": 0.933,
+        "false_allow": 37,
+        "false_block": 2
+      }
+    }
+  },
+  "small_eval": {
+    "seed (empty)": {
+      "train": {
+        "accuracy": 0.634,
+        "false_allow": 37,
+        "false_block": 0,
+        "n": 101,
+        "false_allow_rate": 1.0
+      },
+      "heldout": {
+        "accuracy": 0.667,
+        "false_allow": 13,
+        "false_block": 0,
+        "n": 39,
+        "false_allow_rate": 1.0
+      }
+    },
+    "synthesized": {
+      "train": {
+        "accuracy": 0.634,
+        "false_allow": 37,
+        "false_block": 0,
+        "n": 101,
+        "false_allow_rate": 1.0
+      },
+      "heldout": {
+        "accuracy": 0.667,
+        "false_allow": 13,
+        "false_block": 0,
+        "n": 39,
+        "false_allow_rate": 1.0
+      }
+    },
+    "hand-written is_safe": {
+      "train": {
+        "accuracy": 0.842,
+        "false_allow": 14,
+        "false_block": 2,
+        "n": 101,
+        "false_allow_rate": 0.378
+      },
+      "heldout": {
+        "accuracy": 0.949,
+        "false_allow": 2,
+        "false_block": 0,
+        "n": 39,
+        "false_allow_rate": 0.154
+      }
+    }
+  },
+  "full_eval": {
+    "seed (empty)": {
+      "train": {
+        "accuracy": 0.58,
+        "false_allow": 168,
+        "false_block": 0,
+        "n": 400,
+        "false_allow_rate": 1.0
+      },
+      "heldout": {
+        "accuracy": 0.528,
+        "false_allow": 85,
+        "false_block": 0,
+        "n": 180,
+        "false_allow_rate": 1.0
+      }
+    },
+    "synthesized": {
+      "train": {
+        "accuracy": 0.58,
+        "false_allow": 168,
+        "false_block": 0,
+        "n": 400,
+        "false_allow_rate": 1.0
+      },
+      "heldout": {
+        "accuracy": 0.528,
+        "false_allow": 85,
+        "false_block": 0,
+        "n": 180,
+        "false_allow_rate": 1.0
+      }
+    },
+    "hand-written is_safe": {
+      "train": {
+        "accuracy": 0.927,
+        "false_allow": 27,
+        "false_block": 2,
+        "n": 400,
+        "false_allow_rate": 0.161
+      },
+      "heldout": {
+        "accuracy": 0.944,
+        "false_allow": 10,
+        "false_block": 0,
+        "n": 180,
+        "false_allow_rate": 0.118
+      }
+    }
+  },
+  "synthesis": {},
+  "blocker": null,
+  "no_llm": true
+}

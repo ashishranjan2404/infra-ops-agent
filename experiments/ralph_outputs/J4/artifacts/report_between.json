@@ -1,0 +1,31 @@
+{
+  "design": "between",
+  "n_control": 63,
+  "n_agent": 57,
+  "n_pairs": null,
+  "gm_control_min": 417.77,
+  "gm_agent_min": 223.65,
+  "median_control_min": 405.4,
+  "median_agent_min": 249.94,
+  "speedup": 1.868,
+  "speedup_ci95": [
+    1.006,
+    3.3897
+  ],
+  "pct_reduction": 46.47,
+  "p_value": 0.047524,
+  "test_name": "Welch t-test on log(MTTR)",
+  "effect_size_cliffs_delta": 0.2047,
+  "slo_minutes": 120.0,
+  "pct_within_slo_control": 30.2,
+  "pct_within_slo_agent": 36.8,
+  "significant_at_05": true,
+  "notes": [
+    "Mann-Whitney U p=0.0538"
+  ],
+  "_meta": {
+    "scipy": true,
+    "n_trials_loaded": 120,
+    "source": "trials_between.csv"
+  }
+}

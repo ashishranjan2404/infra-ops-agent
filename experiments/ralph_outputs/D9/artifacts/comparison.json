@@ -1,0 +1,139 @@
+{
+  "kind": "SIMULATED learning-curve comparison (training blocked: no GPU)",
+  "model_note": "competence-vs-difficulty proxy, NOT measured model reward",
+  "n_incidents": 51,
+  "n_stages": 6,
+  "rehearsal": 0.3,
+  "sim_params": {
+    "LR": 0.18,
+    "SIGMA": 3.5,
+    "K": 0.9,
+    "C0": 0.5
+  },
+  "results": {
+    "curriculum": {
+      "order": "curriculum",
+      "final_mean_reward": 0.1972,
+      "final_mean_reward_std": 0.0,
+      "auc": 0.1677,
+      "n_seeds": 1,
+      "stage_eval": [
+        {
+          "stage": 0,
+          "competence": 2.0699,
+          "mean_reward": 0.1158
+        },
+        {
+          "stage": 1,
+          "competence": 2.8958,
+          "mean_reward": 0.1509
+        },
+        {
+          "stage": 2,
+          "competence": 3.4133,
+          "mean_reward": 0.1692
+        },
+        {
+          "stage": 3,
+          "competence": 3.8755,
+          "mean_reward": 0.1822
+        },
+        {
+          "stage": 4,
+          "competence": 4.281,
+          "mean_reward": 0.1911
+        },
+        {
+          "stage": 5,
+          "competence": 4.6342,
+          "mean_reward": 0.1972
+        }
+      ]
+    },
+    "random": {
+      "order": "random",
+      "final_mean_reward": 0.1276,
+      "final_mean_reward_std": 0.0008,
+      "auc": 0.0929,
+      "n_seeds": 5,
+      "stage_eval": [
+        {
+          "stage": 0,
+          "competence": 0.9774,
+          "mean_reward": 0.0685
+        },
+        {
+          "stage": 1,
+          "competence": 1.3247,
+          "mean_reward": 0.0827
+        },
+        {
+          "stage": 2,
+          "competence": 1.4855,
+          "mean_reward": 0.0896
+        },
+        {
+          "stage": 3,
+          "competence": 2.0089,
+          "mean_reward": 0.113
+        },
+        {
+          "stage": 4,
+          "competence": 2.1854,
+          "mean_reward": 0.1209
+        },
+        {
+          "stage": 5,
+          "competence": 2.3427,
+          "mean_reward": 0.1279
+        }
+      ]
+    },
+    "anti": {
+      "order": "anti",
+      "final_mean_reward": 0.1236,
+      "final_mean_reward_std": 0.0,
+      "auc": 0.0658,
+      "n_seeds": 1,
+      "stage_eval": [
+        {
+          "stage": 0,
+          "competence": 0.5,
+          "mean_reward": 0.0513
+        },
+        {
+          "stage": 1,
+          "competence": 0.5,
+          "mean_reward": 0.0513
+        },
+        {
+          "stage": 2,
+          "competence": 0.5,
+          "mean_reward": 0.0513
+        },
+        {
+          "stage": 3,
+          "competence": 0.5,
+          "mean_reward": 0.0513
+        },
+        {
+          "stage": 4,
+          "competence": 0.9059,
+          "mean_reward": 0.0658
+        },
+        {
+          "stage": 5,
+          "competence": 2.2449,
+          "mean_reward": 0.1236
+        }
+      ]
+    }
+  },
+  "verdict": {
+    "curriculum_auc": 0.1677,
+    "random_auc": 0.0929,
+    "auc_delta": 0.0748,
+    "curriculum_beats_random": true,
+    "final_delta": 0.0696
+  }
+}

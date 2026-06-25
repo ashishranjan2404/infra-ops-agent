@@ -1,0 +1,62 @@
+# Task D8 — Fireball SFT training config (Claim 2).
+#
+# Supervised fine-tuning on Fireball (state -> action -> state') trajectories,
+# then EVAL transfer onto SRE cascade/multi-hop incidents vs an OpenSRE-trained
+# and a zero-shot baseline.
+#
+# !!! BLOCKER: real_data is NOT in the repo. It is pending from Wenji. This
+# config points at the synthetic fixture by default so the pipeline is runnable
+# end-to-end for a smoke test ONLY. Do NOT report fixture results as Claim-2
+# evidence. When the real corpus lands, set data.input to it and flip
+# data.is_real_fireball: true.
+
+experiment: fireball_sft_claim2
+seed: 0
+
+data:
+  # SWAP to the real FIREBALL dump when Wenji pushes it.
+  input: experiments/ralph_outputs/D8/artifacts/fireball_fixture.jsonl
+  adapted_out: experiments/ralph_outputs/D8/artifacts/fireball_train.jsonl
+  is_real_fireball: false          # GUARD: trainer must refuse "real run" while false
+  min_examples_for_real_run: 2000  # below this, only a --smoke run is allowed
+  adapter: experiments/ralph_outputs/D8/artifacts/fireball_adapter.py
+  split:
+    train: 0.9
+    val: 0.1
+
+model:
+  # SFT trains an OPEN model (closed Claude/GPT/Gemini are eval baselines only).
+  base: Qwen/Qwen3-8B
+  fork_name: fireball-qwen3-8b   # hud models fork Qwen/Qwen3-8B --name fireball-qwen3-8b
+
+train:
+  method: sft               # imitation on well-formed transitions (Claim-2 thesis)
+  epochs: 2
+  lr: 1.0e-5
+  batch_size: 8
+  max_seq_len: 2048
+  grad_accum: 4
+  reward_field: reward       # the adapter's data-quality weight (loss weighting)
+  smoke:                     # the ONLY mode permitted on fixture data
+    steps: 1
+    batch_size: 2
+
+eval:
+  # Claim 2 is about TRANSFER, so eval is on SRE incidents, not Fireball.
+  env: opensre-traj/hud_env_static.py
+  metrics: [pass@1, pass@2, pass@5]
+  split_by: incident_class   # cascade/multi-hop  vs  simple
+  baselines:
+    - name: zero_shot
+      model: Qwen/Qwen3-8B
+    - name: opensre_trained
+      model: opensre-qwen3-8b       # from train_rft_v2.py
+    - name: fireball_trained
+      model: fireball-qwen3-8b      # this config's output
+  # Claim-2 prediction to test (NOT to assume): fireball_trained > opensre_trained
+  # on cascade/multi-hop, possibly < on simple incidents (the asymmetry).
+
+provenance:
+  claim: "Claim 2 — Fireball transfer learning gain (cascade/multi-hop)"
+  blocked_on: "Wenji to push real FIREBALL corpus into repo"
+  do_not_fabricate: true

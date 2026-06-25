@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  H8 — launchd entry for the nightly pass@k eval (macOS).  NOT installed by
+  this task. This is the native macOS equivalent of the crontab entry, since
+  cron is deprecated/limited on modern macOS.
+
+  Install:
+    cp com.sre.nightly-eval.plist ~/Library/LaunchAgents/
+    launchctl load   ~/Library/LaunchAgents/com.sre.nightly-eval.plist
+  Trigger once now (smoke):
+    launchctl start  com.sre.nightly-eval
+  Uninstall:
+    launchctl unload ~/Library/LaunchAgents/com.sre.nightly-eval.plist
+    rm ~/Library/LaunchAgents/com.sre.nightly-eval.plist
+
+  Runs nightly at 02:30 (StartCalendarInterval). RunAtLoad is false so loading
+  the agent does not immediately fire a real eval.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sre.nightly-eval</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/mei/rl/experiments/ralph_outputs/H8/artifacts/run_nightly_eval.sh</string>
+        <string>--model</string>
+        <string>glm-5p2</string>
+        <string>--per-family</string>
+        <string>2</string>
+        <string>--seeds</string>
+        <string>2</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>2</integer>
+        <key>Minute</key>
+        <integer>30</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/mei/rl</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/mei/rl/experiments/ralph_outputs/H8/artifacts/logs/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/mei/rl/experiments/ralph_outputs/H8/artifacts/logs/launchd.err.log</string>
+</dict>
+</plist>

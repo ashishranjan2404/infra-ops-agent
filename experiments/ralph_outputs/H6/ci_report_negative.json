@@ -1,0 +1,54 @@
+{
+  "summary": {
+    "total": 3,
+    "pass": 0,
+    "fail": 3,
+    "all_pass": false,
+    "failures_by_stage": {
+      "schema": 2,
+      "load": 1
+    }
+  },
+  "scenarios": [
+    {
+      "file": "experiments/ralph_outputs/H6/artifacts/bad_engine.yaml",
+      "id": "bad-engine",
+      "ok": false,
+      "failed_stage": "schema",
+      "schema_errors": [
+        "slo 'error_rate_pct': node 'NONEXISTENT_VICTIM' not in topology",
+        "assertions.cascades=true but no required/pool/queue edges to propagate through",
+        "assertions.buried_gun_exists=true but no observation.smoking_guns defined"
+      ],
+      "error": "3 schema error(s)"
+    },
+    {
+      "file": "experiments/ralph_outputs/H6/artifacts/bad_schema.yaml",
+      "id": "bad-schema",
+      "ok": false,
+      "failed_stage": "schema",
+      "schema_errors": [
+        "node 'svc-a': unknown kind 'NOT_A_KIND' (allowed: ['cache', 'control_plane', 'datastore', 'external', 'lb', 'monitoring', 'node', 'pool', 'queue', 'service'])",
+        "edge svc-a->ghost: dst not a node",
+        "root_cause.kind 'not_a_kind' not in closed vocab ['bad_content', 'bad_revision', 'cache_flush', 'cert_expire', 'churn_spike', 'config_bloat', 'cpu_starve', 'defense_amplify', 'dep_revoked', 'disk_fill', 'dns_race', 'fd_exhaust', 'host_agent_crash', 'mem_leak', 'net_delay', 'node_notready', 'pool_leak', 'thread_exhaust']",
+        "root_cause.location 'nowhere' is not a node or edge",
+        "slo 'error_rate_pct': bad direction 'sideways'",
+        "assertions.buried_gun_exists=true but no observation.smoking_guns defined"
+      ],
+      "error": "6 schema error(s)"
+    },
+    {
+      "file": "experiments/ralph_outputs/H6/artifacts/bad_yaml.yaml",
+      "id": null,
+      "ok": false,
+      "failed_stage": "load",
+      "schema_errors": [],
+      "error": "ParserError: while parsing a flow mapping\n  in \"/Users/mei/rl/experiments/ralph_outputs/H6/artifacts/bad_yaml.yaml\", line 1, column 7\nexpected ',' or '}', but got ':'\n  in \"/Users/mei/rl/experiments/ralph_outputs/H6/artifacts/bad_yaml.yaml\", line 2, column 9",
+      "traceback": [
+        "  in \"/Users/mei/rl/experiments/ralph_outputs/H6/artifacts/bad_yaml.yaml\", line 1, column 7",
+        "expected ',' or '}', but got ':'",
+        "  in \"/Users/mei/rl/experiments/ralph_outputs/H6/artifacts/bad_yaml.yaml\", line 2, column 9"
+      ]
+    }
+  ]
+}

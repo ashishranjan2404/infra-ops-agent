@@ -1,0 +1,17 @@
+% Abstract --- max ~250 words for AAAI.
+We present \textsc{SRE-Degrees}, a verifiable reinforcement-learning environment for
+autonomous incident remediation in which the hard part of real outages is reproduced
+faithfully: \emph{cascading} failures whose loudest alert points at a downstream victim
+rather than the root cause, and where the naive fix makes the incident worse. The policy is
+a \emph{frozen, swappable} LLM (no fine-tuning); reliability comes from the environment and a
+\emph{root-cause-aware} reward that grades diagnosis, correct fix, and trap-avoidance rather
+than ``did it come back up.'' We contribute (i) a Cascading-Incident Dependency-Graph (CIDG)
+DSL with a deterministic in-process simulator and a high-fidelity live-cluster tier;
+(ii) a graded reward with an explicit trap penalty that cleanly separates ``looks resolved''
+from a clean win; and (iii) a \emph{searched} safety verifier --- a Thompson-sampling tree
+over rules-as-data --- that learns a 3-rule safety harness which generalizes to held-out
+incidents at 0.90 accuracy versus 0.95 hand-written. An honest fair-control ablation shows
+the refinement loop's apparent lift is largely oracle-feedback leakage, relocating the
+defensible contribution to the verifiable environment and the searched verifier. We release
+51 generated scenarios, a deterministic judge, and FIREBALL-schema trajectories with genuine
+within-group reward spread.

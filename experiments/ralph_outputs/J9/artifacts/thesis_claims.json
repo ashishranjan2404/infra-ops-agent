@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "project": "SRE-Degrees",
+  "description": "Falsifiable thesis claims under practitioner test. Each claim has a flag-based qualitative accept/reject criterion (pre-registered process, not a fragile percentage gate). Evaluated against survey + interview evidence at small N (counts + quotes, not population means).",
+  "conflict_of_interest": "The authors of this instrument built the system under evaluation. This is disclosed to every respondent and in the analysis write-up.",
+  "claims": [
+    {
+      "id": "C1_cascade_realism",
+      "statement": "Real production cascades exist where the loudest alert fires on a downstream victim, not the root cause.",
+      "tested_by": ["Q_warstory", "Q_loudest_alert_freq", "INT_cascade"],
+      "accept_if": "At least 3 independent on-call SREs describe a real incident matching this pattern in free text.",
+      "reject_if": "Fewer than 2 SREs recognize the pattern, or majority say it is contrived/rare.",
+      "review_if": "Exactly 2 recognize it; outcome documented."
+    },
+    {
+      "id": "C2_naive_fix_trap",
+      "statement": "There exist incidents where the obvious/naive remediation makes the outage worse (a trap).",
+      "tested_by": ["Q_trap_seen", "Q_trap_example", "INT_trap"],
+      "accept_if": "At least 3 independent SREs give a concrete example of a naive fix that worsened an incident.",
+      "reject_if": "Majority say naive fixes essentially never backfire in their experience.",
+      "review_if": "2 examples given; documented."
+    },
+    {
+      "id": "C3_resolution_ordering",
+      "statement": "Practitioners independently rank resolution quality as: clean root-cause fix > symptom-suppressed-but-cause-live > trap (made-worse), matching our reward tiers (1.0 > 0.45 > -0.60).",
+      "tested_by": ["Q_elicit_good_bad", "Q_tier_compare", "INT_reward"],
+      "accept_if": "Open-elicited ordering from at least 3 SREs is consistent with our tier ordering BEFORE our tiers are revealed.",
+      "reject_if": "Multiple SREs order outcomes differently (e.g. value 'back up fast' over root-cause) in a way that contradicts the reward sign structure.",
+      "review_if": "Mixed orderings; document the disagreement and which scenarios it applies to."
+    },
+    {
+      "id": "C4_scenario_specificity",
+      "statement": "Our concrete CIDG scenarios (e.g. redis-cache-flush, auth-cert-expiry, billing-disk-fill) read as plausible real incidents, not toy puzzles.",
+      "tested_by": ["Q_scenario_realism", "Q_scenario_bs", "INT_scenario_walkthrough"],
+      "accept_if": "For a given scenario, 0 or 1 SRE flags it unrealistic.",
+      "reject_if": "A scenario is flagged unrealistic by >=2 independent SREs -> mandatory documented review of that scenario.",
+      "review_if": "Any scenario flagged by exactly 2; review and document outcome."
+    },
+    {
+      "id": "C5_agent_value",
+      "statement": "An autonomous agent that correctly identifies root cause + safe fix + avoids the trap would be trusted/useful to a real on-call SRE.",
+      "tested_by": ["Q_trust_agent", "Q_trust_reverse", "INT_trust"],
+      "accept_if": "Majority express conditional trust (would use as a triage co-pilot) AND name the conditions.",
+      "reject_if": "Majority say they would not trust/act on such an agent under any near-term condition.",
+      "review_if": "Split; document the stated trust conditions for the backlog."
+    }
+  ]
+}

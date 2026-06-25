@@ -1,0 +1,535 @@
+{
+ "types": [
+  "simple",
+  "cascade",
+  "novel"
+ ],
+ "results_used": [
+  "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+  "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json"
+ ],
+ "partial_results": [
+  "experiments/results/ablation_pass_at_k_glm-5p2.json.partial"
+ ],
+ "classifier": "experiments/ralph_outputs/B4/artifacts/incident_types.json",
+ "tables": {
+  "simple": {
+   "rows": [
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "zero_shot",
+     "n": 36,
+     "passes": 20,
+     "pass@1": 0.5556,
+     "ci95": [
+      0.3958,
+      0.7046
+     ],
+     "pass@2": 0.8095,
+     "pass@5": 0.9884,
+     "mean_reward": 0.6694,
+     "reward_std": 0.4032
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "best_of_n",
+     "n": 36,
+     "passes": 27,
+     "pass@1": 0.75,
+     "ci95": [
+      0.5893,
+      0.8625
+     ],
+     "pass@2": 0.9429,
+     "pass@5": 0.9997,
+     "mean_reward": 0.8528,
+     "reward_std": 0.271
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "retry_realistic",
+     "n": 36,
+     "passes": 25,
+     "pass@1": 0.6944,
+     "ci95": [
+      0.5314,
+      0.82
+     ],
+     "pass@2": 0.9127,
+     "pass@5": 0.9988,
+     "mean_reward": 0.8194,
+     "reward_std": 0.2873
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "rex",
+     "n": 36,
+     "passes": 32,
+     "pass@1": 0.8889,
+     "ci95": [
+      0.7468,
+      0.9559
+     ],
+     "pass@2": 0.9905,
+     "pass@5": 1.0,
+     "mean_reward": 0.9222,
+     "reward_std": 0.22
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "rex_no_oracle",
+     "n": 36,
+     "passes": 26,
+     "pass@1": 0.7222,
+     "ci95": [
+      0.5601,
+      0.8415
+     ],
+     "pass@2": 0.9286,
+     "pass@5": 0.9993,
+     "mean_reward": 0.8458,
+     "reward_std": 0.2704
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "zero_shot",
+     "n": 50,
+     "passes": 31,
+     "pass@1": 0.62,
+     "ci95": [
+      0.4815,
+      0.7414
+     ],
+     "pass@2": 0.8604,
+     "pass@5": 0.9945,
+     "mean_reward": 0.76,
+     "reward_std": 0.3455
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "best_of_n",
+     "n": 50,
+     "passes": 37,
+     "pass@1": 0.74,
+     "ci95": [
+      0.6045,
+      0.8413
+     ],
+     "pass@2": 0.9363,
+     "pass@5": 0.9994,
+     "mean_reward": 0.866,
+     "reward_std": 0.2614
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "retry_realistic",
+     "n": 50,
+     "passes": 35,
+     "pass@1": 0.7,
+     "ci95": [
+      0.5625,
+      0.809
+     ],
+     "pass@2": 0.9143,
+     "pass@5": 0.9986,
+     "mean_reward": 0.867,
+     "reward_std": 0.2449
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "rex",
+     "n": 50,
+     "passes": 50,
+     "pass@1": 1.0,
+     "ci95": [
+      0.9286,
+      1.0
+     ],
+     "pass@2": 1.0,
+     "pass@5": 1.0,
+     "mean_reward": 1.0,
+     "reward_std": 0.0
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "rex_no_oracle",
+     "n": 50,
+     "passes": 37,
+     "pass@1": 0.74,
+     "ci95": [
+      0.6045,
+      0.8413
+     ],
+     "pass@2": 0.9363,
+     "pass@5": 0.9994,
+     "mean_reward": 0.883,
+     "reward_std": 0.2264
+    }
+   ],
+   "classified_unevaluated": [
+    "cert_expire_leaf_sidecar",
+    "fd_exhaust_leaf_shipper",
+    "mem_leak_leaf_transcoder"
+   ]
+  },
+  "cascade": {
+   "rows": [
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "zero_shot",
+     "n": 60,
+     "passes": 4,
+     "pass@1": 0.0667,
+     "ci95": [
+      0.0262,
+      0.1593
+     ],
+     "pass@2": 0.1299,
+     "pass@5": 0.3006,
+     "mean_reward": 0.2833,
+     "reward_std": 0.3276
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "best_of_n",
+     "n": 60,
+     "passes": 9,
+     "pass@1": 0.15,
+     "ci95": [
+      0.081,
+      0.2611
+     ],
+     "pass@2": 0.2797,
+     "pass@5": 0.5699,
+     "mean_reward": 0.59,
+     "reward_std": 0.2844
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "retry_realistic",
+     "n": 60,
+     "passes": 12,
+     "pass@1": 0.2,
+     "ci95": [
+      0.1183,
+      0.3178
+     ],
+     "pass@2": 0.3627,
+     "pass@5": 0.6865,
+     "mean_reward": 0.6225,
+     "reward_std": 0.2773
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "rex",
+     "n": 60,
+     "passes": 51,
+     "pass@1": 0.85,
+     "ci95": [
+      0.7389,
+      0.919
+     ],
+     "pass@2": 0.9797,
+     "pass@5": 1.0,
+     "mean_reward": 0.9263,
+     "reward_std": 0.1785
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "rex_no_oracle",
+     "n": 60,
+     "passes": 9,
+     "pass@1": 0.15,
+     "ci95": [
+      0.081,
+      0.2611
+     ],
+     "pass@2": 0.2797,
+     "pass@5": 0.5699,
+     "mean_reward": 0.5975,
+     "reward_std": 0.2759
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "zero_shot",
+     "n": 50,
+     "passes": 1,
+     "pass@1": 0.02,
+     "ci95": [
+      0.0035,
+      0.105
+     ],
+     "pass@2": 0.04,
+     "pass@5": 0.1,
+     "mean_reward": 0.343,
+     "reward_std": 0.3187
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "best_of_n",
+     "n": 50,
+     "passes": 4,
+     "pass@1": 0.08,
+     "ci95": [
+      0.0315,
+      0.1884
+     ],
+     "pass@2": 0.1551,
+     "pass@5": 0.353,
+     "mean_reward": 0.511,
+     "reward_std": 0.3105
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "retry_realistic",
+     "n": 50,
+     "passes": 6,
+     "pass@1": 0.12,
+     "ci95": [
+      0.0562,
+      0.2381
+     ],
+     "pass@2": 0.2278,
+     "pass@5": 0.4874,
+     "mean_reward": 0.51,
+     "reward_std": 0.3358
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "rex",
+     "n": 50,
+     "passes": 34,
+     "pass@1": 0.68,
+     "ci95": [
+      0.5419,
+      0.7924
+     ],
+     "pass@2": 0.902,
+     "pass@5": 0.9979,
+     "mean_reward": 0.784,
+     "reward_std": 0.3409
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "rex_no_oracle",
+     "n": 50,
+     "passes": 1,
+     "pass@1": 0.02,
+     "ci95": [
+      0.0035,
+      0.105
+     ],
+     "pass@2": 0.04,
+     "pass@5": 0.1,
+     "mean_reward": 0.4405,
+     "reward_std": 0.3036
+    }
+   ],
+   "classified_unevaluated": [
+    "cert_expire_cascade_ingress",
+    "fd_exhaust_cascade_gw",
+    "mem_leak_cascade_cache",
+    "multi_cert_poolleak",
+    "multi_fdexhaust_cpustarve",
+    "multi_rollout_cacheflush"
+   ]
+  },
+  "novel": {
+   "rows": [
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "zero_shot",
+     "n": 30,
+     "passes": 5,
+     "pass@1": 0.1667,
+     "ci95": [
+      0.0734,
+      0.3356
+     ],
+     "pass@2": 0.3103,
+     "pass@5": 0.6272,
+     "mean_reward": 0.43,
+     "reward_std": 0.3131
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "best_of_n",
+     "n": 30,
+     "passes": 7,
+     "pass@1": 0.2333,
+     "ci95": [
+      0.1179,
+      0.4093
+     ],
+     "pass@2": 0.4184,
+     "pass@5": 0.7639,
+     "mean_reward": 0.5367,
+     "reward_std": 0.306
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "retry_realistic",
+     "n": 30,
+     "passes": 7,
+     "pass@1": 0.2333,
+     "ci95": [
+      0.1179,
+      0.4093
+     ],
+     "pass@2": 0.4184,
+     "pass@5": 0.7639,
+     "mean_reward": 0.5508,
+     "reward_std": 0.2945
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "rex",
+     "n": 30,
+     "passes": 30,
+     "pass@1": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ],
+     "pass@2": 1.0,
+     "pass@5": 1.0,
+     "mean_reward": 1.0,
+     "reward_std": 0.0
+    },
+    {
+     "source": "experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json",
+     "model": "glm-5p2",
+     "condition": "rex_no_oracle",
+     "n": 30,
+     "passes": 7,
+     "pass@1": 0.2333,
+     "ci95": [
+      0.1179,
+      0.4093
+     ],
+     "pass@2": 0.4184,
+     "pass@5": 0.7639,
+     "mean_reward": 0.5617,
+     "reward_std": 0.2956
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "zero_shot",
+     "n": 50,
+     "passes": 4,
+     "pass@1": 0.08,
+     "ci95": [
+      0.0315,
+      0.1884
+     ],
+     "pass@2": 0.1551,
+     "pass@5": 0.353,
+     "mean_reward": 0.3315,
+     "reward_std": 0.2835
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "best_of_n",
+     "n": 50,
+     "passes": 5,
+     "pass@1": 0.1,
+     "ci95": [
+      0.0435,
+      0.2136
+     ],
+     "pass@2": 0.1918,
+     "pass@5": 0.4234,
+     "mean_reward": 0.4385,
+     "reward_std": 0.2536
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "retry_realistic",
+     "n": 50,
+     "passes": 6,
+     "pass@1": 0.12,
+     "ci95": [
+      0.0562,
+      0.2381
+     ],
+     "pass@2": 0.2278,
+     "pass@5": 0.4874,
+     "mean_reward": 0.47,
+     "reward_std": 0.2588
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "rex",
+     "n": 50,
+     "passes": 50,
+     "pass@1": 1.0,
+     "ci95": [
+      0.9286,
+      1.0
+     ],
+     "pass@2": 1.0,
+     "pass@5": 1.0,
+     "mean_reward": 1.0,
+     "reward_std": 0.0
+    },
+    {
+     "source": "experiments/ralph_outputs/A2/artifacts/ablation_pass_at_k_deepseek-v4-pro.json",
+     "model": "deepseek-v4-pro",
+     "condition": "rex_no_oracle",
+     "n": 50,
+     "passes": 5,
+     "pass@1": 0.1,
+     "ci95": [
+      0.0435,
+      0.2136
+     ],
+     "pass@2": 0.1918,
+     "pass@5": 0.4234,
+     "mean_reward": 0.4495,
+     "reward_std": 0.2449
+    }
+   ],
+   "classified_unevaluated": [
+    "aws_s3_typo_capacity",
+    "cloudbleed_parser_overrun",
+    "fastly_pop_config",
+    "gitlab_db_deletion",
+    "honeycomb_retry_storm",
+    "monzo_cassandra_compaction",
+    "reddit_piday_k8s_route",
+    "roblox_consul_streaming",
+    "stripe_redis_fork_latency",
+    "travis_ci_leaked_secret"
+   ]
+  }
+ },
+ "consistency_mismatches": []
+}

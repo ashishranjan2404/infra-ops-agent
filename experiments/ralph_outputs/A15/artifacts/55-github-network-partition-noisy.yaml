@@ -1,0 +1,127 @@
+meta:
+  id: github-network-partition-noisy
+  title: GitHub 2018-10-21 network partition / Orchestrator (noisy metrics / alerting
+    degrades)
+  source: GitHub 2018-10-21 network partition / Orchestrator
+  urls: []
+  failure_class: net_delay
+  clouds:
+  - gke
+  - lke
+  derived_from: github-network-partition
+  variant: noisy_metrics
+topology:
+  nodes:
+  - name: orchestrator
+    kind: control_plane
+    resources:
+      replicas: 3
+  - name: ingress-gw
+    kind: lb
+    resources:
+      replicas: 4
+  - name: app-east
+    kind: service
+    resources:
+      replicas: 3
+  - name: app-west
+    kind: service
+    resources:
+      replicas: 3
+  - name: mysql-primary
+    kind: service
+    resources:
+      replicas: 3
+  - name: monitoring-stack
+    kind: monitoring
+    resources:
+      replicas: 1
+  edges:
+  - from: ingress-gw
+    to: orchestrator
+    type: discovery
+    weight: 1.0
+  - from: app-east
+    to: ingress-gw
+    type: required
+    weight: 1.0
+    latency_add_ms: 5
+    retry: 0.3
+  - from: app-west
+    to: ingress-gw
+    type: required
+    weight: 1.0
+    latency_add_ms: 5
+    retry: 0.3
+  - from: mysql-primary
+    to: ingress-gw
+    type: required
+    weight: 1.0
+    latency_add_ms: 5
+    retry: 0.3
+  - from: monitoring-stack
+    to: orchestrator
+    type: observes
+    weight: 1.0
+root_cause:
+  location: orchestrator
+  kind: net_delay
+  severity: 0.7
+  hidden: true
+  persistent: false
+  reset_by: []
+fault:
+  chaos_kind: exec
+  exec_cmd: inject net_delay on orchestrator
+  sim:
+    set:
+      net_delay_active: true
+  duration_s: 120
+observation:
+  alerting: noisy
+  monitoring_degrades: true
+  smoking_guns:
+  - tool: get_logs
+    node: orchestrator
+    signature: 'github-network-partition: root fault on orchestrator'
+    buried_under: 120
+slo:
+- metric: error_rate_pct
+  node: app-east
+  direction: higher_bad
+  threshold: 5
+  sustain_ticks: 3
+- metric: error_rate_pct
+  node: app-west
+  direction: higher_bad
+  threshold: 5
+  sustain_ticks: 3
+- metric: error_rate_pct
+  node: mysql-primary
+  direction: higher_bad
+  threshold: 5
+  sustain_ticks: 3
+trap_actions:
+- tool: scale_deployment
+  args:
+    target: app-east
+    replicas: 8
+canonical_fix:
+  ordering_notes: Fix the root 'orchestrator' with modify_network_policy.
+  steps:
+  - tool: modify_network_policy
+    args:
+      target: orchestrator
+      action: disable_bad_path
+assertions:
+  cascades: true
+  loudest_alert_not_cause: true
+  fix_resolves: true
+  buried_gun_exists: true
+  hysteresis: false
+  monitoring_degrades: true
+chance:
+  flap_prob: 0.05
+  jitter: 0.03
+  partial_recovery_prob: 0.0
+seed: 1055

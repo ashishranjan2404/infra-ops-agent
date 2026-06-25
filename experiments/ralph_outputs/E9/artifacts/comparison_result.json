@@ -1,0 +1,37 @@
+{
+  "fireball_transfer": {
+    "arm": "fireball_transfer",
+    "status": "blocked",
+    "n_trajectories": 0,
+    "label_coverage": 0.0,
+    "mean_within_group_spread": null,
+    "domain_match": 0.0,
+    "floor_check_pass": null,
+    "blocker": "FIREBALL D&D dataset not vendored; project uses a FROZEN LLM (no fine-tuning stack to 'transfer' into); and D&D combat state is OFF-DOMAIN for SRE diagnosis. Drop a JSONL at --fireball-jsonl to score."
+  },
+  "synthetic_sre_augmentation": {
+    "arm": "synthetic_sre_augmentation",
+    "status": "runnable",
+    "n_groups": 204,
+    "n_trajectories": 816,
+    "label_coverage": 0.1,
+    "classes_covered": [
+      "cache_flush",
+      "fd_exhaust"
+    ],
+    "mean_within_group_spread": 0.5745,
+    "groups_with_positive_spread": 204,
+    "domain_match": 1.0,
+    "floor_check_pass": true,
+    "positive_pass_rate": 1.0
+  },
+  "verdict": {
+    "winner_on_available_evidence": "synthetic_sre_augmentation",
+    "reasons": [
+      "synthetic arm is in-domain (SRE) vs FIREBALL off-domain (D&D).",
+      "synthetic yields 816 usable trajectories vs 0 from the (blocked) Fireball arm.",
+      "synthetic arm has non-zero within-group reward spread (RFT-trainable); the Fireball arm has no SRE reward defined."
+    ],
+    "caveat": "Fireball arm is BLOCKED, not measured end-to-end. This is a data-quality verdict (coverage/spread/domain), not a trained-accuracy verdict. A fair head-to-head would require (a) a FIREBALL export and (b) a fine-tuning stack \u2014 neither available to an offline frozen-LLM worker."
+  }
+}

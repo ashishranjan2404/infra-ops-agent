@@ -1,0 +1,21 @@
+{
+  "n_scenarios": 34,
+  "n_train": 24,
+  "n_eval": 10,
+  "n_sft_pairs": 21,
+  "coverage": 0.875,
+  "min_reward": 0.5,
+  "mean_demo_reward": 0.7206,
+  "dropped_no_qualifying_demo": [
+    "006-dns_failure",
+    "110-github_mysql_semaphore_rename",
+    "116-aws_dynamodb_dns_enactor"
+  ],
+  "teacher_model_histogram": {
+    "claude-opus-4-8": 8,
+    "claude-haiku-4-5": 7,
+    "kimi-k2p5": 6
+  },
+  "sft_pairs_path": "experiments/ralph_outputs/D5/artifacts/sft_pairs.jsonl",
+  "split_path": "experiments/ralph_outputs/D5/artifacts/split.json"
+}

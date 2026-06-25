@@ -1,0 +1,63 @@
+{
+  "trap_plan": {
+    "root_cause": "edge-proxy CPU starvation",
+    "actions": [
+      {
+        "tool": "scale_deployment",
+        "args": {
+          "target": "edge-proxy",
+          "replicas": 8
+        }
+      }
+    ]
+  },
+  "trap_result": {
+    "resolved": false,
+    "root_cleared": false,
+    "blocked_actions": [
+      {
+        "action": {
+          "tool": "scale_deployment",
+          "args": {
+            "target": "edge-proxy",
+            "replicas": 8
+          }
+        },
+        "reason": "scale_deployment blocked for cloudflare_waf_regex: it treats 'saturation', a ruled-out cause (the real root is 'bad_deploy')."
+      }
+    ],
+    "applied_actions": [],
+    "final_metrics": {
+      "error_rate_pct": 70.0,
+      "p99_latency_ms": 50.0
+    }
+  },
+  "fix_plan": {
+    "root_cause": "bad WAF regex on waf-engine",
+    "actions": [
+      {
+        "tool": "rollback_deployment",
+        "args": {
+          "target": "waf-engine"
+        }
+      }
+    ]
+  },
+  "fix_result": {
+    "resolved": true,
+    "root_cleared": true,
+    "blocked_actions": [],
+    "applied_actions": [
+      {
+        "tool": "rollback_deployment",
+        "args": {
+          "target": "waf-engine"
+        }
+      }
+    ],
+    "final_metrics": {
+      "error_rate_pct": 0.0,
+      "p99_latency_ms": 50.0
+    }
+  }
+}

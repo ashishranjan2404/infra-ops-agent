@@ -1,0 +1,1354 @@
+{
+  "schema": {
+    "trap_complexity": "0..1 structural trap density (higher=trappier)",
+    "expected_pass_rate": "0..1 prior single-attempt resolve probability",
+    "difficulty_bucket": "easy>=0.70 | medium>=0.45 | hard<0.45 on expected_pass_rate"
+  },
+  "count": 48,
+  "scores": [
+    {
+      "file": "80-gitlab-db-deletion.yaml",
+      "id": "gitlab-db-deletion",
+      "failure_class": "cache_flush",
+      "title": "GitLab 2017-01-31 primary database directory deletion",
+      "trap_complexity": 0.7907,
+      "expected_pass_rate": 0.4326,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.048
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4349,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "83-roblox-consul-streaming.yaml",
+      "id": "roblox-consul-streaming",
+      "failure_class": "churn_spike",
+      "title": "Roblox 2021-10 Consul streaming meltdown (73h outage)",
+      "trap_complexity": 0.7907,
+      "expected_pass_rate": 0.4326,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.048
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4349,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "87-aws-s3-typo-capacity.yaml",
+      "id": "aws-s3-typo-capacity",
+      "failure_class": "node_notready",
+      "title": "AWS S3 2017-02-28 command typo removed too much capacity",
+      "trap_complexity": 0.7907,
+      "expected_pass_rate": 0.4326,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.048
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4349,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "89-monzo-cassandra-compaction.yaml",
+      "id": "monzo-cassandra-compaction",
+      "failure_class": "churn_spike",
+      "title": "Monzo 2019-07-29 Cassandra scale-up during compaction",
+      "trap_complexity": 0.7907,
+      "expected_pass_rate": 0.4326,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.048
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4349,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "50-circleci-kubeproxy-iptables.yaml",
+      "id": "circleci-kubeproxy-iptables",
+      "failure_class": "net_delay",
+      "title": "CircleCI 2023-03-14 kube-proxy iptables-restore outage",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "51-datadog-systemd-cilium.yaml",
+      "id": "datadog-systemd-cilium",
+      "failure_class": "config_bloat",
+      "title": "Datadog 2023-03-08 systemd-networkd / Cilium route flush",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "53-slack-tgw-fd-exhaustion.yaml",
+      "id": "slack-tgw-fd-exhaustion",
+      "failure_class": "net_delay",
+      "title": "Slack 2021-01-04 Transit Gateway saturation",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "55-github-network-partition.yaml",
+      "id": "github-network-partition",
+      "failure_class": "net_delay",
+      "title": "GitHub 2018-10-21 network partition / Orchestrator",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "59-cloudflare-byzantine-switch.yaml",
+      "id": "cloudflare-byzantine-switch",
+      "failure_class": "net_delay",
+      "title": "Cloudflare 2020-11-02 Byzantine switch",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "60-cloudflare-bgp-reorder.yaml",
+      "id": "cloudflare-bgp-reorder",
+      "failure_class": "config_bloat",
+      "title": "Cloudflare 2022-06-21 BGP term reorder withdraw",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "62-launchdarkly-cold-cache.yaml",
+      "id": "launchdarkly-cold-cache",
+      "failure_class": "dep_revoked",
+      "title": "LaunchDarkly 2025-10-20 legacy-routing cold cache",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "70-facebook-bgp-backbone.yaml",
+      "id": "facebook-bgp-backbone",
+      "failure_class": "config_bloat",
+      "title": "Facebook 2021-10-04 BGP backbone withdrawal",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "84-fastly-pop-config.yaml",
+      "id": "fastly-pop-config",
+      "failure_class": "bad_revision",
+      "title": "Fastly 2021-06-08 global edge config trigger",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "85-reddit-piday-k8s-route.yaml",
+      "id": "reddit-piday-k8s-route",
+      "failure_class": "config_bloat",
+      "title": "Reddit 2023-03-14 Pi-Day Kubernetes upgrade route failure",
+      "trap_complexity": 0.7847,
+      "expected_pass_rate": 0.4359,
+      "difficulty_bucket": "hard",
+      "trap_breakdown": {
+        "topology": 0.12,
+        "fanout": 0.0667,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4316,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.04
+      }
+    },
+    {
+      "file": "52-incidentio-anetd-cpu.yaml",
+      "id": "incidentio-anetd-cpu",
+      "failure_class": "cpu_starve",
+      "title": "incident.io 2023-09 anetd CPU saturation",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "54-slack-consul-cache-db.yaml",
+      "id": "slack-consul-cache-db",
+      "failure_class": "churn_spike",
+      "title": "Slack 2022-02-22 Consul/cache/DB metastable",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "56-github-proxysql-fd-limit.yaml",
+      "id": "github-proxysql-fd-limit",
+      "failure_class": "fd_exhaust",
+      "title": "GitHub 2020-02 ProxySQL silent FD clamp",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "57-github-mysql-semaphore-rename.yaml",
+      "id": "github-mysql-semaphore-rename",
+      "failure_class": "thread_exhaust",
+      "title": "GitHub 2021-11-27 MySQL semaphore RENAME",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "58-cloudflare-zonemd-stale-cache.yaml",
+      "id": "cloudflare-zonemd-stale-cache",
+      "failure_class": "config_bloat",
+      "title": "Cloudflare 2023-10-04 1.1.1.1 ZONEMD stale cache",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "61-github-dns-zone-corruption.yaml",
+      "id": "github-dns-zone-corruption",
+      "failure_class": "config_bloat",
+      "title": "GitHub 2016-12-08 DNS zone corruption",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "63-aws-kinesis-cell-manager.yaml",
+      "id": "aws-kinesis-cell-manager",
+      "failure_class": "churn_spike",
+      "title": "AWS 2024-07-30 Kinesis cell manager reshuffle",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "71-cloudflare-leap-second.yaml",
+      "id": "cloudflare-leap-second",
+      "failure_class": "config_bloat",
+      "title": "Cloudflare 2017 leap-second time panic",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "72-knight-capital-conflict.yaml",
+      "id": "knight-capital-conflict",
+      "failure_class": "bad_revision",
+      "title": "Knight Capital 2012-08-01 $440M deployment conflict",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "73-azure-leapyear-cert.yaml",
+      "id": "azure-leapyear-cert",
+      "failure_class": "cert_expire",
+      "title": "Azure 2012-02-29 leap-year certificate",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "74-github-zk-splitbrain.yaml",
+      "id": "github-zk-splitbrain",
+      "failure_class": "net_delay",
+      "title": "GitHub ZooKeeper split-brain (novel)",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "76-cloudflare-waf-regex.yaml",
+      "id": "cloudflare-waf-regex",
+      "failure_class": "bad_revision",
+      "title": "Cloudflare 2019-07-02 WAF regex CPU exhaustion",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "77-gke-ip-exhaustion.yaml",
+      "id": "gke-ip-exhaustion",
+      "failure_class": "pool_leak",
+      "title": "GKE Pod CIDR / IP exhaustion (SREGym)",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "78-kafka-poison-pill.yaml",
+      "id": "kafka-poison-pill",
+      "failure_class": "bad_content",
+      "title": "Kafka poison-pill consumer block (SREGym)",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "79-conntrack-exhaustion.yaml",
+      "id": "conntrack-exhaustion",
+      "failure_class": "fd_exhaust",
+      "title": "Conntrack table exhaustion (SREGym)",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "81-cloudbleed-parser-overrun.yaml",
+      "id": "cloudbleed-parser-overrun",
+      "failure_class": "bad_revision",
+      "title": "Cloudflare 2017-02 Cloudbleed HTML-parser buffer overrun",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "82-travis-ci-leaked-secret.yaml",
+      "id": "travis-ci-leaked-secret",
+      "failure_class": "dep_revoked",
+      "title": "Travis CI 2021 leaked build secrets in fork logs",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "86-honeycomb-retry-storm.yaml",
+      "id": "honeycomb-retry-storm",
+      "failure_class": "thread_exhaust",
+      "title": "Honeycomb 2023 retry-storm thread exhaustion",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "88-stripe-redis-fork-latency.yaml",
+      "id": "stripe-redis-fork-latency",
+      "failure_class": "mem_leak",
+      "title": "Stripe 2019-07 Redis fork/dirty-page memory pressure",
+      "trap_complexity": 0.738,
+      "expected_pass_rate": 0.4816,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.09,
+        "fanout": 0.05,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.4059,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "81-fd-exhaust-cascade-gw.yaml",
+      "id": "fd-exhaust-cascade-gw",
+      "failure_class": "fd_exhaust",
+      "title": "PAIR1-B fd_exhaust cascade: API gateway socket exhaustion starves callers",
+      "trap_complexity": 0.6913,
+      "expected_pass_rate": 0.5073,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.06,
+        "fanout": 0.0333,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.3802,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "83-cert-expire-cascade-ingress.yaml",
+      "id": "cert-expire-cascade-ingress",
+      "failure_class": "cert_expire",
+      "title": "PAIR2-B cert_expire cascade: ingress TLS cert expired, frontends 5xx",
+      "trap_complexity": 0.6913,
+      "expected_pass_rate": 0.5073,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.06,
+        "fanout": 0.0333,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.3802,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "85-mem-leak-cascade-cache.yaml",
+      "id": "mem-leak-cascade-cache",
+      "failure_class": "mem_leak",
+      "title": "PAIR3-B mem_leak cascade: cache tier heap leak overloads origin services",
+      "trap_complexity": 0.6913,
+      "expected_pass_rate": 0.5073,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.06,
+        "fanout": 0.0333,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.3802,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.02
+      }
+    },
+    {
+      "file": "75-firefox-addon-cert.yaml",
+      "id": "firefox-addon-cert",
+      "failure_class": "cert_expire",
+      "title": "Mozilla 2019-05-04 add-on intermediate cert expiry",
+      "trap_complexity": 0.6913,
+      "expected_pass_rate": 0.5273,
+      "difficulty_bucket": "medium",
+      "trap_breakdown": {
+        "topology": 0.06,
+        "fanout": 0.0333,
+        "cascades": 0.16,
+        "loudest_not_cause": 0.16,
+        "hidden_root": 0.12,
+        "buried_gun": 0.096,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.3802,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "40-redis-cache-flush.yaml",
+      "id": "redis-cache-flush",
+      "failure_class": "cache_flush",
+      "title": "Synthetic simple incident (cache_flush)",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "41-billing-disk-fill.yaml",
+      "id": "billing-disk-fill",
+      "failure_class": "disk_fill",
+      "title": "Synthetic simple incident (disk_fill)",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "42-auth-cert-expiry.yaml",
+      "id": "auth-cert-expiry",
+      "failure_class": "cert_expire",
+      "title": "Synthetic simple incident (cert_expire)",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "43-checkout-bad-rollout.yaml",
+      "id": "checkout-bad-rollout",
+      "failure_class": "bad_revision",
+      "title": "Synthetic simple incident (bad_revision)",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "44-search-cpu-starve.yaml",
+      "id": "search-cpu-starve",
+      "failure_class": "cpu_starve",
+      "title": "Synthetic simple incident (cpu_starve)",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "45-ingest-fd-exhaust.yaml",
+      "id": "ingest-fd-exhaust",
+      "failure_class": "fd_exhaust",
+      "title": "Synthetic simple incident (fd_exhaust)",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "46-media-oom-leak.yaml",
+      "id": "media-oom-leak",
+      "failure_class": "mem_leak",
+      "title": "Synthetic simple incident (mem_leak)",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "47-payments-dep-revoked.yaml",
+      "id": "payments-dep-revoked",
+      "failure_class": "dep_revoked",
+      "title": "Synthetic simple incident (dep_revoked)",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "80-fd-exhaust-leaf-shipper.yaml",
+      "id": "fd-exhaust-leaf-shipper",
+      "failure_class": "fd_exhaust",
+      "title": "PAIR1-A fd_exhaust leaf: log shipper file-descriptor exhaustion",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "82-cert-expire-leaf-sidecar.yaml",
+      "id": "cert-expire-leaf-sidecar",
+      "failure_class": "cert_expire",
+      "title": "PAIR2-A cert_expire leaf: payments sidecar mTLS cert expired",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    },
+    {
+      "file": "84-mem-leak-leaf-transcoder.yaml",
+      "id": "mem-leak-leaf-transcoder",
+      "failure_class": "mem_leak",
+      "title": "PAIR3-A mem_leak leaf: media transcoder heap leak OOMs",
+      "trap_complexity": 0.062,
+      "expected_pass_rate": 0.8734,
+      "difficulty_bucket": "easy",
+      "trap_breakdown": {
+        "topology": 0.0,
+        "fanout": 0.0,
+        "cascades": 0.0,
+        "loudest_not_cause": 0.0,
+        "hidden_root": 0.0,
+        "buried_gun": 0.0,
+        "hysteresis": 0.0,
+        "monitoring_degrades": 0.0,
+        "trap_actions": 0.02,
+        "severity": 0.042
+      },
+      "pass_rate_penalties": {
+        "trap_complexity": 0.0341,
+        "fix_steps": 0.0,
+        "flap": 0.0125,
+        "partial_recovery": 0.0,
+        "multi_slo": 0.0
+      }
+    }
+  ]
+}

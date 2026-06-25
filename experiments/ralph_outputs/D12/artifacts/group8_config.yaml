@@ -1,0 +1,25 @@
+# D12 — RFT group-size-8 config (vs current group=4)
+# Consumed by run_group8.sh. Mirrors opensre-traj/train_rft_v2.py CLI surface.
+# The single param that changes the number of rollouts per task per step is `group`.
+# It flows to THREE places in train_rft_v2.py:
+#   Job.start(model, group=G)          -> sizes the rollout job
+#   ts.run(agent, group=G, job=...)    -> emits G rollouts per task per step
+#   trainer.step(batch, group_size=G)  -> GRPO normalizes advantage within each group of G
+run_name: opensre-qwen3-8b_group8
+env: hud_env_v2.py            # P0 deterministic-judge grader (non-degenerate within-group spread)
+model_slug: opensre-qwen3-8b  # from: hud models fork Qwen/Qwen3-8B --name opensre-qwen3-8b
+tasks: "0,1,2,3,4,5,6,7,8,9"  # 10 tasks (same set as the v2 baseline run)
+group: 8                       # <-- THE CHANGE: 8 rollouts/task/step (baseline used 4)
+steps: 30
+lr: 1.0e-5
+reset_head: true               # objective unchanged vs v2 baseline, but reset keeps the A/B clean
+out: runs/train_qwen3-8b_group8.jsonl
+
+# Cost/throughput note (rollouts/step = tasks * group):
+#   baseline group=4 -> 10*4 = 40 rollouts/step  (matches runs/train_qwen3-8b_v2.jsonl n=40)
+#   group=8          -> 10*8 = 80 rollouts/step   (2x rollout compute & wall-clock per step)
+# To hold per-step compute roughly constant for a fair A/B, optionally halve steps or tasks.
+
+# Smoke (cheap, fail-fast — DO THIS FIRST, < 1 min of model time):
+#   set -a; source ~/.zshrc; set +a
+#   ../.venv-hud/bin/python train_rft_v2.py --model opensre-qwen3-8b --tasks 0,1 --group 8 --steps 1 --smoke

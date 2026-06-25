@@ -1,0 +1,232 @@
+{
+  "n_items": 12,
+  "blinded": true,
+  "items": [
+    {
+      "item_id": "DX01",
+      "scenario_id": "114-cloudflare_byzantine_switch",
+      "incident": "cloudflare_byzantine_switch",
+      "source_company": "Cloudflare",
+      "difficulty": 5,
+      "ground_truth_category": "network_fault",
+      "source_url": "https://blog.cloudflare.com/a-byzantine-failure-in-the-real-world/",
+      "agent_diagnosis": "All evidence converges. Let me synthesize the findings:\n\n**Evidence chain:**\n- `clusterdb_leader_count = 0`, 9 consecutive failed elections \u2014 persistent split vote, not a blip.\n- `clusterdb_peer_reachability_asymmetry = 1` (non-transitive): A\u2194B OK, B\u2194C OK, **A\u2194C FAIL** \u2014 textbook Byzantine/asymmetric partition.\n- `tor-switch-cp-rack3` mgmt-plane ping is **down (0)** but data-plane is still forwarding **~184k fps** \u2014 the switch is *partially* failed, not cleanly down. This is the cause of the asymmetric reachability.\n- Logs confirm: A self-votes, B votes C, C can't confirm A's view \u2192 quorum never satisfiable; a node restart rejoins the *same* asymmetric topology and stalls again.\n- All 3 nodes are individually `Ready` with healthy CPU/mem \u2014 k8s node conditions don't capture the inter-peer fabric break.\n\n**Look-alikes ruled out:**\n- *DB primary overload* \u2014 CPU (3.1 cores) is elevated only from retry backlog, memory nominal (41%); a *symptom*, not a runaway query. Not resource_exhaustion.\n- *Node failure* \u2014 all nodes Ready, NetworkUnavailable=False; not node_failure.\n- *Bad deploy / config error* \u2014 no rollout or config events; the trigger is the switch.\n- *Clean network partition* \u2014 would self-resolve via normal raft majority; this doesn't because the partition is *asymmetric* (partial switch), which is the distinguishing signal.\n- API 75% success / dashboard slowness \u2014 downstream victims of the leaderless DB (writes have nowhere to land).\n\nROOT_CAUSE: The top-of-rack switch tor-switch-cp-rack3 is partially failed \u2014 its management/control plane is dark while its data plane still forwards frames \u2014 producing non-transitive (Byzantine) reachability among the cluster-db raft peers (A\u2194B and B\u2194C up, but A\u2194C down). Each node sees a different liveness view, so no candidate ever reaches a quorum, the consensus group has no leader, and all control-plane API writes time out.\n\nROOT_CAUSE_CATEGORY: network_fault\n\nFIX: Fully isolate the partially-failed switch by hard-downing/draining tor-switch-cp-rack3 (or failing over its uplink to the redundant ToR), converting the ambiguous asymmetric partition into a clean one so cluster-db can elect a leader on the remaining quorum and writes resume.",
+      "tools_used": [
+        "get_alerts",
+        "get_metrics",
+        "get_events",
+        "get_logs",
+        "query_traces",
+        "get_node_status"
+      ],
+      "n_tool_calls": 6
+    },
+    {
+      "item_id": "DX02",
+      "scenario_id": "006-dns_failure",
+      "incident": "dns_failure",
+      "source_company": null,
+      "difficulty": 4,
+      "ground_truth_category": "network_fault",
+      "source_url": null,
+      "agent_diagnosis": "I have enough evidence to conclude. Let me synthesize the findings against the look-alikes.\n\n**Evidence summary:**\n- **search pods:** all 3 Running, 1/1 Ready, 0 restarts \u2014 app is healthy, serving until the upstream lookup fails.\n- **Logs/events:** SERVFAIL specifically and exclusively on `search-upstream.rlvr-target.svc.cluster.local`. SERVFAIL = the resolver returned a server-side failure for that name (e.g., missing/broken record, no backing endpoints), not NXDOMAIN and not a timeout.\n- **`kube_dns_up = 1`:** CoreDNS itself is healthy \u2014 this is **not** an infra-wide DNS outage. The fault is scoped to one Service name.\n- **Ruled-out look-alikes:**\n  - *bad_deploy* \u2014 rollout completed cleanly 9h before the incident; all replicas Available (red herring).\n  - *resource_exhaustion* \u2014 CPU 0.31 cores, mem 41%, nominal.\n  - *node_failure / saturation* \u2014 all nodes Ready, no pressure; the 8s MemoryPressure flap at 07:41 cleared and predates the 09:14 DNS window (red herring).\n  - *network_fault* \u2014 NetworkUnavailable=False everywhere, and CoreDNS resolves fine; failure is name-scoped, not connectivity-scoped.\n\nThe mechanism: search depends on the Service `search-upstream`, whose DNS record resolves to SERVFAIL \u2014 the Service has no healthy/ready backing endpoints (or the Service/EndpointSlice is missing), so CoreDNS can't return an A record for it. This is a dependency/config problem with the upstream Service object, not a problem in search or in cluster DNS.\n\nROOT_CAUSE: The `search-upstream` Service in namespace rlvr-target has no resolvable A record \u2014 CoreDNS returns SERVFAIL for `search-upstream.rlvr-target.svc.cluster.local` because the Service has no healthy backing endpoints/EndpointSlice \u2014 so 62% of search's upstream lookups fail and clients get 503s. Cluster DNS (CoreDNS) and the search pods themselves are healthy; the fault is scoped to the missing/empty upstream Service.\n\nROOT_CAUSE_CATEGORY: dependency_failure\n\nFIX: Restore the `search-upstream` dependency so its Service resolves \u2014 bring its backing Deployment/endpoints back to Ready (scale up / fix the down upstream pods), or recreate the missing `search-upstream` Service/EndpointSlice so CoreDNS returns a valid record.",
+      "tools_used": [
+        "get_alerts",
+        "describe_pod",
+        "get_logs",
+        "get_events",
+        "query_traces",
+        "get_metrics",
+        "get_node_status",
+        "get_deployment_status"
+      ],
+      "n_tool_calls": 8
+    },
+    {
+      "item_id": "DX03",
+      "scenario_id": "002-cpu_saturation",
+      "incident": "cpu_saturation",
+      "source_company": null,
+      "difficulty": 3,
+      "ground_truth_category": "saturation",
+      "source_url": null,
+      "agent_diagnosis": "## Analysis\n\nThe evidence is clear and converges on a single root cause:\n\n**Timeline:**\n- 14m ago: Deployment rollout (revision 7) completed\n- 4m ago: CPU began climbing from 0.34 \u2192 0.62\n- 2m ago: CPU peaked at 0.91-0.97 (throttling began at 86%)\n- Now: Sustained at 0.97 cores with heavy throttling (86-88% ratio)\n\n**Evidence:**\n1. **Pod metrics**: All 3 replicas running at 96-98% CPU, hovering at their 1000m limit (10x the 100m request)\n2. **Logs**: Explicit indicators of CPU saturation:\n   - \"worker pool saturated, 0 idle threads\"\n   - \"request queue depth 312\" (backlog accumulating)\n   - \"p99 handler time 1480ms\" (latency climbing due to queueing)\n   - Request timeouts at 2000ms while CPU-bound with \"no downstream call in flight\"\n3. **Events**: CFS throttling confirmed at pod level (0.84-0.88 throttled_periods ratio)\n4. **Deployment**: Rollout completed 14m ago \u2192 new code in revision 7 is consuming excessive CPU\n5. **Dependencies**: Upstream payment service has 0% error rate, so this is not a cascading failure\n6. **Nodes**: Healthy with no resource pressure; CPU is available at cluster level but being throttled by pod limits\n\n**Root cause mechanism:** The new deployment (revision 7) introduced a CPU regression\u2014likely an algorithmic change, missing optimization, or new feature in the checkout handler that performs CPU-intensive work. The handler is now CPU-bound rather than I/O-bound, consuming ~970m per pod when the code was apparently designed for ~500m. The tight CPU limit (1000m) is forcing throttling, creating a request queue backlog and latency spike.\n\n---\n\n**ROOT_CAUSE:** The checkout deployment rolled out ~14 minutes ago (revision 7) with a code change that introduced a CPU-intensive regression in the handler logic; the pods are now consuming 970m CPU on a 1000m limit, causing heavy CFS throttling (86%), request queue buildup (312 deep), and p99 latency climbing to 1.48s.\n\n**ROOT_CAUSE_CATEGORY:** bad_deploy\n\n**FIX:** `kubectl rollout undo deployment/checkout -n rlvr-target`",
+      "tools_used": [
+        "get_metrics",
+        "get_deployment_status",
+        "get_events",
+        "describe_pod",
+        "get_logs",
+        "query_traces",
+        "get_node_status"
+      ],
+      "n_tool_calls": 7
+    },
+    {
+      "item_id": "DX04",
+      "scenario_id": "117-aws_kinesis_cell_manager",
+      "incident": "aws_kinesis_cell_manager",
+      "source_company": "AWS",
+      "difficulty": 5,
+      "ground_truth_category": "saturation",
+      "source_url": "https://aws.amazon.com/message/073024/",
+      "agent_diagnosis": "I have a complete, consistent causal chain. All evidence corroborates and the look-alikes are ruled out.\n\n## Investigation Summary\n\n**Causal chain (confirmed by alert timeline, metrics, and logs):**\n\n1. **09:09\u201309:41** Routine single-AZ deploy removed a host. Cell manager rebalanced shards \u2014 but it **balances by throughput/IO, not shard count**. A novel many-very-low-throughput-shard workload caused ~9,412 shards to pile onto kds-host-3 (and ~9,388 on kds-host-4), vs ~1,100 normal. Aggregate IO/CPU stayed normal (38%).\n2. **14:40** Each over-loaded host's status message ballooned to **14MB** (vs ~80KB) because it carries one descriptor per shard \u2014 far over the 256KB/250ms ingest budget.\n3. **14:41** (alert #1, fired FIRST) Cell manager can't ingest the oversized status in time \u2192 **status-ingest lag 41s** \u2192 **falsely marks healthy hosts UNHEALTHY**.\n4. False-unhealthy verdicts trigger shard redistribution \u2192 **reshuffle storm (640/s vs 2/s)**. Each move re-provisions secure TLS connections.\n5. **14:45** (alert #2) Reshuffle + churn causes dataplane PutRecord/GetRecords errors and 9,400ms p99.\n6. **14:52** (alert #3, fired LAST) Connection request rate 120/s \u2192 3,900/s overruns the conn-provisioner ceiling (60,000/60,000) \u2192 it refuses new connections, making the storm self-sustaining.\n\n**Look-alikes ruled out:**\n- *bad_deploy*: rollout completed cleanly, r3 is byte-identical to prior good revision, all 8 pods Ready. Rollback doesn't stop the storm. The deploy only *triggered* the rebalance.\n- *conn-provisioner saturation*: it's the loud last-link **victim**, not origin \u2014 adding capacity alone didn't drain the backlog until upstream status messages shrank.\n- *node_failure / resource_exhaustion*: all nodes Ready, CPU/mem normal, no pressure conditions; the \"unhealthy\" hosts are actually serving.\n\n---\n\nROOT_CAUSE: The cell manager balances shards by throughput/IO rather than shard *count*, so after the deploy removed a host it piled ~9,412 low-throughput shards onto two hosts; their per-host status messages ballooned to ~14MB, blew the status-ingest budget, and caused the cell manager to falsely mark healthy hosts unhealthy \u2014 triggering a 640/s shard-reshuffle storm that exhausted the TLS connection provisioner and drove the dataplane error/latency spike.\n\nROOT_CAUSE_CATEGORY: config_error\n\nFIX: Apply a per-host shard-count cap (cap \u22482,000 shards/host) in the cell manager's balancer and load-shed/redistribute the excess shards off kds-host-3/kds-host-4 so status messages shrink below the ingest budget \u2014 this halts the false-unhealthy verdicts and the reshuffle storm, after which the conn-provisioner drains.",
+      "tools_used": [
+        "get_alerts",
+        "get_metrics",
+        "get_deployment_status",
+        "get_logs",
+        "get_node_status"
+      ],
+      "n_tool_calls": 5
+    },
+    {
+      "item_id": "DX05",
+      "scenario_id": "107-github_mlag_stonith_splitbrain",
+      "incident": "github_mlag_stonith_splitbrain",
+      "source_company": "GitHub",
+      "difficulty": 5,
+      "ground_truth_category": "network_fault",
+      "source_url": "https://github.blog/news-insights/downtime-last-saturday/",
+      "agent_diagnosis": "## Root Cause Analysis Complete\n\nI have identified the exact failure chain:\n\n**Timeline:**\n1. **20:15:00** \u2014 Aggregation switch agent on agg-switch-a terminated for maintenance state dump; links stayed UP.\n2. **20:15:05** \u2014 agg-switch-b lost heartbeat to peer (agent down) but detected peer links were still UP, triggering DISRUPTIVE (not gentle) MLAG failover.\n3. **20:15:06\u201320:16:36** \u2014 Spanning-tree reconvergence blocked ALL inter-rack L2 traffic for ~90 seconds.\n4. **20:16:40** \u2014 Pacemaker heartbeat between fileserver pairs timed out (heartbeat runs on the same production fabric now blacked out), each pair declared the other dead.\n5. **20:16:43** \u2014 When network recovered, **both members of each pair simultaneously believed they were active** and issued mutual STONITH fencing \u2192 **both shut down**.\n6. **Result** \u2014 All 4 DRBD resources now have NO Primary; automatic recovery is unsafe (booting the stale node first risks data overwrite).\n\n**The Architectural Fault:** Pacemaker cluster heartbeat shares the same production L2 fabric as data traffic, with no separate OOB (out-of-band) heartbeat. The 90s L2 blackout exceeded the Pacemaker dead-timer.\n\n**The Trigger:** Terminating the MLAG agent while keeping peer links UP caused an unplanned disruptive failover + spanning-tree churn, not the switch upgrade itself.\n\n---\n\n**ROOT_CAUSE:** Pacemaker cluster heartbeat (running on production L2 fabric) timed out during a 90-second inter-rack spanning-tree reconvergence triggered by MLAG disruptive failover; when the network recovered, both members of each pair issued simultaneous mutual STONITH fences, stopping all 4 fileservers and leaving all DRBD resources with no Primary.\n\n**ROOT_CAUSE_CATEGORY:** network_fault\n\n**FIX:** Boot fileserver-pair1-a-0 (the last confirmed Primary per DRBD generation logs in the startup message) and allow it to become Primary; once healthy, boot the passive peers in order (pair1-b-0, pair2-a-0, pair2-b-0) to allow DRBD re-sync and restore the active pair count to 4.",
+      "tools_used": [
+        "get_alerts",
+        "get_node_status",
+        "get_deployment_status",
+        "describe_pod",
+        "get_events",
+        "get_logs",
+        "get_metrics"
+      ],
+      "n_tool_calls": 7
+    },
+    {
+      "item_id": "DX06",
+      "scenario_id": "115-circleci_waf_manual_edit",
+      "incident": "circleci_waf_manual_edit",
+      "source_company": "CircleCI",
+      "difficulty": 4,
+      "ground_truth_category": "config_error",
+      "source_url": "https://discuss.circleci.com/t/post-incident-report-april-4-2025-circleci-ui-loading-build-triggering-issues/53208",
+      "agent_diagnosis": "Perfect. The evidence is airtight. Here's my diagnosis:\n\n---\n\n**ROOT_CAUSE:** An out-of-band WAF rule (`sec-monitor-block-rule`) was manually added to the live CloudFront WAF web-ACL at 00:16Z by the `security-monitoring-operator` IAM role, without going through the Terraform IaC pipeline. This rule returns 403 Forbidden to legitimate traffic (browsers, API calls, GitHub webhooks) before requests reach the origin, causing CORS preflight failures and request blocking.\n\n**ROOT_CAUSE_CATEGORY:** `config_error`\n\n**FIX:** Remove the out-of-band WAF rule `sec-monitor-block-rule` from the live CloudFront web-ACL for edge-waf-circleci, and audit the `security-monitoring-operator` IAM role permissions to prevent future out-of-band mutations.",
+      "tools_used": [
+        "get_deployment_status",
+        "get_node_status",
+        "get_alerts",
+        "get_events",
+        "get_metrics",
+        "get_logs"
+      ],
+      "n_tool_calls": 6
+    },
+    {
+      "item_id": "DX07",
+      "scenario_id": "119-launchdarkly_legacy_routing_cold_cache",
+      "incident": "launchdarkly_legacy_routing_cold_cache",
+      "source_company": "LaunchDarkly",
+      "difficulty": 5,
+      "ground_truth_category": "dependency_failure",
+      "source_url": "https://launchdarkly.com/blog/what-happened-what-we-learned-and-how-were-improving/",
+      "agent_diagnosis": "I have enough evidence. The root cause is crystal clear:\n\n---\n\n**ROOT_CAUSE:** At 11:48 UTC, the routing mode was switched from the fault-tolerant path to the legacy routing path to reduce load on the web application. The legacy router's per-flag cache started cold (0.06 hit ratio), forcing every SDK stream initialization to miss cache and fall through to DynamoDB\u2014already rate-limited by the ongoing AWS us-east-1 regional event. Each slow/failed stream init triggered an SDK client-side reconnect, amplifying inbound connection attempts to 14.2\u00d7 baseline (a positive feedback loop), which saturated fdn-streaming pods (98% CPU) and the load balancer (91% 5xx responses), resulting in ~99% stream connection errors.\n\n**ROOT_CAUSE_CATEGORY:** config_error\n\n**FIX:** `kubectl set env deployment/fdn-router-legacy -n flag-delivery ROUTING_MODE=fault_tolerant --record` (revert the routing cutover to the fault-tolerant path to allow caches to re-warm and break the reconnect storm)",
+      "tools_used": [
+        "get_deployment_status",
+        "get_metrics",
+        "describe_pod",
+        "get_events",
+        "get_logs",
+        "get_node_status"
+      ],
+      "n_tool_calls": 6
+    },
+    {
+      "item_id": "DX08",
+      "scenario_id": "113-cloudflare_1111_zonemd_stale_cache",
+      "incident": "cloudflare_1111_zonemd_stale_cache",
+      "source_company": "Cloudflare",
+      "difficulty": 5,
+      "ground_truth_category": "config_error",
+      "source_url": "https://blog.cloudflare.com/1-1-1-1-lookup-failures-on-october-4th-2023/",
+      "agent_diagnosis": "The evidence is conclusive. The metrics directly contradict the alert's \"upstream root expiry\" hypothesis:\n\n- `upstream_root_fetch_success_rate = 1.0` and `upstream_root_rrsig_valid = 1` \u2192 the **live root zone is healthy and validly signed**.\n- The failure is concentrated entirely on pods with >13d uptime (`rec_servfail_rate_by_pod_uptime_gt_13d = 0.42`), while freshly-restarted pods SERVFAIL ~0.\n- `static_zone_parse_failures_total = 13` and `static_zone_root_serial_age_seconds = 1123200` (13 days) \u2192 the preloader has been silently failing to parse every daily root update since 2023-09-21.\n- Root cause mechanism: on 2023-09-21 IANA added the **ZONEMD (RR type 63)** record to the root zone. The `static-zone-preload` parser doesn't recognize type 63, rejects the entire update, and keeps serving the last-good frozen snapshot (serial 2023092101). The RRSIG signatures on that frozen snapshot expired at exactly 07:00 UTC on 2023-10-04, so DNSSEC validation against the stale root began returning SERVFAIL.\n\nThis is a local config/parser defect, not an upstream IANA problem. The deploy was clean (9 days before onset, image unchanged at onset). I have enough to report.\n\nROOT_CAUSE: The `static-zone-preload` component cannot parse the ZONEMD record (RR type 63, added to the root zone on 2023-09-21), so it rejected 13 consecutive daily root updates and kept serving a frozen 13-day-old root snapshot (serial 2023092101). At 07:00 UTC the RRSIG signatures on that stale snapshot hard-expired, breaking DNSSEC chain-of-trust to '.' and causing SERVFAIL on valid queries. The live upstream root is healthy and validly signed \u2014 only pods holding the stale in-memory snapshot fail.\n\nROOT_CAUSE_CATEGORY: config_error\n\nFIX: Patch/upgrade the `static-zone-preload` parser to accept RR type 63 (ZONEMD) \u2014 or as immediate mitigation, restart the stale (>13d uptime) resolver pods to drop the frozen snapshot and force a fresh live root fetch (which validates successfully), then fix the parser to prevent recurrence.",
+      "tools_used": [
+        "get_alerts",
+        "get_logs",
+        "get_deployment_status",
+        "get_metrics"
+      ],
+      "n_tool_calls": 4
+    },
+    {
+      "item_id": "DX09",
+      "scenario_id": "015-stuck_rollout",
+      "incident": "stuck_rollout",
+      "source_company": null,
+      "difficulty": 4,
+      "ground_truth_category": "bad_deploy",
+      "source_url": null,
+      "agent_diagnosis": "**Evidence Summary:**\n\n1. **Pod Status**: Both new pods (`shipping-7d9c4b6f88-q2m7x` and `shipping-7d9c4b6f88-vk5tn`) are stuck in `Pending` with waiting state showing:\n   - `ImagePullBackOff`: \"Back-off pulling image \\\"rlvr/shipping:v99-nonexistent\\\": manifest unknown\"\n   - `ErrImagePull`: \"failed to pull and unpack image \\\"rlvr/shipping:v99-nonexistent\\\": manifest unknown\"\n\n2. **Deployment State**: \n   - Current image set to `rlvr/shipping:v99-nonexistent`\n   - Previous working image: `rlvr/shipping:v1.7.2`\n   - Progressing condition `False` with reason `ProgressDeadlineExceeded`\n   - 1/3 replicas available (only the old revision pod is running)\n\n3. **Events**: Confirmed multiple `Failed` events stating \"manifest unknown: tag does not exist in registry\" and `BackOff` warnings.\n\n**Root cause confirmed**: The deployment was triggered with a non-existent container image tag (v99-nonexistent), which doesn't exist in the registry. This is a deployment error, not a resource or infrastructure issue.\n\n---\n\n**ROOT_CAUSE**: Deployment revision 8 references non-existent container image tag `rlvr/shipping:v99-nonexistent`, causing new pods to fail with ImagePullBackOff/ErrImagePull errors.  \n**ROOT_CAUSE_CATEGORY**: bad_deploy  \n**FIX**: Rollback deployment shipping to previous revision 7 (rlvr/shipping:v1.7.2) to restore availability and end the stuck rollout.",
+      "tools_used": [
+        "describe_pod",
+        "get_deployment_status",
+        "get_events"
+      ],
+      "n_tool_calls": 3
+    },
+    {
+      "item_id": "DX10",
+      "scenario_id": "109-github_proxysql_fd_limit",
+      "incident": "github_proxysql_fd_limit",
+      "source_company": "GitHub",
+      "difficulty": 5,
+      "ground_truth_category": "config_error",
+      "source_url": "https://github.blog/2020-03-26-february-service-disruptions-post-incident-analysis/",
+      "agent_diagnosis": "ROOT_CAUSE: ProxySQL on pod proxysql-mysql1-0 has exhausted its per\u2011process open\u2011file\u2011descriptor limit (65\u202f536) because the host\u2019s fs.nr_open silently clamps the effective limit far below the configured LimitNOFILE, causing accept() to fail with errno\u202f24 (\u201cToo many open files\u201d) and preventing any new connections from reaching the healthy mysql1 primary.\n\nROOT_CAUSE_CATEGORY: resource_exhaustion\n\nFIX: Raise the host\u2019s fs.nr_open sysctl on node\u2011iad\u2011data\u20113 to at least 1\u202f073\u202f741\u202f824 (e.g., `sysctl -w fs.nr_open=1048576`) and restart the proxysql\u2011mysql1 pod so the ProxySQL process picks up the higher limit and can accept connections again.",
+      "tools_used": [
+        "get_alerts",
+        "describe_pod",
+        "get_logs",
+        "get_metrics",
+        "get_node_status",
+        "get_events",
+        "query_traces"
+      ],
+      "n_tool_calls": 7
+    },
+    {
+      "item_id": "DX11",
+      "scenario_id": "108-github_dns_zone_corruption",
+      "incident": "github_dns_zone_corruption",
+      "source_company": "GitHub",
+      "difficulty": 5,
+      "ground_truth_category": "config_error",
+      "source_url": "https://github.blog/news-insights/dns-outage-post-mortem/",
+      "agent_diagnosis": "Based on my investigation, here is the analysis:\n\n**Evidence Summary:**\nThe alert shows {{VICTIM_SVC}} failing with DNS timeouts then NXDOMAIN. However, the smoking gun is in the secondary alerts and events:\n\n1. **DNSZoneRecordCountDrop** alert shows authoritative zone records collapsed from 41,902 \u2192 7,118 at 18:22\n2. **Events** reveal: \"DNS deploy pushed a zone with 7118 records (previous 41902); provisioning-API output was not sanity-checked before zone generation \u2014 significant records removed (SMOKING GUN: this is what produced NXDOMAIN)\"\n3. **DNS deploy logs** confirm: \"provisioning API returned partial result: 7118 records (expected ~41900)\" and \"generating zone file from API output (no sanity-check stage configured)\"\n4. **Circular dependency**: The deploy pipeline itself needs DNS to resolve \"provisioning.internal\" to fetch zone data, but caching nameservers had stale upstream IPs due to a Puppet manifest bug (never restarted after config change), causing the API call to return degraded data\n5. **Fileserver OOM** is adversarial/downstream \u2014 caused by retry storms from the DNS failure, not an independent capacity issue\n\n**Distinguishing from look-alikes:**\n- The fileserver OOMs appear to be a resource exhaustion issue, but they are caused by the DNS failure spawning retry processes\n- The DNS timeout rate (0.83) suggests network/resolver issues, but the NXDOMAIN rate (0.74) after 18:22 specifically indicates missing records in the zone\n- The caching nameservers appear Ready/Healthy but have stale upstream IPs \u2014 a config error, not node failure\n\nROOT_CAUSE: The DNS deploy pipeline pushed a truncated authoritative zone (41,902 \u2192 7,118 records) generated from unvalidated provisioning-API output during a circular dependency failure (the deploy itself needs DNS to fetch zone data), triggered by caching nameservers having stale upstream IPs from a Puppet manifest bug that failed to restart them after a config change.\n\nROOT_CAUSE_CATEGORY: bad_deploy\n\nFIX: Restore the authoritative DNS zone from the pre-18:22 backup (41,902 records) and restart the caching nameservers to pick up the correct upstream IP configuration.",
+      "tools_used": [
+        "get_alerts",
+        "get_events",
+        "get_node_status",
+        "describe_pod",
+        "get_deployment_status",
+        "get_logs",
+        "get_metrics"
+      ],
+      "n_tool_calls": 7
+    },
+    {
+      "item_id": "DX12",
+      "scenario_id": "008-cert_expiry",
+      "incident": "cert_expiry",
+      "source_company": null,
+      "difficulty": 4,
+      "ground_truth_category": "config_error",
+      "source_url": null,
+      "agent_diagnosis": "ROOT_CAUSE: The serving TLS certificate mounted at `/etc/billing/cert.pem` in the billing pods expired at 2026-06-20T18:29:00Z (current time is 18:30:05Z), causing all TLS handshakes to fail with x509 \"certificate expired\" errors, dropping success rate to 4%.\n\nROOT_CAUSE_CATEGORY: config_error\n\nFIX: Update the `tls-certs` Secret with a renewed certificate (valid notAfter > now) and roll out the billing Deployment to reload the mounted certificate into all pods.",
+      "tools_used": [
+        "get_alerts",
+        "get_logs",
+        "describe_pod",
+        "get_events"
+      ],
+      "n_tool_calls": 4
+    }
+  ]
+}

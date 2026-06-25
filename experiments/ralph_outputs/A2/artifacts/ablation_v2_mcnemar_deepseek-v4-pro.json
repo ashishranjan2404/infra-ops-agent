@@ -1,0 +1,39 @@
+{
+  "model": "deepseek-v4-pro",
+  "n_incidents": 30,
+  "seeds": 5,
+  "mcnemar_overall": {
+    "rex_vs_zero_shot": {
+      "a_pass_b_fail": 99,
+      "a_fail_b_pass": 1,
+      "n_discordant": 100,
+      "p_exact": 0.0,
+      "chi2_cc": 94.09,
+      "significant_05": true
+    },
+    "rex_vs_best_of_n": {
+      "a_pass_b_fail": 88,
+      "a_fail_b_pass": 0,
+      "n_discordant": 88,
+      "p_exact": 0.0,
+      "chi2_cc": 86.011,
+      "significant_05": true
+    },
+    "rex_vs_retry_realistic": {
+      "a_pass_b_fail": 88,
+      "a_fail_b_pass": 1,
+      "n_discordant": 89,
+      "p_exact": 0.0,
+      "chi2_cc": 83.101,
+      "significant_05": true
+    },
+    "rex_vs_rex_no_oracle": {
+      "a_pass_b_fail": 91,
+      "a_fail_b_pass": 0,
+      "n_discordant": 91,
+      "p_exact": 0.0,
+      "chi2_cc": 89.011,
+      "significant_05": true
+    }
+  }
+}

@@ -1,0 +1,17 @@
+distribution                                n     dip        p  conclusion
+----------------------------------------------------------------------------------------------------
+A1/glm-5p2::zero_shot                     126  0.1429   0.0000  REJECT unimodality (multimodal / bimodal)
+A1/glm-5p2::best_of_n                     126  0.1508   0.0000  REJECT unimodality (multimodal / bimodal)
+A1/glm-5p2::retry_realistic               126  0.1468   0.0000  REJECT unimodality (multimodal / bimodal)
+A1/glm-5p2::rex                           126  0.0332   0.4221  fail to reject unimodality
+A1/glm-5p2::rex_no_oracle                 126  0.1468   0.0000  REJECT unimodality (multimodal / bimodal)
+A1/glm-5p2::ALL_CONDITIONS_pooled         630  0.1214   0.0000  REJECT unimodality (multimodal / bimodal)
+A2/deepseek-v4-pro::zero_shot             150  0.1200   0.0000  REJECT unimodality (multimodal / bimodal)
+A2/deepseek-v4-pro::best_of_n             150  0.1643   0.0000  REJECT unimodality (multimodal / bimodal)
+A2/deepseek-v4-pro::retry_realistic       150  0.1600   0.0000  REJECT unimodality (multimodal / bimodal)
+A2/deepseek-v4-pro::rex                   150  0.0250   0.7750  fail to reject unimodality
+A2/deepseek-v4-pro::rex_no_oracle         150  0.1543   0.0000  REJECT unimodality (multimodal / bimodal)
+A2/deepseek-v4-pro::ALL_CONDITIONS_pooled  750  0.1340   0.0000  REJECT unimodality (multimodal / bimodal)
+rex/runs::diagnostic_probe_scores          12  0.1875   0.0001  REJECT unimodality (multimodal / bimodal)
+
+Wrote /Users/mei/rl/experiments/ralph_outputs/I3/artifacts/dip_results.json

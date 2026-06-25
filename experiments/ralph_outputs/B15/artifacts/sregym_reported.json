@@ -1,0 +1,58 @@
+{
+  "benchmark": "SREGym",
+  "version_note": "Numbers transcribed from SREGym paper (arXiv:2605.07161v1) and the public leaderboard (sregym.com/leaderboard), retrieved 2026-06-25. Frozen here for reproducibility; not scraped at run time.",
+  "n_problems": 90,
+  "runs_per_problem": 3,
+  "attempts_per_run": 1,
+  "metric_semantics": "Reported 'success rate' is over 3 runs with a single attempt per run. Single-attempt success rate is pass@1 semantics, so SREGym E2E/diagnosis/mitigation success rates ARE pass@1 even though the paper does not use the 'pass@1' label.",
+  "grader": "Diagnosis: checklist-based LLM-as-judge on fault localization (correct originating component). Mitigation: live mitigation oracle verifying the real system recovered. E2E: correct diagnosis AND correct mitigation on the same run.",
+  "substrate": "Live containerized (Kubernetes) microservice apps with injected high-fidelity faults; some ported from AIOpsLab/ITBench.",
+  "partitions": {"ported": 34, "similar": 43, "new": 13},
+  "leaderboard": [
+    {"agent": "Claude Code", "model": "Claude Sonnet 4.6", "noise": false,
+     "diagnosis": 0.726, "mitigation": 0.756, "e2e": 0.607,
+     "source": "sregym.com/leaderboard rank 1; arXiv:2605.07161v1"},
+    {"agent": "Stratus", "model": "Claude Sonnet 4.6", "noise": false,
+     "diagnosis": 0.615, "mitigation": 0.785, "e2e": 0.548,
+     "source": "sregym.com/leaderboard rank 2; arXiv:2605.07161v1"},
+    {"agent": "Claude Code", "model": "Claude Sonnet 4.6", "noise": true,
+     "diagnosis": 0.626, "mitigation": 0.763, "e2e": 0.537,
+     "source": "sregym.com/leaderboard rank 3"},
+    {"agent": "Codex", "model": "GPT-5.4", "noise": false,
+     "diagnosis": 0.700, "mitigation": 0.652, "e2e": 0.533,
+     "source": "sregym.com/leaderboard rank 4; arXiv:2605.07161v1"},
+    {"agent": "Codex", "model": "GPT-5.4", "noise": true,
+     "diagnosis": 0.593, "mitigation": 0.640, "e2e": 0.459,
+     "source": "sregym.com/leaderboard rank 5"},
+    {"agent": "Stratus", "model": "Claude Sonnet 4.6", "noise": true,
+     "diagnosis": 0.515, "mitigation": 0.655, "e2e": 0.402,
+     "source": "sregym.com/leaderboard rank 6"},
+    {"agent": "Stratus", "model": "Kimi K2.5", "noise": false,
+     "diagnosis": 0.413, "mitigation": 0.606, "e2e": 0.329,
+     "source": "sregym.com/leaderboard rank 7"},
+    {"agent": "Stratus", "model": "Kimi K2.5", "noise": true,
+     "diagnosis": 0.389, "mitigation": 0.573, "e2e": 0.304,
+     "source": "sregym.com/leaderboard rank 8"}
+  ],
+  "partition_breakdown": {
+    "Stratus::Claude Sonnet 4.6::no_noise": {
+      "ported":  {"diagnosis": 0.706, "mitigation": 0.833, "e2e": 0.637},
+      "similar": {"diagnosis": 0.628, "mitigation": 0.806, "e2e": 0.589},
+      "new":     {"diagnosis": 0.333, "mitigation": 0.590, "e2e": 0.179},
+      "source": "arXiv:2605.07161v1 per-partition table"
+    },
+    "Claude Code::Claude Sonnet 4.6::no_noise": {
+      "ported":  {"diagnosis": 0.745, "mitigation": 0.716, "e2e": 0.608},
+      "similar": {"diagnosis": 0.814, "mitigation": 0.791, "e2e": 0.705},
+      "new":     {"diagnosis": 0.385, "mitigation": 0.744, "e2e": 0.282},
+      "source": "arXiv:2605.07161v1 per-partition table"
+    },
+    "Codex::GPT-5.4::no_noise": {
+      "ported":  {"diagnosis": 0.765, "mitigation": 0.667, "e2e": 0.578},
+      "similar": {"diagnosis": 0.783, "mitigation": 0.682, "e2e": 0.612},
+      "new":     {"diagnosis": 0.256, "mitigation": 0.410, "e2e": 0.154},
+      "source": "arXiv:2605.07161v1 per-partition table"
+    }
+  },
+  "key_finding": "E2E success collapses on novel (New) failures: Stratus 63.7->17.9, Claude Code 60.8->28.2, Codex 57.8->15.4 (ported->new, no noise)."
+}

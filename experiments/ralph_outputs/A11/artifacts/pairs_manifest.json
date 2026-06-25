@@ -1,0 +1,47 @@
+{
+  "description": "A11 transfer-test incident pairs. Each pair shares root cause (failure_class + canonical fix tool) but differs in surface symptom (leaf-visible vs buried cascade, different topology and service names). Use A as train, B as held-out transfer test (or vice versa).",
+  "generated_dir": "scenarios/cidg/generated/",
+  "pairs": [
+    {
+      "pair_id": "P1",
+      "shared_root_cause": {
+        "failure_class": "fd_exhaust",
+        "fix_tool": "restart_service"
+      },
+      "A": "a11-pair-fd-exhaust-leaf-shipper.yaml",
+      "B": "a11-pair-fd-exhaust-cascade-gw.yaml",
+      "symptom_A": "the log-shipper service itself errors out (leaf, root visible)",
+      "symptom_B": "two downstream callers (orders-svc, notify-svc) breach SLO while the api-gw root is buried (cascade)"
+    },
+    {
+      "pair_id": "P2",
+      "shared_root_cause": {
+        "failure_class": "cert_expire",
+        "fix_tool": "renew_certificate"
+      },
+      "A": "a11-pair-cert-expire-leaf-sidecar.yaml",
+      "B": "a11-pair-cert-expire-cascade-ingress.yaml",
+      "symptom_A": "payments-svc rejects its own calls (leaf, root visible)",
+      "symptom_B": "web-frontend and mobile-bff both 5xx while tls-ingress is the buried root (cascade)"
+    },
+    {
+      "pair_id": "P3",
+      "shared_root_cause": {
+        "failure_class": "mem_leak",
+        "fix_tool": "increase_memory_limit"
+      },
+      "A": "a11-pair-mem-leak-leaf-transcoder.yaml",
+      "B": "a11-pair-mem-leak-cascade-cache.yaml",
+      "symptom_A": "transcoder OOMs itself (leaf, root visible)",
+      "symptom_B": "catalog-api and recsys degrade from origin overload while object-cache is the buried root (cascade)"
+    }
+  ],
+  "files": [
+    "a11-pair-fd-exhaust-leaf-shipper.yaml",
+    "a11-pair-fd-exhaust-cascade-gw.yaml",
+    "a11-pair-cert-expire-leaf-sidecar.yaml",
+    "a11-pair-cert-expire-cascade-ingress.yaml",
+    "a11-pair-mem-leak-leaf-transcoder.yaml",
+    "a11-pair-mem-leak-cascade-cache.yaml"
+  ]
+}

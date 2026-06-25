@@ -1,0 +1,67 @@
+# J1 — staging deployment of the CIDG call-mesh + in-cluster agent-runner Job.
+#
+# This is a SELF-CONTAINED, J1-namespaced (j1-staging) staging twin of
+# mreal/k8s.yaml. It does NOT touch the live cidg-mreal namespace, so it can be
+# stood up alongside production without collision. Stand up the mesh, install
+# Chaos Mesh (see j1_chaos_plan.md), then run the agent-runner Job which drives
+# experiments and writes a result to a ConfigMap.
+#
+# Validate offline (no cluster needed):
+#   KUBECONFIG=/dev/null kubectl apply --dry-run=client -f j1_staging_deploy.yaml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: j1-staging
+  labels: { part-of: cidg-mreal, env: staging, j1: "true" }
+---
+# The agent-runner harness mounted from a ConfigMap (built by the deploy script
+# from j1_agent_runner.py). Runs as a Job so it terminates after the eval sweep.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: j1-agent-runner
+  namespace: j1-staging
+  labels: { part-of: cidg-mreal, j1: "true" }
+spec:
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata: { labels: { app: j1-agent-runner, part-of: cidg-mreal } }
+    spec:
+      serviceAccountName: j1-agent-runner       # RBAC below: chaos + read-only mesh
+      restartPolicy: Never
+      containers:
+        - name: runner
+          image: python:3.11-slim
+          command: ["python", "/app/j1_agent_runner.py", "--backend", "kube", "--soak", "30"]
+          volumeMounts: [{ name: src, mountPath: /app }]
+          resources: { requests: { cpu: 50m, memory: 64Mi }, limits: { cpu: 500m, memory: 256Mi } }
+      volumes: [{ name: src, configMap: { name: j1-agent-runner-src } }]
+---
+# Least-privilege SA: the runner may create/delete Chaos Mesh experiments in its
+# own namespace and read pods/exec for metrics — nothing cluster-wide, no deletes
+# of workloads. (Bound to j1-staging only.)
+apiVersion: v1
+kind: ServiceAccount
+metadata: { name: j1-agent-runner, namespace: j1-staging, labels: { part-of: cidg-mreal } }
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: { name: j1-agent-runner, namespace: j1-staging, labels: { part-of: cidg-mreal } }
+rules:
+  - apiGroups: [""]
+    resources: [pods, pods/exec]
+    verbs: [get, list, create]
+  - apiGroups: [""]
+    resources: [configmaps]
+    verbs: [get, create, update]
+  - apiGroups: ["chaos-mesh.org"]
+    resources: [httpchaos, networkchaos, podchaos, stresschaos]
+    verbs: [get, list, create, delete]          # delete = the auto-heal path
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: { name: j1-agent-runner, namespace: j1-staging, labels: { part-of: cidg-mreal } }
+subjects: [{ kind: ServiceAccount, name: j1-agent-runner, namespace: j1-staging }]
+roleRef: { kind: Role, name: j1-agent-runner, apiGroup: rbac.authorization.k8s.io }

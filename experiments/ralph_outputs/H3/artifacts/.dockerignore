@@ -1,0 +1,67 @@
+# Keep the build context small & reproducible. Everything here is excluded
+# from `docker build`, which speeds builds and avoids baking secrets/junk in.
+
+# --- VCS & tooling ---
+.git
+.gitignore
+.github
+.factory
+.hermes
+.windsurf
+.agents
+.claude
+
+# --- Python caches / venvs ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+.venv-hud/
+venv/
+env/
+
+# --- Secrets (NEVER bake into an image) ---
+.env
+.env.*
+*.pem
+*.key
+secrets/
+.secrets/
+
+# --- Heavy / irrelevant trees not needed by the eval ---
+site/
+docs/
+research/
+gcp-bench/
+linode-bench/
+mreal/
+opensre-traj/
+skills/
+runs/
+rex/runs/
+experiments/results/
+experiments/ralph_outputs/
+# ...but the H3 build needs its own entrypoint + smoke from that tree.
+# Re-include each parent dir, then the two files (Docker needs the chain).
+!experiments/ralph_outputs/
+!experiments/ralph_outputs/H3/
+!experiments/ralph_outputs/H3/artifacts/
+!experiments/ralph_outputs/H3/artifacts/entrypoint.sh
+!experiments/ralph_outputs/H3/artifacts/smoke_eval.py
+*.mp3
+*.png
+*.jpg
+
+# --- The GPU/SFT stack is not used by this image ---
+requirements.txt
+
+# --- Editor / OS cruft ---
+.DS_Store
+.idea/
+.vscode/
+*.swp

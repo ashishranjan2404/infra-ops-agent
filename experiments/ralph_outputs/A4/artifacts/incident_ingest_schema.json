@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sre-degrees/incident_ingest_schema/1.0",
+  "title": "IncidentRecord",
+  "description": "Normalized incident record for ingestion from external partners (e.g. Snorkel). Maps onto scenarios/cidg/generated/*.yaml (root_cause, trap_actions, canonical_fix, slo, assertions) + opensre-traj/real-incidents/catalog.md fields + INCIDENT_DATASET.md classification taxonomy.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version", "incident_id", "source", "title", "category",
+    "classification", "loud_symptom", "root_cause", "causal_chain",
+    "trap_actions", "canonical_fix", "slo", "assertions"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+    "incident_id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "source": {
+      "type": "object",
+      "required": ["org", "kind", "license", "anonymization", "pii_status"],
+      "properties": {
+        "org": { "type": "string" },
+        "kind": { "enum": ["postmortem", "raw_anon", "env", "reconstructed"] },
+        "url": { "type": "string" },
+        "license": { "type": "string" },
+        "anonymization": { "type": "string" },
+        "pii_status": { "enum": ["none", "redacted", "present"] }
+      }
+    },
+    "title": { "type": "string" },
+    "category": {
+      "enum": ["network_fault", "config_error", "saturation",
+               "resource_exhaustion", "data", "conflict", "time",
+               "cache_flush", "other"]
+    },
+    "classification": { "enum": ["simple", "cascade", "novel"] },
+    "loud_symptom": { "type": "string" },
+    "why_misleading": { "type": "string" },
+    "root_cause": {
+      "type": "object",
+      "required": ["location", "kind", "severity"],
+      "properties": {
+        "location": { "type": "string" },
+        "kind": { "type": "string" },
+        "severity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "hidden": { "type": "boolean" },
+        "persistent": { "type": "boolean" }
+      }
+    },
+    "causal_chain": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "trap_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tool", "args"],
+        "properties": { "tool": { "type": "string" }, "args": { "type": "object" } }
+      }
+    },
+    "canonical_fix": {
+      "type": "object",
+      "required": ["steps"],
+      "properties": {
+        "ordering_notes": { "type": "string" },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["tool", "args"],
+            "properties": { "tool": { "type": "string" }, "args": { "type": "object" } }
+          }
+        }
+      }
+    },
+    "slo": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["metric", "node", "direction", "threshold", "sustain_ticks"],
+        "properties": {
+          "metric": { "type": "string" },
+          "node": { "type": "string" },
+          "direction": { "enum": ["higher_bad", "lower_bad"] },
+          "threshold": { "type": "number" },
+          "sustain_ticks": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "assertions": {
+      "type": "object",
+      "required": ["cascades", "loudest_alert_not_cause", "fix_resolves",
+                   "buried_gun_exists", "hysteresis", "monitoring_degrades"],
+      "properties": {
+        "cascades": { "type": "boolean" },
+        "loudest_alert_not_cause": { "type": "boolean" },
+        "fix_resolves": { "type": "boolean" },
+        "buried_gun_exists": { "type": "boolean" },
+        "hysteresis": { "type": "boolean" },
+        "monitoring_degrades": { "type": "boolean" }
+      }
+    },
+    "topology": { "type": "object" },
+    "observation": { "type": "object" },
+    "chance": { "type": "object" },
+    "seed": { "type": "integer" },
+    "notes": { "type": "string" }
+  },
+  "x-conditional": "if classification == 'cascade' then why_misleading is required",
+  "x-recommended-tools": [
+    "scale_deployment", "clear_cache", "rollback_deployment", "restart_pod",
+    "drain_node", "cordon_node", "restart_service", "failover", "increase_memory_limit",
+    "restart_coredns", "restart_kube_proxy", "scale_provider_rate_limits"
+  ]
+}

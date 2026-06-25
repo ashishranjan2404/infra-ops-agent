@@ -1,0 +1,550 @@
+{
+  "count": 33,
+  "incidents": [
+    {
+      "incident_id": "redis-cache-flush",
+      "file": "scenarios/cidg/generated/40-redis-cache-flush.yaml",
+      "root_cause_node": "session-cache",
+      "root_cause_severity": 0.7,
+      "cascades": false,
+      "total_services": 1,
+      "services_affected": 1,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "session-cache"
+      ],
+      "severity_tier": "SEV3"
+    },
+    {
+      "incident_id": "billing-disk-fill",
+      "file": "scenarios/cidg/generated/41-billing-disk-fill.yaml",
+      "root_cause_node": "billing-worker",
+      "root_cause_severity": 0.7,
+      "cascades": false,
+      "total_services": 1,
+      "services_affected": 1,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "billing-worker"
+      ],
+      "severity_tier": "SEV3"
+    },
+    {
+      "incident_id": "auth-cert-expiry",
+      "file": "scenarios/cidg/generated/42-auth-cert-expiry.yaml",
+      "root_cause_node": "auth-gateway",
+      "root_cause_severity": 0.7,
+      "cascades": false,
+      "total_services": 1,
+      "services_affected": 1,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "auth-gateway"
+      ],
+      "severity_tier": "SEV3"
+    },
+    {
+      "incident_id": "checkout-bad-rollout",
+      "file": "scenarios/cidg/generated/43-checkout-bad-rollout.yaml",
+      "root_cause_node": "checkout-api",
+      "root_cause_severity": 0.7,
+      "cascades": false,
+      "total_services": 1,
+      "services_affected": 1,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "checkout-api"
+      ],
+      "severity_tier": "SEV3"
+    },
+    {
+      "incident_id": "search-cpu-starve",
+      "file": "scenarios/cidg/generated/44-search-cpu-starve.yaml",
+      "root_cause_node": "search-api",
+      "root_cause_severity": 0.7,
+      "cascades": false,
+      "total_services": 1,
+      "services_affected": 1,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "search-api"
+      ],
+      "severity_tier": "SEV3"
+    },
+    {
+      "incident_id": "ingest-fd-exhaust",
+      "file": "scenarios/cidg/generated/45-ingest-fd-exhaust.yaml",
+      "root_cause_node": "log-ingest",
+      "root_cause_severity": 0.7,
+      "cascades": false,
+      "total_services": 1,
+      "services_affected": 1,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "log-ingest"
+      ],
+      "severity_tier": "SEV3"
+    },
+    {
+      "incident_id": "media-oom-leak",
+      "file": "scenarios/cidg/generated/46-media-oom-leak.yaml",
+      "root_cause_node": "thumbnailer",
+      "root_cause_severity": 0.7,
+      "cascades": false,
+      "total_services": 1,
+      "services_affected": 1,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "thumbnailer"
+      ],
+      "severity_tier": "SEV3"
+    },
+    {
+      "incident_id": "payments-dep-revoked",
+      "file": "scenarios/cidg/generated/47-payments-dep-revoked.yaml",
+      "root_cause_node": "payments-api",
+      "root_cause_severity": 0.7,
+      "cascades": false,
+      "total_services": 1,
+      "services_affected": 1,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "payments-api"
+      ],
+      "severity_tier": "SEV3"
+    },
+    {
+      "incident_id": "circleci-kubeproxy-iptables",
+      "file": "scenarios/cidg/generated/50-circleci-kubeproxy-iptables.yaml",
+      "root_cause_node": "kube-proxy",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "api-svc",
+        "ingress-gw",
+        "kube-proxy",
+        "web-app",
+        "worker-svc"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "datadog-systemd-cilium",
+      "file": "scenarios/cidg/generated/51-datadog-systemd-cilium.yaml",
+      "root_cause_node": "cni-agent",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "cni-agent",
+        "ingress-gw",
+        "region-api",
+        "region-db",
+        "region-worker"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "incidentio-anetd-cpu",
+      "file": "scenarios/cidg/generated/52-incidentio-anetd-cpu.yaml",
+      "root_cause_node": "dataplane-agent",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "dataplane-agent",
+        "ingress-gw",
+        "memcached-proxy",
+        "pg-proxy"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "slack-tgw-fd-exhaustion",
+      "file": "scenarios/cidg/generated/53-slack-tgw-fd-exhaustion.yaml",
+      "root_cause_node": "transit-gateway",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "dashboard",
+        "ingress-gw",
+        "provision-svc",
+        "transit-gateway",
+        "web-tier"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "slack-consul-cache-db",
+      "file": "scenarios/cidg/generated/54-slack-consul-cache-db.yaml",
+      "root_cause_node": "consul-agent",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "cache-ring",
+        "consul-agent",
+        "ingress-gw",
+        "vitess-db"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "github-network-partition",
+      "file": "scenarios/cidg/generated/55-github-network-partition.yaml",
+      "root_cause_node": "orchestrator",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "app-east",
+        "app-west",
+        "ingress-gw",
+        "mysql-primary",
+        "orchestrator"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "github-proxysql-fd-limit",
+      "file": "scenarios/cidg/generated/56-github-proxysql-fd-limit.yaml",
+      "root_cause_node": "proxysql",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "ingress-gw",
+        "mysql1",
+        "proxysql",
+        "writes-api"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "github-mysql-semaphore-rename",
+      "file": "scenarios/cidg/generated/57-github-mysql-semaphore-rename.yaml",
+      "root_cause_node": "replica-pool",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "analytics",
+        "ingress-gw",
+        "reads-api",
+        "replica-pool"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "cloudflare-zonemd-stale-cache",
+      "file": "scenarios/cidg/generated/58-cloudflare-zonemd-stale-cache.yaml",
+      "root_cause_node": "static-zone-parser",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "edge-dns",
+        "ingress-gw",
+        "resolver-1111",
+        "static-zone-parser"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "cloudflare-byzantine-switch",
+      "file": "scenarios/cidg/generated/59-cloudflare-byzantine-switch.yaml",
+      "root_cause_node": "agg-switch",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "agg-switch",
+        "api-svc",
+        "cluster-node-a",
+        "cluster-node-b",
+        "ingress-gw"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "cloudflare-bgp-reorder",
+      "file": "scenarios/cidg/generated/60-cloudflare-bgp-reorder.yaml",
+      "root_cause_node": "bgp-policy",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "bgp-policy",
+        "edge-pop-a",
+        "edge-pop-b",
+        "edge-pop-c",
+        "ingress-gw"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "github-dns-zone-corruption",
+      "file": "scenarios/cidg/generated/61-github-dns-zone-corruption.yaml",
+      "root_cause_node": "dns-pipeline",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "caching-ns",
+        "dns-pipeline",
+        "fileserver-api",
+        "ingress-gw"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "launchdarkly-cold-cache",
+      "file": "scenarios/cidg/generated/62-launchdarkly-cold-cache.yaml",
+      "root_cause_node": "flag-router",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "flag-router",
+        "ingress-gw",
+        "sdk-poll",
+        "sdk-stream",
+        "web-app"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "aws-kinesis-cell-manager",
+      "file": "scenarios/cidg/generated/63-aws-kinesis-cell-manager.yaml",
+      "root_cause_node": "cell-manager",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "cell-manager",
+        "ingress-gw",
+        "kinesis-dataplane",
+        "tls-provisioner"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "facebook-bgp-backbone",
+      "file": "scenarios/cidg/generated/70-facebook-bgp-backbone.yaml",
+      "root_cause_node": "backbone-router",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "backbone-router",
+        "dns-edge",
+        "fb-api",
+        "ingress-gw",
+        "internal-tools"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "cloudflare-leap-second",
+      "file": "scenarios/cidg/generated/71-cloudflare-leap-second.yaml",
+      "root_cause_node": "rrdns",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "dns-resolver",
+        "edge-api",
+        "ingress-gw",
+        "rrdns"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "knight-capital-conflict",
+      "file": "scenarios/cidg/generated/72-knight-capital-conflict.yaml",
+      "root_cause_node": "order-router",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "ingress-gw",
+        "order-router",
+        "risk-svc",
+        "trade-gateway"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "azure-leapyear-cert",
+      "file": "scenarios/cidg/generated/73-azure-leapyear-cert.yaml",
+      "root_cause_node": "fabric-agent",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "fabric-agent",
+        "guest-vm-a",
+        "guest-vm-b",
+        "ingress-gw"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "github-zk-splitbrain",
+      "file": "scenarios/cidg/generated/74-github-zk-splitbrain.yaml",
+      "root_cause_node": "zk-ensemble",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "coordination-api",
+        "ingress-gw",
+        "kafka-broker",
+        "zk-ensemble"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "firefox-addon-cert",
+      "file": "scenarios/cidg/generated/75-firefox-addon-cert.yaml",
+      "root_cause_node": "addon-signer",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 3,
+      "services_affected": 3,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "addon-signer",
+        "browser-fleet",
+        "ingress-gw"
+      ],
+      "severity_tier": "SEV2"
+    },
+    {
+      "incident_id": "cloudflare-waf-regex",
+      "file": "scenarios/cidg/generated/76-cloudflare-waf-regex.yaml",
+      "root_cause_node": "waf-engine",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "edge-proxy",
+        "ingress-gw",
+        "origin-api",
+        "waf-engine"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "gke-ip-exhaustion",
+      "file": "scenarios/cidg/generated/77-gke-ip-exhaustion.yaml",
+      "root_cause_node": "pod-cidr-pool",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "batch-jobs",
+        "ingress-gw",
+        "pod-cidr-pool",
+        "scheduler-api"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "kafka-poison-pill",
+      "file": "scenarios/cidg/generated/78-kafka-poison-pill.yaml",
+      "root_cause_node": "consumer-group",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "consumer-group",
+        "ingress-gw",
+        "ledger-consumer",
+        "orders-consumer"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "conntrack-exhaustion",
+      "file": "scenarios/cidg/generated/79-conntrack-exhaustion.yaml",
+      "root_cause_node": "nat-gateway",
+      "root_cause_severity": 0.7,
+      "cascades": true,
+      "total_services": 4,
+      "services_affected": 4,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "egress-api",
+        "ingress-gw",
+        "nat-gateway",
+        "webhook-svc"
+      ],
+      "severity_tier": "SEV1"
+    },
+    {
+      "incident_id": "gitlab-db-deletion",
+      "file": "scenarios/cidg/generated/80-gitlab-db-deletion.yaml",
+      "root_cause_node": "db-primary",
+      "root_cause_severity": 0.8,
+      "cascades": true,
+      "total_services": 5,
+      "services_affected": 5,
+      "services_affected_pct": 100.0,
+      "affected_services": [
+        "api-svc",
+        "ci-runner",
+        "db-primary",
+        "ingress-gw",
+        "web-app"
+      ],
+      "severity_tier": "SEV1"
+    }
+  ]
+}

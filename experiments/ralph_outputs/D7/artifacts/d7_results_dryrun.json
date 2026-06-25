@@ -1,0 +1,146 @@
+{
+  "_meta": {
+    "model": "glm-5p2",
+    "dry_run": true,
+    "train_family": "cascade",
+    "n_exemplars": 3,
+    "train_names": [
+      "github_network_partition",
+      "aws_kinesis_cell_manager",
+      "azure_ddos"
+    ],
+    "configs": [
+      "cascade",
+      "mixed",
+      "none"
+    ],
+    "seeds": 3,
+    "n_eval_incidents": 4,
+    "threshold": 0.8
+  },
+  "cascade": {
+    "simple": {
+      "n": 12,
+      "passes": 4,
+      "pass@1": 0.3333,
+      "ci95": [
+        0.1381,
+        0.6094
+      ],
+      "mean_reward": 0.7037,
+      "reward_std": 0.1201,
+      "eval_incidents": [
+        "billing_disk_fill",
+        "search_cpu_starve",
+        "oom_kill",
+        "bad_deploy_leaf"
+      ]
+    },
+    "cascade": {
+      "n": 12,
+      "passes": 2,
+      "pass@1": 0.1667,
+      "ci95": [
+        0.047,
+        0.448
+      ],
+      "mean_reward": 0.667,
+      "reward_std": 0.1127,
+      "eval_incidents": [
+        "datadog_systemd_cilium",
+        "crowdstrike_bsod",
+        "cloudflare_bgp_reorder",
+        "github_dns_zone_corruption"
+      ]
+    }
+  },
+  "mixed": {
+    "simple": {
+      "n": 12,
+      "passes": 4,
+      "pass@1": 0.3333,
+      "ci95": [
+        0.1381,
+        0.6094
+      ],
+      "mean_reward": 0.7037,
+      "reward_std": 0.1201,
+      "eval_incidents": [
+        "billing_disk_fill",
+        "search_cpu_starve",
+        "oom_kill",
+        "bad_deploy_leaf"
+      ]
+    },
+    "cascade": {
+      "n": 12,
+      "passes": 2,
+      "pass@1": 0.1667,
+      "ci95": [
+        0.047,
+        0.448
+      ],
+      "mean_reward": 0.667,
+      "reward_std": 0.1127,
+      "eval_incidents": [
+        "datadog_systemd_cilium",
+        "crowdstrike_bsod",
+        "cloudflare_bgp_reorder",
+        "github_dns_zone_corruption"
+      ]
+    }
+  },
+  "none": {
+    "simple": {
+      "n": 12,
+      "passes": 4,
+      "pass@1": 0.3333,
+      "ci95": [
+        0.1381,
+        0.6094
+      ],
+      "mean_reward": 0.7037,
+      "reward_std": 0.1201,
+      "eval_incidents": [
+        "billing_disk_fill",
+        "search_cpu_starve",
+        "oom_kill",
+        "bad_deploy_leaf"
+      ]
+    },
+    "cascade": {
+      "n": 12,
+      "passes": 2,
+      "pass@1": 0.1667,
+      "ci95": [
+        0.047,
+        0.448
+      ],
+      "mean_reward": 0.667,
+      "reward_std": 0.1127,
+      "eval_incidents": [
+        "datadog_systemd_cilium",
+        "crowdstrike_bsod",
+        "cloudflare_bgp_reorder",
+        "github_dns_zone_corruption"
+      ]
+    }
+  },
+  "transfer": {
+    "H1_helps_cascade_vs_none": 0.0,
+    "H2_hurts_simple_vs_mixed": 0.0,
+    "cascade_only": {
+      "simple_p1": 0.3333,
+      "cascade_p1": 0.1667
+    },
+    "mixed": {
+      "simple_p1": 0.3333,
+      "cascade_p1": 0.1667
+    },
+    "none": {
+      "simple_p1": 0.3333,
+      "cascade_p1": 0.1667
+    },
+    "note": "Positive H1 => cascade-only training helps cascade. Negative H2 => it hurts simple."
+  }
+}

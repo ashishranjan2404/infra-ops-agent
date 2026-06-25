@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sre-degrees/intake_schema.json",
+  "title": "Donated incident intake",
+  "description": "Light, donor-fillable capture of a real cascading incident. Maps 1:1 onto opensre-traj/specs/real/*.json label fields. Evidence (k8s_pods/metrics/traces) is authored later by a human; this captures the first-party ground-truth labels only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "incident",
+    "source_company",
+    "provenance",
+    "consent",
+    "loud_symptom",
+    "root_cause",
+    "trap_action",
+    "correct_fix",
+    "category"
+  ],
+  "properties": {
+    "incident": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(_[a-z0-9]+)*$",
+      "description": "snake_case id"
+    },
+    "source_company": {
+      "type": "string",
+      "minLength": 1,
+      "description": "company name or 'anonymized'"
+    },
+    "provenance": {
+      "type": "string",
+      "enum": ["public_postmortem", "first_party_donated", "first_party_nonpublic"]
+    },
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["granted", "anonymized", "dua"],
+      "properties": {
+        "granted": { "type": "boolean" },
+        "anonymized": { "type": "boolean" },
+        "dua": { "type": "boolean", "description": "covered by a data-use agreement" },
+        "contact": { "type": ["string", "null"] }
+      }
+    },
+    "loud_symptom": {
+      "type": "string",
+      "minLength": 1,
+      "description": "the misleading loud alert/symptom (maps to alert.commonAnnotations.summary)"
+    },
+    "root_cause": {
+      "type": "string",
+      "minLength": 1,
+      "description": "REQUIRED first-party ground truth (maps to answer.root_cause_subtype)"
+    },
+    "trap_action": {
+      "type": "string",
+      "minLength": 1,
+      "description": "REQUIRED naive fix that worsened it (maps to remediation.trap_actions[])"
+    },
+    "correct_fix": {
+      "type": "string",
+      "minLength": 1,
+      "description": "maps to remediation.canonical_fix"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "saturation",
+        "network_fault",
+        "config_error",
+        "dependency_failure",
+        "bad_deploy",
+        "resource_exhaustion",
+        "node_failure",
+        "data_quality"
+      ],
+      "description": "maps to answer.root_cause_category"
+    },
+    "provider": { "type": "string" },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ts", "action"],
+        "properties": {
+          "ts": { "type": "string" },
+          "actor": { "type": "string" },
+          "action": { "type": "string" },
+          "effect": { "type": "string" }
+        }
+      }
+    },
+    "causal_chain": { "type": "string" },
+    "source_url": { "type": ["string", "null"] },
+    "severity": { "type": "string", "enum": ["info", "warning", "critical"] },
+    "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 }
+  }
+}

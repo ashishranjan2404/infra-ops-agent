@@ -1,0 +1,214 @@
+{
+  "corpus": {
+    "probe": 12,
+    "hud": 45,
+    "total": 57
+  },
+  "failure_tail": {
+    "n_failed": 36,
+    "n_clean_win": 21,
+    "n_zero_reward": 0
+  },
+  "primary_bucket_counts": {
+    "wrong_root_cause": 7,
+    "no_fix": 22,
+    "trap_taken": 7
+  },
+  "primary_bucket_pct_of_failed": {
+    "wrong_root_cause": 19.4,
+    "no_fix": 61.1,
+    "trap_taken": 19.4
+  },
+  "tag_counts": {
+    "root_cause": 7,
+    "correct_fix_missing": 29,
+    "trap_action": 7,
+    "attempted_trap_blocked": 2,
+    "not_resolved": 20,
+    "empty_plan": 1,
+    "safe_abstain": 1
+  },
+  "by_scenario": {
+    "gcp_service_control": {
+      "n": 16,
+      "failed": 9,
+      "buckets": {
+        "wrong_root_cause": 7,
+        "no_fix": 2
+      }
+    },
+    "oom_kill": {
+      "n": 18,
+      "failed": 6,
+      "buckets": {
+        "trap_taken": 6
+      }
+    },
+    "singleton_node_notready": {
+      "n": 20,
+      "failed": 20,
+      "buckets": {
+        "no_fix": 20
+      }
+    },
+    "bad_deploy_leaf": {
+      "n": 1,
+      "failed": 0,
+      "buckets": {}
+    },
+    "cpu_saturation_leaf": {
+      "n": 2,
+      "failed": 1,
+      "buckets": {
+        "trap_taken": 1
+      }
+    }
+  },
+  "caveat": "Small-N error analysis; counts are over THIS corpus only and do not statistically generalize. REx rollouts are single-shot plan submissions: there is no wall-clock 'timeout' failure mode; the nearest analog is an empty_plan (model abstained / escalated).",
+  "examples": [
+    {
+      "rollout_id": "diagnostic_probe_gcp_service_control.jsonl:0",
+      "source": "probe",
+      "scenario": "gcp_service_control",
+      "bucket": "wrong_root_cause",
+      "score": 0.45,
+      "tags": [
+        "root_cause",
+        "correct_fix_missing"
+      ],
+      "root_cause_excerpt": "service-control is returning 503 errors due to degraded Spanner connectivity or resource exhaustion following the api-gateway deploy, causing cascading failures"
+    },
+    {
+      "rollout_id": "diagnostic_probe_gcp_service_control.jsonl:2",
+      "source": "probe",
+      "scenario": "gcp_service_control",
+      "bucket": "no_fix",
+      "score": 0.75,
+      "tags": [
+        "correct_fix_missing"
+      ],
+      "root_cause_excerpt": "service-control is returning 503 errors due to resource exhaustion or failure after the api-gateway deploy, causing cascading failures across all dependent serv"
+    },
+    {
+      "rollout_id": "diagnostic_probe_gcp_service_control.jsonl:4",
+      "source": "probe",
+      "scenario": "gcp_service_control",
+      "bucket": "wrong_root_cause",
+      "score": 0.45,
+      "tags": [
+        "root_cause",
+        "correct_fix_missing"
+      ],
+      "root_cause_excerpt": "service-control is returning 503 errors due to resource exhaustion or failure following the api-gateway deploy, causing cascading failures across all dependent "
+    },
+    {
+      "rollout_id": "diagnostic_probe_oom_kill.jsonl:0",
+      "source": "probe",
+      "scenario": "oom_kill",
+      "bucket": "trap_taken",
+      "score": 0.4,
+      "tags": [
+        "trap_action"
+      ],
+      "root_cause_excerpt": "The image-resizer container is consuming memory beyond its 512MB limit, triggering OOM-killer termination and restart loops."
+    },
+    {
+      "rollout_id": "diagnostic_probe_oom_kill.jsonl:2",
+      "source": "probe",
+      "scenario": "oom_kill",
+      "bucket": "trap_taken",
+      "score": 0.4,
+      "tags": [
+        "trap_action"
+      ],
+      "root_cause_excerpt": "The image-resizer service is experiencing memory exhaustion due to unbounded RSS growth, causing repeated OOMKill terminations and SLO breaches."
+    },
+    {
+      "rollout_id": "diagnostic_probe_oom_kill.jsonl:4",
+      "source": "probe",
+      "scenario": "oom_kill",
+      "bucket": "trap_taken",
+      "score": 0.4,
+      "tags": [
+        "trap_action"
+      ],
+      "root_cause_excerpt": "The image-resizer container is consuming memory beyond its 512MB limit due to unbounded memory growth, causing repeated OOMKill terminations."
+    },
+    {
+      "rollout_id": "0209868f7041",
+      "source": "hud",
+      "scenario": "gcp_service_control",
+      "bucket": "wrong_root_cause",
+      "score": 0.45,
+      "tags": [
+        "root_cause",
+        "correct_fix_missing",
+        "attempted_trap_blocked"
+      ],
+      "root_cause_excerpt": "service-control is returning 503 errors due to resource exhaustion or failure after the api-gateway deploy, causing cascading failures across all dependent serv"
+    },
+    {
+      "rollout_id": "06d66346bd90",
+      "source": "hud",
+      "scenario": "singleton_node_notready",
+      "bucket": "no_fix",
+      "score": 0.3,
+      "tags": [
+        "correct_fix_missing",
+        "not_resolved",
+        "empty_plan",
+        "safe_abstain"
+      ],
+      "root_cause_excerpt": "The only worker node 'worker-node-1' is NotReady, so edge-api pods cannot be scheduled or run, causing 503s; remediating a NotReady node by draining/cordoning w"
+    },
+    {
+      "rollout_id": "06d66346bd90",
+      "source": "hud",
+      "scenario": "singleton_node_notready",
+      "bucket": "no_fix",
+      "score": 0.3,
+      "tags": [
+        "correct_fix_missing",
+        "not_resolved"
+      ],
+      "root_cause_excerpt": "The only worker node 'worker-node-1' in a single-node pool is NotReady, so 'edge-api' pods have no schedulable Ready node and return 503s."
+    },
+    {
+      "rollout_id": "06d66346bd90",
+      "source": "hud",
+      "scenario": "singleton_node_notready",
+      "bucket": "no_fix",
+      "score": 0.3,
+      "tags": [
+        "correct_fix_missing",
+        "not_resolved"
+      ],
+      "root_cause_excerpt": "The only worker node 'worker-node-1' is NotReady, so 'edge-api' pods have nowhere to be scheduled, causing 503s; cordon/drain are unsafe because it is the last "
+    },
+    {
+      "rollout_id": "0aee7640d916",
+      "source": "hud",
+      "scenario": "gcp_service_control",
+      "bucket": "wrong_root_cause",
+      "score": 0.45,
+      "tags": [
+        "root_cause",
+        "correct_fix_missing",
+        "attempted_trap_blocked"
+      ],
+      "root_cause_excerpt": "service-control is returning 503 errors due to resource exhaustion or failure following the api-gateway deploy, causing cascading failures across all dependent "
+    },
+    {
+      "rollout_id": "0b9d5049259d",
+      "source": "hud",
+      "scenario": "gcp_service_control",
+      "bucket": "wrong_root_cause",
+      "score": 0.45,
+      "tags": [
+        "root_cause",
+        "correct_fix_missing"
+      ],
+      "root_cause_excerpt": "service-control is returning 503 errors to api-gateway for auth/quota checks, causing cascading failures across all product APIs."
+    }
+  ]
+}

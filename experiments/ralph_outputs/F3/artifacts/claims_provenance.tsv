@@ -1,0 +1,10 @@
+claim	value	source
+Reward formula (anti-gaming exam)	0.30·diagnosis_correct + 0.25·correct_fix + 0.45·resolved − 0.60·trap	ARCHITECTURE.md:75
+Trust tiers on every tool	`autonomous` / `approval` / `blocked`	README.md:26
+Promotion/demotion design (earning trust)	junior engineer earning trust	README.md:79
+Argued ceiling, not saturation	(4×1.0 + 0.30)/5	ARCHITECTURE.md:103
+Unsolvable incident correctly escalated	singleton_node_notready	ARCHITECTURE.md:105
+Weakest baseline gets the biggest lift	+0.23	ARCHITECTURE.md:92
+Hard-tier zero-shot floor	0.19–0.42	ARCHITECTURE.md:117
+REx triples hard tier	0.59–0.71	ARCHITECTURE.md:117
+Small+REx beats big zero-shot	haiku+REx (0.68) beats opus zero-shot (0.42)	ARCHITECTURE.md:118

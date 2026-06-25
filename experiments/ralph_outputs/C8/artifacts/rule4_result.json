@@ -1,0 +1,90 @@
+{
+  "baseline_n_rules": 3,
+  "candidate_n_rules": 4,
+  "rule4": {
+    "match_tools": [
+      "drain_node",
+      "cordon_node"
+    ],
+    "conditions": [
+      {
+        "feature": "last_ready_node_op",
+        "op": "==",
+        "value": true
+      }
+    ],
+    "block": true,
+    "reason": "draining/cordoning the last Ready node takes the service fully down \u2014 escalate instead"
+  },
+  "train_signal_for_rule4": 0,
+  "results": {
+    "TRAIN": {
+      "baseline": {
+        "accuracy": 0.861,
+        "false_allow": 12,
+        "false_block": 2,
+        "n": 101
+      },
+      "candidate": {
+        "accuracy": 0.861,
+        "false_allow": 12,
+        "false_block": 2,
+        "n": 101
+      }
+    },
+    "HELDOUT": {
+      "baseline": {
+        "accuracy": 0.897,
+        "false_allow": 4,
+        "false_block": 0,
+        "n": 39
+      },
+      "candidate": {
+        "accuracy": 0.949,
+        "false_allow": 2,
+        "false_block": 0,
+        "n": 39
+      }
+    },
+    "ALL": {
+      "baseline": {
+        "accuracy": 0.871,
+        "false_allow": 16,
+        "false_block": 2,
+        "n": 140
+      },
+      "candidate": {
+        "accuracy": 0.886,
+        "false_allow": 14,
+        "false_block": 2,
+        "n": 140
+      }
+    }
+  },
+  "train_score": {
+    "baseline": 0.803,
+    "candidate": 0.8
+  },
+  "heldout_delta": 0.052,
+  "beats_baseline_897": true,
+  "heldout_false_allows_fixed": [
+    [
+      "singleton_node_notready",
+      "cordon_node"
+    ],
+    [
+      "singleton_node_notready",
+      "drain_node"
+    ]
+  ],
+  "heldout_false_allows_remaining": [
+    [
+      "cpu_saturation_leaf",
+      "clear_cache"
+    ],
+    [
+      "cpu_saturation_leaf",
+      "restart_pod"
+    ]
+  ]
+}

@@ -1,0 +1,1148 @@
+{
+  "summary": {
+    "total": 61,
+    "pass": 54,
+    "fail": 4,
+    "error": 3,
+    "all_pass": false,
+    "broken_fix_resolves_promises": [
+      "scenarios/cidg/03-railway-gcp-suspension.yaml",
+      "scenarios/cidg/05-azure-ddos-amplification.yaml",
+      "scenarios/cidg/06-aws-dynamodb-dns.yaml",
+      "scenarios/cidg/20-leaf-cpu-saturation-positive.yaml",
+      "scenarios/cidg/21-leaf-oom-positive.yaml",
+      "scenarios/cidg/generated/82-travis-ci-leaked-secret.yaml",
+      "scenarios/cidg/generated/87-aws-s3-typo-capacity.yaml"
+    ]
+  },
+  "scenarios": [
+    {
+      "file": "scenarios/cidg/01-gcp-service-control.yaml",
+      "id": "gcp-service-control",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "service-control"
+        },
+        {
+          "tool": "scale_deployment",
+          "target": "service-control"
+        },
+        {
+          "tool": "restart_service",
+          "target": "service-control"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/02-crowdstrike-cf291.yaml",
+      "id": "crowdstrike-cf291",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "security-agent"
+        },
+        {
+          "tool": "cordon_node",
+          "target": "node-a"
+        },
+        {
+          "tool": "restart_service",
+          "target": "security-agent"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/03-railway-gcp-suspension.yaml",
+      "id": "railway-gcp-suspension",
+      "status": "fail",
+      "fix_resolves": false,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": false,
+      "slo_ok_after_fix": false,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "railway-control-plane"
+        },
+        {
+          "tool": "restart_service",
+          "target": "railway-control-plane"
+        },
+        {
+          "tool": "failover_service",
+          "target": "railway-control-plane"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/04-cloudflare-waf.yaml",
+      "id": "cloudflare-waf",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "edge-waf"
+        },
+        {
+          "tool": "rollback_deployment",
+          "target": "edge-waf"
+        },
+        {
+          "tool": "restart_service",
+          "target": "edge-waf"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/05-azure-ddos-amplification.yaml",
+      "id": "azure-ddos-amplification",
+      "status": "error",
+      "fix_resolves": false,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": null,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "ddos-mitigation"
+        },
+        {
+          "tool": "modify_network_policy",
+          "target": "front-door"
+        },
+        {
+          "tool": "scale_deployment",
+          "target": "front-door"
+        },
+        {
+          "tool": "restart_service",
+          "target": "ddos-mitigation"
+        }
+      ],
+      "error": "KeyError: 'latency_p99_ms'",
+      "traceback": [
+        "    return self.nodes[node][key]",
+        "           ~~~~~~~~~~~~~~~~^^^^^",
+        "KeyError: 'latency_p99_ms'"
+      ]
+    },
+    {
+      "file": "scenarios/cidg/06-aws-dynamodb-dns.yaml",
+      "id": "aws-dynamodb-dns",
+      "status": "fail",
+      "fix_resolves": false,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": false,
+      "slo_ok_after_fix": false,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "dns"
+        },
+        {
+          "tool": "restart_service",
+          "target": "dns"
+        },
+        {
+          "tool": "restart_pod",
+          "target": "control-services"
+        },
+        {
+          "tool": "scale_deployment",
+          "target": "control-services"
+        },
+        {
+          "tool": "restart_pod",
+          "target": "nlb"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/20-leaf-cpu-saturation-positive.yaml",
+      "id": "leaf-cpu-saturation-positive",
+      "status": "error",
+      "fix_resolves": false,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": null,
+      "fix_steps": [
+        {
+          "tool": "scale_deployment",
+          "target": "thumbnailer"
+        }
+      ],
+      "error": "KeyError: 'latency_p99_ms'",
+      "traceback": [
+        "    return self.nodes[node][key]",
+        "           ~~~~~~~~~~~~~~~~^^^^^",
+        "KeyError: 'latency_p99_ms'"
+      ]
+    },
+    {
+      "file": "scenarios/cidg/21-leaf-oom-positive.yaml",
+      "id": "leaf-oom-positive",
+      "status": "error",
+      "fix_resolves": false,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": null,
+      "fix_steps": [
+        {
+          "tool": "increase_memory_limit",
+          "target": "image-resizer"
+        },
+        {
+          "tool": "restart_pod",
+          "target": "image-resizer"
+        }
+      ],
+      "error": "KeyError: 'pod_restarts'",
+      "traceback": [
+        "    return self.nodes[node][key]",
+        "           ~~~~~~~~~~~~~~~~^^^^^",
+        "KeyError: 'pod_restarts'"
+      ]
+    },
+    {
+      "file": "scenarios/cidg/22-leaf-bad-deploy-positive.yaml",
+      "id": "leaf-bad-deploy-positive",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "checkout-api"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/30-singleton-node-notready.yaml",
+      "id": "singleton-node-notready",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": false,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "drain_node",
+          "target": "worker-node-1"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/40-redis-cache-flush.yaml",
+      "id": "redis-cache-flush",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "clear_cache",
+          "target": "session-cache"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/41-billing-disk-fill.yaml",
+      "id": "billing-disk-fill",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rotate_logs",
+          "target": "billing-worker"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/42-auth-cert-expiry.yaml",
+      "id": "auth-cert-expiry",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "renew_certificate",
+          "target": "auth-gateway"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/43-checkout-bad-rollout.yaml",
+      "id": "checkout-bad-rollout",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "checkout-api"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/44-search-cpu-starve.yaml",
+      "id": "search-cpu-starve",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "scale_deployment",
+          "target": "search-api"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/45-ingest-fd-exhaust.yaml",
+      "id": "ingest-fd-exhaust",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "log-ingest"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/46-media-oom-leak.yaml",
+      "id": "media-oom-leak",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "increase_memory_limit",
+          "target": "thumbnailer"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/47-payments-dep-revoked.yaml",
+      "id": "payments-dep-revoked",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "payments-api"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/50-circleci-kubeproxy-iptables.yaml",
+      "id": "circleci-kubeproxy-iptables",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "kube-proxy"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/51-datadog-systemd-cilium.yaml",
+      "id": "datadog-systemd-cilium",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "cni-agent"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/52-incidentio-anetd-cpu.yaml",
+      "id": "incidentio-anetd-cpu",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "scale_deployment",
+          "target": "dataplane-agent"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/53-slack-tgw-fd-exhaustion.yaml",
+      "id": "slack-tgw-fd-exhaustion",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "transit-gateway"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/54-slack-consul-cache-db.yaml",
+      "id": "slack-consul-cache-db",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "consul-agent"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/55-github-network-partition.yaml",
+      "id": "github-network-partition",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "orchestrator"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/56-github-proxysql-fd-limit.yaml",
+      "id": "github-proxysql-fd-limit",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "proxysql"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/57-github-mysql-semaphore-rename.yaml",
+      "id": "github-mysql-semaphore-rename",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "replica-pool"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/58-cloudflare-zonemd-stale-cache.yaml",
+      "id": "cloudflare-zonemd-stale-cache",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "static-zone-parser"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/59-cloudflare-byzantine-switch.yaml",
+      "id": "cloudflare-byzantine-switch",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "agg-switch"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/60-cloudflare-bgp-reorder.yaml",
+      "id": "cloudflare-bgp-reorder",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "bgp-policy"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/61-github-dns-zone-corruption.yaml",
+      "id": "github-dns-zone-corruption",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "dns-pipeline"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/62-launchdarkly-cold-cache.yaml",
+      "id": "launchdarkly-cold-cache",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "flag-router"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/63-aws-kinesis-cell-manager.yaml",
+      "id": "aws-kinesis-cell-manager",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "cell-manager"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/70-facebook-bgp-backbone.yaml",
+      "id": "facebook-bgp-backbone",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "backbone-router"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/71-cloudflare-leap-second.yaml",
+      "id": "cloudflare-leap-second",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "rrdns"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/72-knight-capital-conflict.yaml",
+      "id": "knight-capital-conflict",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "order-router"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/73-azure-leapyear-cert.yaml",
+      "id": "azure-leapyear-cert",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "renew_certificate",
+          "target": "fabric-agent"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/74-github-zk-splitbrain.yaml",
+      "id": "github-zk-splitbrain",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "zk-ensemble"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/75-firefox-addon-cert.yaml",
+      "id": "firefox-addon-cert",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "renew_certificate",
+          "target": "addon-signer"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/76-cloudflare-waf-regex.yaml",
+      "id": "cloudflare-waf-regex",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "waf-engine"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/77-gke-ip-exhaustion.yaml",
+      "id": "gke-ip-exhaustion",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "pod-cidr-pool"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/78-kafka-poison-pill.yaml",
+      "id": "kafka-poison-pill",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "consumer-group"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/79-conntrack-exhaustion.yaml",
+      "id": "conntrack-exhaustion",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "nat-gateway"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/80-fd-exhaust-leaf-shipper.yaml",
+      "id": "fd-exhaust-leaf-shipper",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "log-shipper"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/80-gitlab-db-deletion.yaml",
+      "id": "gitlab-db-deletion",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "clear_cache",
+          "target": "db-primary"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/80-multi-cert-poolleak.yaml",
+      "id": "multi-cert-poolleak",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "renew_certificate",
+          "target": "auth-gw"
+        },
+        {
+          "tool": "restart_service",
+          "target": "session-pool"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/81-cloudbleed-parser-overrun.yaml",
+      "id": "cloudbleed-parser-overrun",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "html-parser"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/81-fd-exhaust-cascade-gw.yaml",
+      "id": "fd-exhaust-cascade-gw",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "api-gw"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/81-multi-rollout-cacheflush.yaml",
+      "id": "multi-rollout-cacheflush",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "api-edge"
+        },
+        {
+          "tool": "clear_cache",
+          "target": "result-cache"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/82-cert-expire-leaf-sidecar.yaml",
+      "id": "cert-expire-leaf-sidecar",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "renew_certificate",
+          "target": "payments-svc"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/82-multi-fdexhaust-cpustarve.yaml",
+      "id": "multi-fdexhaust-cpustarve",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "conn-router"
+        },
+        {
+          "tool": "scale_deployment",
+          "target": "rank-svc"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/82-travis-ci-leaked-secret.yaml",
+      "id": "travis-ci-leaked-secret",
+      "status": "fail",
+      "fix_resolves": false,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": false,
+      "slo_ok_after_fix": false,
+      "fix_steps": [
+        {
+          "tool": "rotate_secret",
+          "target": "secrets-vault"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/83-cert-expire-cascade-ingress.yaml",
+      "id": "cert-expire-cascade-ingress",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "renew_certificate",
+          "target": "tls-ingress"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/83-roblox-consul-streaming.yaml",
+      "id": "roblox-consul-streaming",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "consul-streaming"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/84-fastly-pop-config.yaml",
+      "id": "fastly-pop-config",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "rollback_deployment",
+          "target": "edge-config"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/84-mem-leak-leaf-transcoder.yaml",
+      "id": "mem-leak-leaf-transcoder",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "increase_memory_limit",
+          "target": "transcoder"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/85-mem-leak-cascade-cache.yaml",
+      "id": "mem-leak-cascade-cache",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "increase_memory_limit",
+          "target": "object-cache"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/85-reddit-piday-k8s-route.yaml",
+      "id": "reddit-piday-k8s-route",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "modify_network_policy",
+          "target": "route-controller"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/86-honeycomb-retry-storm.yaml",
+      "id": "honeycomb-retry-storm",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "query-worker"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/87-aws-s3-typo-capacity.yaml",
+      "id": "aws-s3-typo-capacity",
+      "status": "fail",
+      "fix_resolves": false,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": false,
+      "slo_ok_after_fix": false,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "index-subsystem"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/88-stripe-redis-fork-latency.yaml",
+      "id": "stripe-redis-fork-latency",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "increase_memory_limit",
+          "target": "redis-store"
+        }
+      ],
+      "error": null
+    },
+    {
+      "file": "scenarios/cidg/generated/89-monzo-cassandra-compaction.yaml",
+      "id": "monzo-cassandra-compaction",
+      "status": "pass",
+      "fix_resolves": true,
+      "asserts_fix_resolves": true,
+      "fault_active_at_t0": true,
+      "root_cleared_after_fix": true,
+      "slo_ok_after_fix": true,
+      "fix_steps": [
+        {
+          "tool": "restart_service",
+          "target": "cassandra-ring"
+        }
+      ],
+      "error": null
+    }
+  ]
+}

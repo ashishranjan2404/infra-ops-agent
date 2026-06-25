@@ -1,0 +1,48 @@
+# D2 — RFT config for the "Qwen-14B" upgrade run on the opensre incident env.
+# Consumed as documentation + the canonical flag set for train_rft_qwen14b.py.
+# (The launcher takes CLI flags; this YAML is the single source of truth that the
+#  README/launcher mirror, and is YAML-parse-validated in 07_test_results.md.)
+
+task_id: D2
+purpose: >
+  Train a larger Qwen base with GRPO/RLVR on hud_env_v2.py because the 8B run was
+  flat (mean_reward 0.50 -> 0.54 over 15 steps). Meeting asked for "Qwen-14B".
+
+backend:
+  provider: tinker            # HUD inference gateway; only Tinker models are trainable
+  gateway: hud
+  api_key_env: HUD_API_KEY
+
+model:
+  requested: Qwen/Qwen3-14B   # WHAT THE MEETING ASKED FOR
+  available: false            # NOT exposed by the HUD Tinker gateway (2026-06-25)
+  blocker: >
+    `hud models list` shows no Qwen-14B (dense) under the tinker provider. Trainable
+    Qwen dense bases: Qwen3.5-4B, Qwen3-8B, Qwen3.6-27B. MoE: Qwen3-30B-A3B,
+    Qwen3.6-35B-A3B, Qwen3.5-397B-A17B. A literal 14B cannot be forked/trained here.
+  substitute_base: Qwen/Qwen3.6-27B   # closest dense rung above 8B
+  alt_base_moe: Qwen/Qwen3-30B-A3B    # cheaper (~3B active); already partly trained as opensre-qwen3-30b
+  fork_cmd: hud models fork Qwen/Qwen3.6-27B --name opensre-qwen14b-up
+
+env:
+  module: hud_env_v2.py        # P0 deterministic-judge graded reward (finer within-group signal)
+  rationale: same env as the 8B v2 run for an apples-to-apples size comparison
+
+train:
+  tasks: [0,1,2,3,4,5,6,7,8,9]  # 10 tasks (curriculum width, per v2 diagnosis)
+  group: 6                      # GRPO group size
+  steps: 30
+  learning_rate: 1.0e-5
+  reset_head: true              # reward/objective is the v2 grader -> start from clean head
+  out: runs/train_qwen14b_v2.jsonl
+
+success_criteria:
+  - preflight passes only when the chosen base is actually trainable on the gateway
+  - smoke: 1 step on tasks 0,1 group 4 emits rollouts -> rewards -> (forward/backward) -> JSONL line
+  - real: mean_reward trends UP vs the 8B v2 baseline (0.50->0.54); reward_std stays > 0 (trainable spread)
+  - artifact does NOT modify any shared core file (imports train_rft_v2, never edits it)
+
+compute_note: >
+  ~15 min cap for this worker. A real 30-step GRPO run on a 27B/30B base is hours of
+  paid Tinker forward/backward and was NOT executed here. Deliverable = launcher +
+  config + preflight + documented blocker. No metrics are fabricated.

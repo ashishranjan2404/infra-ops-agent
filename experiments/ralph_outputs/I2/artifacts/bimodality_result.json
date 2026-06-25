@@ -1,0 +1,157 @@
+{
+  "constants": {
+    "W_ROOT": 0.3,
+    "W_FIX": 0.25,
+    "W_RESOLVED": 0.45,
+    "TRAP_PENALTY": 0.6
+  },
+  "gap_condition": "TRAP_PENALTY > W_RESOLVED",
+  "gap_condition_holds": true,
+  "baseline_full_population": {
+    "trap_penalty": 0.6,
+    "mean": 0.289,
+    "stdev": 0.3181,
+    "bimodality_coefficient": 0.308,
+    "separation": {
+      "split_at": 0.6375,
+      "left_frac": 0.8379,
+      "right_frac": 0.162,
+      "left_mean": 0.1787,
+      "right_mean": 0.8591,
+      "gap": 0.125
+    },
+    "is_bimodal": true
+  },
+  "competent_subpopulation": {
+    "trap_penalty": 0.6,
+    "values_seen": [
+      0.4,
+      1.0
+    ],
+    "bimodality_coefficient": 0.3194,
+    "separation": {
+      "split_at": 0.7,
+      "left_frac": 0.3479,
+      "right_frac": 0.6521,
+      "left_mean": 0.4,
+      "right_mean": 1.0,
+      "gap": 0.6
+    },
+    "is_bimodal": true
+  },
+  "sweep_competent_subpop": [
+    {
+      "trap_penalty": 0.0,
+      "above_threshold": false,
+      "trap_atom": 1.0,
+      "success_atom": 1.0,
+      "atom_gap": 0.0,
+      "bc": 0.0,
+      "gap": 0.0,
+      "is_bimodal": false,
+      "resolved_reward_nullified": false
+    },
+    {
+      "trap_penalty": 0.1,
+      "above_threshold": false,
+      "trap_atom": 0.9,
+      "success_atom": 1.0,
+      "atom_gap": 0.1,
+      "bc": 0.3194,
+      "gap": 0.1,
+      "is_bimodal": false,
+      "resolved_reward_nullified": false
+    },
+    {
+      "trap_penalty": 0.2,
+      "above_threshold": false,
+      "trap_atom": 0.8,
+      "success_atom": 1.0,
+      "atom_gap": 0.2,
+      "bc": 0.3194,
+      "gap": 0.2,
+      "is_bimodal": true,
+      "resolved_reward_nullified": false
+    },
+    {
+      "trap_penalty": 0.3,
+      "above_threshold": false,
+      "trap_atom": 0.7,
+      "success_atom": 1.0,
+      "atom_gap": 0.3,
+      "bc": 0.3194,
+      "gap": 0.3,
+      "is_bimodal": true,
+      "resolved_reward_nullified": false
+    },
+    {
+      "trap_penalty": 0.4,
+      "above_threshold": false,
+      "trap_atom": 0.6,
+      "success_atom": 1.0,
+      "atom_gap": 0.4,
+      "bc": 0.3194,
+      "gap": 0.4,
+      "is_bimodal": true,
+      "resolved_reward_nullified": false
+    },
+    {
+      "trap_penalty": 0.45,
+      "above_threshold": false,
+      "trap_atom": 0.55,
+      "success_atom": 1.0,
+      "atom_gap": 0.45,
+      "bc": 0.3194,
+      "gap": 0.45,
+      "is_bimodal": true,
+      "resolved_reward_nullified": true
+    },
+    {
+      "trap_penalty": 0.5,
+      "above_threshold": true,
+      "trap_atom": 0.5,
+      "success_atom": 1.0,
+      "atom_gap": 0.5,
+      "bc": 0.3194,
+      "gap": 0.5,
+      "is_bimodal": true,
+      "resolved_reward_nullified": true
+    },
+    {
+      "trap_penalty": 0.6,
+      "above_threshold": true,
+      "trap_atom": 0.4,
+      "success_atom": 1.0,
+      "atom_gap": 0.6,
+      "bc": 0.3194,
+      "gap": 0.6,
+      "is_bimodal": true,
+      "resolved_reward_nullified": true
+    },
+    {
+      "trap_penalty": 0.75,
+      "above_threshold": true,
+      "trap_atom": 0.25,
+      "success_atom": 1.0,
+      "atom_gap": 0.75,
+      "bc": 0.3194,
+      "gap": 0.75,
+      "is_bimodal": true,
+      "resolved_reward_nullified": true
+    },
+    {
+      "trap_penalty": 0.9,
+      "above_threshold": true,
+      "trap_atom": 0.1,
+      "success_atom": 1.0,
+      "atom_gap": 0.9,
+      "bc": 0.3194,
+      "gap": 0.9,
+      "is_bimodal": true,
+      "resolved_reward_nullified": true
+    }
+  ],
+  "valley_present_at_shipped_penalty": true,
+  "nullification_threshold_is_W_RESOLVED": true,
+  "shipped_penalty_nullifies_resolved": true
+}

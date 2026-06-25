@@ -1,0 +1,133 @@
+{
+  "task_id": "E4",
+  "threshold": 0.8,
+  "seeds": 3,
+  "incidents": [
+    "cpu_saturation_leaf",
+    "oom_kill",
+    "bad_deploy_leaf",
+    "redis_cache_flush",
+    "auth_cert_expiry",
+    "billing_disk_fill",
+    "singleton_node_notready",
+    "ingest_fd_exhaust"
+  ],
+  "n_incidents": 8,
+  "policy_a": {
+    "label": "glm5p2_standin",
+    "model": "glm-5p2"
+  },
+  "policy_b": {
+    "label": "minimax_standin",
+    "model": "minimax-m3"
+  },
+  "overall": {
+    "glm5p2_standin": {
+      "n": 24,
+      "passes": 12,
+      "pass@1": 0.5,
+      "ci95": [
+        0.3143,
+        0.6857
+      ],
+      "pass@2": 0.7609,
+      "mean_reward": 0.6167,
+      "reward_std": 0.4296
+    },
+    "minimax_standin": {
+      "n": 24,
+      "passes": 4,
+      "pass@1": 0.1667,
+      "ci95": [
+        0.0668,
+        0.3585
+      ],
+      "pass@2": 0.3116,
+      "mean_reward": 0.1667,
+      "reward_std": 0.3727
+    }
+  },
+  "per_incident": [
+    {
+      "incident": "cpu_saturation_leaf",
+      "glm5p2_standin_pass@1": 0.6667,
+      "minimax_standin_pass@1": 0.0,
+      "delta_b_minus_a": -0.6667,
+      "hurts": true,
+      "glm5p2_standin_mean": 0.6667,
+      "minimax_standin_mean": 0.0
+    },
+    {
+      "incident": "oom_kill",
+      "glm5p2_standin_pass@1": 0.0,
+      "minimax_standin_pass@1": 0.6667,
+      "delta_b_minus_a": 0.6667,
+      "hurts": false,
+      "glm5p2_standin_mean": 0.1333,
+      "minimax_standin_mean": 0.6667
+    },
+    {
+      "incident": "bad_deploy_leaf",
+      "glm5p2_standin_pass@1": 1.0,
+      "minimax_standin_pass@1": 0.3333,
+      "delta_b_minus_a": -0.6667,
+      "hurts": true,
+      "glm5p2_standin_mean": 1.0,
+      "minimax_standin_mean": 0.3333
+    },
+    {
+      "incident": "redis_cache_flush",
+      "glm5p2_standin_pass@1": 0.3333,
+      "minimax_standin_pass@1": 0.0,
+      "delta_b_minus_a": -0.3333,
+      "hurts": true,
+      "glm5p2_standin_mean": 0.3333,
+      "minimax_standin_mean": 0.0
+    },
+    {
+      "incident": "auth_cert_expiry",
+      "glm5p2_standin_pass@1": 1.0,
+      "minimax_standin_pass@1": 0.0,
+      "delta_b_minus_a": -1.0,
+      "hurts": true,
+      "glm5p2_standin_mean": 1.0,
+      "minimax_standin_mean": 0.0
+    },
+    {
+      "incident": "billing_disk_fill",
+      "glm5p2_standin_pass@1": 1.0,
+      "minimax_standin_pass@1": 0.0,
+      "delta_b_minus_a": -1.0,
+      "hurts": true,
+      "glm5p2_standin_mean": 1.0,
+      "minimax_standin_mean": 0.0
+    },
+    {
+      "incident": "singleton_node_notready",
+      "glm5p2_standin_pass@1": 0.0,
+      "minimax_standin_pass@1": 0.0,
+      "delta_b_minus_a": 0.0,
+      "hurts": false,
+      "glm5p2_standin_mean": 0.3,
+      "minimax_standin_mean": 0.0
+    },
+    {
+      "incident": "ingest_fd_exhaust",
+      "glm5p2_standin_pass@1": 0.0,
+      "minimax_standin_pass@1": 0.3333,
+      "delta_b_minus_a": 0.3333,
+      "hurts": false,
+      "glm5p2_standin_mean": 0.5,
+      "minimax_standin_mean": 0.3333
+    }
+  ],
+  "regression": {
+    "n_incidents_b_hurts_vs_a": 5,
+    "mean_delta_b_minus_a": -0.3333,
+    "verdict": "B_HURTS"
+  },
+  "elapsed_s": 46.7,
+  "n_errors": 0,
+  "errors": [],
+  "note": "STAND-IN policies (frozen frontier models) \u2014 neither the FIREBALL-trained nor the OpenSRE-GRPO-trained slug exists in this repo; see experiments/results/P7_fireball_status.md. Re-run with the real slugs when they land."
+}

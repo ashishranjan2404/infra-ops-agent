@@ -1,0 +1,54 @@
+{
+  "scenario": "oom_kill",
+  "seconds_per_call": 9.0,
+  "rows": [
+    {
+      "variant": "unbounded",
+      "time_budget_s": null,
+      "step_budget": null,
+      "iters": 2,
+      "time_spent_s": 18.0,
+      "steps_spent": 2,
+      "outcome": "resolved",
+      "clean_win": true,
+      "truncated": false,
+      "stopped": "loop_converged_or_iter_cap"
+    },
+    {
+      "variant": "relaxed",
+      "time_budget_s": 60.0,
+      "step_budget": 8,
+      "iters": 2,
+      "time_spent_s": 18.0,
+      "steps_spent": 2,
+      "outcome": "resolved",
+      "clean_win": true,
+      "truncated": false,
+      "stopped": "loop_converged_or_iter_cap"
+    },
+    {
+      "variant": "tight",
+      "time_budget_s": 20.0,
+      "step_budget": 4,
+      "iters": 2,
+      "time_spent_s": 18.0,
+      "steps_spent": 2,
+      "outcome": "resolved",
+      "clean_win": true,
+      "truncated": false,
+      "stopped": "loop_converged_or_iter_cap"
+    },
+    {
+      "variant": "pager-storm",
+      "time_budget_s": 8.0,
+      "step_budget": 2,
+      "iters": 1,
+      "time_spent_s": 9.0,
+      "steps_spent": 1,
+      "outcome": "escalated",
+      "clean_win": false,
+      "truncated": true,
+      "stopped": "time_budget exceeded: 9.00s >= 8.00s"
+    }
+  ]
+}

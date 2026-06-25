@@ -1,0 +1,30 @@
+\section{The CIDG Environment}
+\label{sec:env}
+
+% [F2 content: environment + simulator. Source: sim/engine.py, ARCHITECTURE.md]
+\paragraph{Scenario specs as a single source of truth.}
+Each incident is a CIDG scenario: a typed dependency graph with a root-cause fault, a
+propagation rule, a victim service on which a uniform alert fires, and a labelled trap
+remediation. Specs are authored in a small DSL (\texttt{sim/spec.py},
+\texttt{scenarios/cidg/*.yaml}) and seeded from real public post-mortems
+(\texttt{opensre-traj/specs/real/*.json}: GCP Service Control, Kinesis, Cloudflare,
+Slack/Consul, GitHub, Datadog). We release 51 generated scenarios.
+
+\paragraph{Tier-A: deterministic in-process simulator.}
+\texttt{sim/engine.py} runs \texttt{propagate()} over the dependency graph so that the cascade
+is \emph{emergent}, not scripted. A root-cause-aware \texttt{is\_resolved} distinguishes a
+true fix from a symptom suppression, and trap detection flags the locally-obvious-but-harmful
+action. This tier is free and reproducible.
+
+\paragraph{Tier-B: M-real live cluster.}
+For high fidelity, \texttt{mreal/server.py} on GKE implements a real-RPS call mesh where
+services call upstreams over HTTP, so cascades are \emph{physically} emergent. A
+kube-prometheus-stack (Prometheus, Alertmanager, Grafana) fires the same uniform alert on the
+victim, mirroring production observability.
+
+\paragraph{Rollout harness.}
+\texttt{rex/harness.py} and \texttt{rex/loop.py} drive the agent loop:
+\(\text{observe} \rightarrow \text{propose tool} \rightarrow \text{apply} \rightarrow
+\text{re-diagnose}\), emitting FIREBALL-schema trajectories
+(\(\text{state\_before} \rightarrow \text{tool} \rightarrow \text{state\_after} \rightarrow
+\text{reward}\)).

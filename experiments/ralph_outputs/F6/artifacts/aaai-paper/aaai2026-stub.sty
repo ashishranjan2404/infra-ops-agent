@@ -1,0 +1,42 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% aaai2026-stub.sty
+% Structural stand-in for the official aaai2026.sty. This is NOT the AAAI style
+% and must NOT be used for an actual submission --- it only provides the macros
+% main.tex calls (\affiliations, \pdfinfo metadata is handled by the engine, the
+% two-column layout, \frenchspacing etc.) so the document parses and compiles in
+% a toolchain that does not have the licensed AAAI style installed.
+%
+% For a real submission, delete this file and place the official aaai2026.sty
+% next to main.tex (the \IfFileExists guard will pick it up automatically).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{aaai2026-stub}[2026/01/01 v0.1 structural stand-in for aaai2026.sty]
+
+% AAAI uses a two-column layout; approximate it.
+\RequirePackage{multicol}
+\AtBeginDocument{}
+
+% \affiliations{...} --- AAAI macro; render as a centered line under the title.
+\newcommand{\affiliations}[1]{\gdef\@aaaiaffil{#1}}
+\gdef\@aaaiaffil{}
+
+% Re-define \maketitle to also print affiliations and then open two columns,
+% emulating the AAAI single-column-title / two-column-body layout.
+\let\stub@oldmaketitle\maketitle
+\renewcommand{\maketitle}{%
+  \twocolumn[%
+    \begin{center}%
+      {\LARGE\bfseries \@title \par}%
+      \vskip 1em%
+      {\large \@author \par}%
+      \vskip 0.5em%
+      {\@aaaiaffil \par}%
+      \vskip 1.5em%
+    \end{center}%
+  ]%
+}
+
+% AAAI forbids page numbers in the submission body.
+\AtBeginDocument{\thispagestyle{empty}\pagestyle{empty}}
+
+\endinput

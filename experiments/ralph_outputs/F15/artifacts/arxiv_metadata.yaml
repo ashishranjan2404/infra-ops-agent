@@ -1,0 +1,64 @@
+# arXiv submission metadata — SRE-Degrees / opensre-REx
+# Single source of truth for the F15 submission-readiness package.
+# NOTE: this is a PREPRINT (non-anonymous) artifact, distinct from the
+# anonymous AAAI review PDF. See SUBMISSION_CHECKLIST.md gate "two artifacts".
+
+title: "SRE-Degrees: A Verifiable Environment and a Searched Verifier for Safe Incident Remediation under Cascading Failure"
+
+authors:
+  - name: "TBD — fill before posting (de-anonymize)"
+    affiliation: "TBD"
+    email: null
+# Author identities are intentionally NOT fabricated. The arXiv copy MUST be
+# non-anonymous; fill real authors during the de-anonymization checklist step.
+
+# arXiv abstract field: plain text, <= ~1920 chars, NO LaTeX macros, no \cite/\ref.
+# Self-contained summary of the paper scope (F1-F6). Verify against the final
+# compiled abstract (F6 sections/00_abstract.tex) before posting — currently that
+# section is EMPTY upstream (see notes/blocker).
+abstract: >-
+  Automated incident remediation agents are routinely evaluated on whether they
+  resolve a fault, but rarely on whether their actions are safe under cascading
+  failure, where a locally-correct fix can trigger downstream outages. We present
+  SRE-Degrees, a verifiable simulation environment for incident remediation built
+  on a causal incident-dependency graph (CIDG), together with a searched verifier
+  that scores candidate remediations for root-cause correctness rather than
+  symptom suppression. The environment ships a deterministic judge and a
+  reproducible pass@k harness over a suite of incident families with controllable
+  cascading dependencies. Our verifier, REx, performs Thompson-sampling tree
+  search over candidate refinements and routes novel incidents to escalation
+  rather than guessing. Across a held-out incident set the searched verifier
+  substantially improves pass@1 over a zero-shot baseline while preserving safety
+  on cascading scenarios, and we report an honest ablation isolating the
+  contribution of search, root-cause reward, and escalation routing. We release
+  the environment, the deterministic judge, and the evaluation harness to support
+  reproducible study of safe, verifiable incident remediation.
+
+primary_category: "cs.SE"
+cross_list:
+  - "cs.AI"
+  - "cs.LG"
+
+acm_class: "I.2.6; D.2.5; D.4.5"   # Learning; Testing/Debugging; Reliability
+msc_class: null
+
+# arXiv "Comments" line (public, on the abstract page).
+comments: "Preprint. Submitted to AAAI 2026. Code and environment available; see project repository. NN pages, MM figures — fill exact counts from compiled PDF."
+
+# Default to the safest, reversible license. CC BY 4.0 is an opt-in author decision.
+license: "arXiv.org perpetual non-exclusive license"
+
+report_no: null
+journal_ref: null
+doi: null
+
+notes: |
+  BLOCKER: F6 paper body (sections/*.tex) is currently EMPTY upstream, so no
+  compilable PDF / .bbl exists yet. This metadata is READY but cannot be POSTED
+  until the paper body + bibliography are filled and the PDF compiles.
+  POLICY: AAAI 2026 review is double-blind. Posting a non-anonymous arXiv
+  preprint is permitted, but (a) the AAAI submission PDF must stay anonymous and
+  (b) self-citations to this arXiv version must be phrased in the third person.
+  LICENSE: CC BY 4.0 is irreversible on arXiv — only switch from the non-exclusive
+  default if the authors explicitly want it.
+  ENDORSEMENT: first-time cs.* submitters may need an arXiv endorsement.

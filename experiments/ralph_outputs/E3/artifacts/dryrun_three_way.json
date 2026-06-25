@@ -1,0 +1,46 @@
+{
+  "task_id": "E3",
+  "threshold": 0.8,
+  "incident_family": "cascade",
+  "n_incidents": 14,
+  "incidents": [
+    "aws_dynamodb_dns",
+    "aws_kinesis_cell_manager",
+    "azure_ddos",
+    "circleci_kubeproxy_iptables",
+    "cloudflare_bgp_reorder",
+    "cloudflare_byzantine_switch",
+    "cloudflare_waf",
+    "cloudflare_zonemd_stale_cache",
+    "crowdstrike_bsod",
+    "datadog_systemd_cilium",
+    "gcp_service_control",
+    "github_dns_zone_corruption",
+    "github_mysql_semaphore_rename",
+    "github_network_partition"
+  ],
+  "arm_status": {
+    "zero_shot": {
+      "runnable": true,
+      "roster_key": "qwen3-8b-base",
+      "probe": "'<think>\\nOkay, the user wants me'"
+    },
+    "opensre_trained": {
+      "runnable": true,
+      "roster_key": "opensre-qwen3-8b",
+      "probe": "'<think>\\nOkay, the user wants me'"
+    },
+    "fireball_trained": {
+      "runnable": false,
+      "reason": "No Fireball training data or forked model exists. Upstream Fireball pipeline (tasks E2/D8) produced no dataset and no model; nothing to evaluate. Numbers intentionally NOT fabricated."
+    }
+  },
+  "blocked_arms": [
+    "fireball_trained"
+  ],
+  "runnable_arms": [
+    "zero_shot",
+    "opensre_trained"
+  ],
+  "mode": "dry-run"
+}

@@ -1,0 +1,12 @@
+meta: {id: bad-engine}
+topology:
+  nodes:
+  - {name: svc-a, kind: service}
+  edges: []
+root_cause: {location: svc-a, kind: cpu_starve}
+fault: {chaos_kind: exec}
+slo:
+- {metric: error_rate_pct, node: NONEXISTENT_VICTIM, direction: higher_bad, threshold: 5}
+canonical_fix:
+  steps:
+  - {tool: scale_deployment, args: {target: svc-a}}

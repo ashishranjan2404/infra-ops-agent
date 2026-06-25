@@ -1,0 +1,48 @@
+  [progress] 50/630 new episodes  (60s, 0 errors)
+  [progress] 100/630 new episodes  (130s, 0 errors)
+  [progress] 150/630 new episodes  (294s, 0 errors)
+  [progress] 200/630 new episodes  (464s, 0 errors)
+  [progress] 250/630 new episodes  (653s, 0 errors)
+  [progress] 300/630 new episodes  (812s, 0 errors)
+  [progress] 350/630 new episodes  (962s, 0 errors)
+  [progress] 400/630 new episodes  (1065s, 0 errors)
+  [progress] 450/630 new episodes  (1180s, 0 errors)
+  [progress] 500/630 new episodes  (1252s, 0 errors)
+  [progress] 550/630 new episodes  (1370s, 0 errors)
+  [progress] 600/630 new episodes  (1533s, 0 errors)
+  [progress] 630/630 new episodes  (1608s, 0 errors)
+
+====================================================================================
+pass@k — model=glm-5p2 (full-42)  seeds=3  threshold=0.8  (1608.3s, 0 errors)
+====================================================================================
+floor check: empty_plan_max=0.0 trap_max=0.1 -> OK (cheapest path stays below floor)
+
+condition           pass@1          95% CI  pass@2  pass@5   mean    std    n
+------------------------------------------------------------------------------------
+zero_shot            0.230     [0.17,0.31]   0.409   0.736   0.43   0.38  126
+best_of_n            0.341     [0.26,0.43]   0.568   0.881   0.65   0.31  126
+retry_realistic      0.349     [0.27,0.44]   0.578   0.888   0.66   0.30  126
+rex                  0.897     [0.83,0.94]   0.990   1.000   0.94   0.17  126
+rex_no_oracle        0.333     [0.26,0.42]   0.557   0.874   0.66   0.30  126
+
+condition         family      pass@1  pass@2  pass@5   mean    std    n
+------------------------------------------------------------------------------------
+zero_shot         simple       0.556   0.809   0.988   0.67   0.40   36
+zero_shot         cascade      0.067   0.130   0.301   0.28   0.33   60
+zero_shot         novel        0.167   0.310   0.627   0.43   0.31   30
+best_of_n         simple       0.750   0.943   1.000   0.85   0.27   36
+best_of_n         cascade      0.150   0.280   0.570   0.59   0.28   60
+best_of_n         novel        0.233   0.418   0.764   0.54   0.31   30
+retry_realistic   simple       0.694   0.913   0.999   0.82   0.29   36
+retry_realistic   cascade      0.200   0.363   0.686   0.62   0.28   60
+retry_realistic   novel        0.233   0.418   0.764   0.55   0.29   30
+rex               simple       0.889   0.991   1.000   0.92   0.22   36
+rex               cascade      0.850   0.980   1.000   0.93   0.18   60
+rex               novel        1.000   1.000   1.000   1.00   0.00   30
+rex_no_oracle     simple       0.722   0.929   0.999   0.85   0.27   36
+rex_no_oracle     cascade      0.150   0.280   0.570   0.60   0.28   60
+rex_no_oracle     novel        0.233   0.418   0.764   0.56   0.30   30
+
+incidents covered: 42 (simple=12, cascade=20, novel=10)
+
+-> /Users/mei/rl/experiments/ralph_outputs/A1/artifacts/full_pass_at_k_glm-5p2.json

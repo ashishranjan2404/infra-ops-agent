@@ -1,0 +1,110 @@
+{
+  "mode": "live-llm",
+  "scenario": "cloudflare_waf_regex",
+  "model": "gpt-5.5",
+  "prompt": "ALERT firing: 503 error-rate spike across MULTIPLE product APIs (edge-proxy, origin-api) at once.\nObserved error_rate_pct (loudest first): edge-proxy 62%, origin-api 57%, api-gateway 40%.\nRecent change: a 'edge-proxy' deploy completed ~8 minutes before the spike began (rollout reports complete; image bumped a minor version).\nLogs (sampled): edge-proxy: 'request failed: 503 from api-gateway'; api-gateway: 'upstream auth/quota check returned 503' (x hundreds).\nTopology: ingress-gw --required--> waf-engine; edge-proxy --required--> ingress-gw; origin-api --required--> ingress-gw.\n(Note: cloud-service-health monitors waf-engine and the status page is lagging/stale.)\nSLO breached: error_rate_pct higher-bad 5 on edge-proxy, origin-api.\nIdentify the ROOT cause (it may be UPSTREAM of the loudest alerts \u2014 note that ALL products are failing simultaneously through a shared path) and remediate it.",
+  "result": {
+    "scenario": "cloudflare_waf_regex",
+    "iterations": [
+      {
+        "iter": 0,
+        "score": 0.3,
+        "resolved": false,
+        "stated_root_cause": "waf-engine is returning 503 on the required shared ingress path, causing ingress-gw/api-gateway checks to fail and all product APIs to simultaneously surface 503s.",
+        "diagnosis_correct": true,
+        "failed_checks": [
+          "correct_fix_missing",
+          "not_resolved"
+        ],
+        "blocked": [],
+        "plan": {
+          "root_cause": "waf-engine is returning 503 on the required shared ingress path, causing ingress-gw/api-gateway checks to fail and all product APIs to simultaneously surface 503s.",
+          "actions": [
+            {
+              "tool": "failover_service",
+              "args": {
+                "target": "waf-engine"
+              }
+            }
+          ]
+        },
+        "feedback": "ROOT CAUSE: correct \u2014 you identified a WAF rule with a catastrophically-backtracking regex was deployed to 'waf-engine', pinning CPU to 100% on every edge request; the loud CPU saturation is a symptom of the bad rule \u2014 rolling back the rule fixes it, scaling CPU does not.\nFIX: your plan did NOT include a remediation that targets the real root 'waf-engine'. What resolves it: rollback_deployment on 'waf-engine'.\nRESULT: NOT resolved \u2014 the root cause is still active and the SLO is still breaching. Revise the plan."
+      },
+      {
+        "iter": 1,
+        "score": 1.0,
+        "resolved": true,
+        "stated_root_cause": "A catastrophically-backtracking WAF regex rule deployed to waf-engine is pinning CPU on every edge request, causing shared ingress auth/quota checks to return 503 across products.",
+        "diagnosis_correct": true,
+        "failed_checks": [],
+        "blocked": [],
+        "plan": {
+          "root_cause": "A catastrophically-backtracking WAF regex rule deployed to waf-engine is pinning CPU on every edge request, causing shared ingress auth/quota checks to return 503 across products.",
+          "actions": [
+            {
+              "tool": "rollback_deployment",
+              "args": {
+                "target": "waf-engine"
+              }
+            }
+          ]
+        },
+        "feedback": "ROOT CAUSE: correct \u2014 you identified a WAF rule with a catastrophically-backtracking regex was deployed to 'waf-engine', pinning CPU to 100% on every edge request; the loud CPU saturation is a symptom of the bad rule \u2014 rolling back the rule fixes it, scaling CPU does not.\nFIX: your plan included a correct fix (rollback_deployment) targeting 'waf-engine'. Good.\nRESULT: the sim reports the incident RESOLVED \u2014 SLO restored and the root cleared."
+      }
+    ],
+    "best_score": 1.0,
+    "best_iter": 1,
+    "resolved": true,
+    "clean_win": true,
+    "outcome": "resolved"
+  },
+  "steps": [
+    {
+      "iter": 0,
+      "score": 0.3,
+      "resolved": false,
+      "stated_root_cause": "waf-engine is returning 503 on the required shared ingress path, causing ingress-gw/api-gateway checks to fail and all product APIs to simultaneously surface 503s.",
+      "diagnosis_correct": true,
+      "failed_checks": [
+        "correct_fix_missing",
+        "not_resolved"
+      ],
+      "blocked": [],
+      "plan": {
+        "root_cause": "waf-engine is returning 503 on the required shared ingress path, causing ingress-gw/api-gateway checks to fail and all product APIs to simultaneously surface 503s.",
+        "actions": [
+          {
+            "tool": "failover_service",
+            "args": {
+              "target": "waf-engine"
+            }
+          }
+        ]
+      },
+      "feedback": "ROOT CAUSE: correct \u2014 you identified a WAF rule with a catastrophically-backtracking regex was deployed to 'waf-engine', pinning CPU to 100% on every edge request; the loud CPU saturation is a symptom of the bad rule \u2014 rolling back the rule fixes it, scaling CPU does not.\nFIX: your plan did NOT include a remediation that targets the real root 'waf-engine'. What resolves it: rollback_deployment on 'waf-engine'.\nRESULT: NOT resolved \u2014 the root cause is still active and the SLO is still breaching. Revise the plan."
+    },
+    {
+      "iter": 1,
+      "score": 1.0,
+      "resolved": true,
+      "stated_root_cause": "A catastrophically-backtracking WAF regex rule deployed to waf-engine is pinning CPU on every edge request, causing shared ingress auth/quota checks to return 503 across products.",
+      "diagnosis_correct": true,
+      "failed_checks": [],
+      "blocked": [],
+      "plan": {
+        "root_cause": "A catastrophically-backtracking WAF regex rule deployed to waf-engine is pinning CPU on every edge request, causing shared ingress auth/quota checks to return 503 across products.",
+        "actions": [
+          {
+            "tool": "rollback_deployment",
+            "args": {
+              "target": "waf-engine"
+            }
+          }
+        ]
+      },
+      "feedback": "ROOT CAUSE: correct \u2014 you identified a WAF rule with a catastrophically-backtracking regex was deployed to 'waf-engine', pinning CPU to 100% on every edge request; the loud CPU saturation is a symptom of the bad rule \u2014 rolling back the rule fixes it, scaling CPU does not.\nFIX: your plan included a correct fix (rollback_deployment) targeting 'waf-engine'. Good.\nRESULT: the sim reports the incident RESOLVED \u2014 SLO restored and the root cleared."
+    }
+  ],
+  "error": null,
+  "elapsed_s": 10.55
+}

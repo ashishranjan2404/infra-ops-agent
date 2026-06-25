@@ -1,0 +1,546 @@
+{
+  "model": "glm-5p2",
+  "label": "glm-5p2 (sub2-grid)",
+  "threshold": 0.8,
+  "seeds": 5,
+  "incidents_by_family": {
+    "simple": [
+      "auth_cert_expiry",
+      "bad_deploy_leaf"
+    ],
+    "cascade": [
+      "aws_dynamodb_dns",
+      "aws_kinesis_cell_manager"
+    ],
+    "novel": [
+      "azure_leapyear_cert",
+      "cloudflare_leap_second"
+    ]
+  },
+  "n_jobs": 150,
+  "elapsed_s": 429.8,
+  "errors": [],
+  "n_errors": 0,
+  "floor_check": {
+    "empty_plan_max_reward": 0.0,
+    "trap_max_reward": 0.0,
+    "threshold": 0.8,
+    "floor_ok": true
+  },
+  "by_condition": {
+    "zero_shot": {
+      "overall": {
+        "n": 30,
+        "passes": 10,
+        "pass@1": 0.3333,
+        "ci95": [
+          0.1923,
+          0.5122
+        ],
+        "pass@2": 0.5632,
+        "pass@5": 0.8912,
+        "mean_reward": 0.5217,
+        "reward_std": 0.4175
+      },
+      "by_family": {
+        "simple": {
+          "n": 10,
+          "passes": 10,
+          "pass@1": 1.0,
+          "ci95": [
+            0.7225,
+            1.0
+          ],
+          "pass@2": 1.0,
+          "pass@5": 1.0,
+          "mean_reward": 1.0,
+          "reward_std": 0.0
+        },
+        "cascade": {
+          "n": 10,
+          "passes": 0,
+          "pass@1": 0.0,
+          "ci95": [
+            0.0,
+            0.2775
+          ],
+          "pass@2": 0.0,
+          "pass@5": 0.0,
+          "mean_reward": 0.295,
+          "reward_std": 0.3616
+        },
+        "novel": {
+          "n": 10,
+          "passes": 0,
+          "pass@1": 0.0,
+          "ci95": [
+            0.0,
+            0.2775
+          ],
+          "pass@2": 0.0,
+          "pass@5": 0.0,
+          "mean_reward": 0.27,
+          "reward_std": 0.2205
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "aws_dynamodb_dns": [
+          0.0,
+          0.0,
+          0.7,
+          0.0,
+          0.0
+        ],
+        "aws_kinesis_cell_manager": [
+          0.0,
+          0.75,
+          0.75,
+          0.75,
+          0.0
+        ],
+        "azure_leapyear_cert": [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.0
+        ],
+        "cloudflare_leap_second": [
+          0.0,
+          0.45,
+          0.3,
+          0.75,
+          0.0
+        ]
+      }
+    },
+    "best_of_n": {
+      "overall": {
+        "n": 30,
+        "passes": 12,
+        "pass@1": 0.4,
+        "ci95": [
+          0.2459,
+          0.5768
+        ],
+        "pass@2": 0.6483,
+        "pass@5": 0.9399,
+        "mean_reward": 0.6883,
+        "reward_std": 0.3175
+      },
+      "by_family": {
+        "simple": {
+          "n": 10,
+          "passes": 10,
+          "pass@1": 1.0,
+          "ci95": [
+            0.7225,
+            1.0
+          ],
+          "pass@2": 1.0,
+          "pass@5": 1.0,
+          "mean_reward": 1.0,
+          "reward_std": 0.0
+        },
+        "cascade": {
+          "n": 10,
+          "passes": 2,
+          "pass@1": 0.2,
+          "ci95": [
+            0.0567,
+            0.5098
+          ],
+          "pass@2": 0.3778,
+          "pass@5": 0.7778,
+          "mean_reward": 0.675,
+          "reward_std": 0.2892
+        },
+        "novel": {
+          "n": 10,
+          "passes": 0,
+          "pass@1": 0.0,
+          "ci95": [
+            0.0,
+            0.2775
+          ],
+          "pass@2": 0.0,
+          "pass@5": 0.0,
+          "mean_reward": 0.39,
+          "reward_std": 0.18
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "aws_dynamodb_dns": [
+          1.0,
+          0.7,
+          1.0,
+          0.0,
+          0.3
+        ],
+        "aws_kinesis_cell_manager": [
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          0.75
+        ],
+        "azure_leapyear_cert": [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_leap_second": [
+          0.3,
+          0.3,
+          0.75,
+          0.3,
+          0.75
+        ]
+      }
+    },
+    "retry_realistic": {
+      "overall": {
+        "n": 30,
+        "passes": 13,
+        "pass@1": 0.4333,
+        "ci95": [
+          0.2738,
+          0.608
+        ],
+        "pass@2": 0.6874,
+        "pass@5": 0.9566,
+        "mean_reward": 0.78,
+        "reward_std": 0.2452
+      },
+      "by_family": {
+        "simple": {
+          "n": 10,
+          "passes": 10,
+          "pass@1": 1.0,
+          "ci95": [
+            0.7225,
+            1.0
+          ],
+          "pass@2": 1.0,
+          "pass@5": 1.0,
+          "mean_reward": 1.0,
+          "reward_std": 0.0
+        },
+        "cascade": {
+          "n": 10,
+          "passes": 3,
+          "pass@1": 0.3,
+          "ci95": [
+            0.1078,
+            0.6032
+          ],
+          "pass@2": 0.5333,
+          "pass@5": 0.9167,
+          "mean_reward": 0.815,
+          "reward_std": 0.1226
+        },
+        "novel": {
+          "n": 10,
+          "passes": 0,
+          "pass@1": 0.0,
+          "ci95": [
+            0.0,
+            0.2775
+          ],
+          "pass@2": 0.0,
+          "pass@5": 0.0,
+          "mean_reward": 0.525,
+          "reward_std": 0.225
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "aws_dynamodb_dns": [
+          1.0,
+          1.0,
+          1.0,
+          0.7,
+          0.7
+        ],
+        "aws_kinesis_cell_manager": [
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          0.75
+        ],
+        "azure_leapyear_cert": [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_leap_second": [
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          0.75
+        ]
+      }
+    },
+    "rex": {
+      "overall": {
+        "n": 30,
+        "passes": 29,
+        "pass@1": 0.9667,
+        "ci95": [
+          0.8333,
+          0.9941
+        ],
+        "pass@2": 1.0,
+        "pass@5": 1.0,
+        "mean_reward": 0.985,
+        "reward_std": 0.0808
+      },
+      "by_family": {
+        "simple": {
+          "n": 10,
+          "passes": 10,
+          "pass@1": 1.0,
+          "ci95": [
+            0.7225,
+            1.0
+          ],
+          "pass@2": 1.0,
+          "pass@5": 1.0,
+          "mean_reward": 1.0,
+          "reward_std": 0.0
+        },
+        "cascade": {
+          "n": 10,
+          "passes": 9,
+          "pass@1": 0.9,
+          "ci95": [
+            0.5958,
+            0.9821
+          ],
+          "pass@2": 1.0,
+          "pass@5": 1.0,
+          "mean_reward": 0.955,
+          "reward_std": 0.135
+        },
+        "novel": {
+          "n": 10,
+          "passes": 10,
+          "pass@1": 1.0,
+          "ci95": [
+            0.7225,
+            1.0
+          ],
+          "pass@2": 1.0,
+          "pass@5": 1.0,
+          "mean_reward": 1.0,
+          "reward_std": 0.0
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "aws_dynamodb_dns": [
+          0.55,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "aws_kinesis_cell_manager": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "azure_leapyear_cert": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cloudflare_leap_second": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "rex_no_oracle": {
+      "overall": {
+        "n": 30,
+        "passes": 10,
+        "pass@1": 0.3333,
+        "ci95": [
+          0.1923,
+          0.5122
+        ],
+        "pass@2": 0.5632,
+        "pass@5": 0.8912,
+        "mean_reward": 0.69,
+        "reward_std": 0.2939
+      },
+      "by_family": {
+        "simple": {
+          "n": 10,
+          "passes": 10,
+          "pass@1": 1.0,
+          "ci95": [
+            0.7225,
+            1.0
+          ],
+          "pass@2": 1.0,
+          "pass@5": 1.0,
+          "mean_reward": 1.0,
+          "reward_std": 0.0
+        },
+        "cascade": {
+          "n": 10,
+          "passes": 0,
+          "pass@1": 0.0,
+          "ci95": [
+            0.0,
+            0.2775
+          ],
+          "pass@2": 0.0,
+          "pass@5": 0.0,
+          "mean_reward": 0.575,
+          "reward_std": 0.2581
+        },
+        "novel": {
+          "n": 10,
+          "passes": 0,
+          "pass@1": 0.0,
+          "ci95": [
+            0.0,
+            0.2775
+          ],
+          "pass@2": 0.0,
+          "pass@5": 0.0,
+          "mean_reward": 0.495,
+          "reward_std": 0.2127
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "aws_dynamodb_dns": [
+          0.7,
+          0.3,
+          0.3,
+          0.7,
+          0.0
+        ],
+        "aws_kinesis_cell_manager": [
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          0.75
+        ],
+        "azure_leapyear_cert": [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_leap_second": [
+          0.75,
+          0.75,
+          0.45,
+          0.75,
+          0.75
+        ]
+      }
+    }
+  },
+  "n_incidents": 6,
+  "grid": {
+    "incidents": 6,
+    "conditions": [
+      "zero_shot",
+      "best_of_n",
+      "retry_realistic",
+      "rex",
+      "rex_no_oracle"
+    ],
+    "seeds": 5,
+    "episodes": 150,
+    "full_grid": false
+  }
+}

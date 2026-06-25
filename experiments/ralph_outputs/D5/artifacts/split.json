@@ -1,0 +1,43 @@
+{
+  "seed": 7,
+  "n_scenarios": 34,
+  "train_frac": 0.7,
+  "train": [
+    "001-oom_kill",
+    "005-latency_spike",
+    "006-dns_failure",
+    "007-memory_leak",
+    "008-cert_expiry",
+    "009-cache_stampede",
+    "011-bad_deploy_errors",
+    "013-node_not_ready",
+    "014-consumer_lag",
+    "015-stuck_rollout",
+    "101-circleci_kubeproxy_iptables",
+    "102-datadog_systemd_cilium",
+    "104-slack_tgw_fd_exhaustion",
+    "105-slack_consul_cache_db_metastable",
+    "107-github_mlag_stonith_splitbrain",
+    "108-github_dns_zone_corruption",
+    "109-github_proxysql_fd_limit",
+    "110-github_mysql_semaphore_rename",
+    "113-cloudflare_1111_zonemd_stale_cache",
+    "114-cloudflare_byzantine_switch",
+    "115-circleci_waf_manual_edit",
+    "116-aws_dynamodb_dns_enactor",
+    "117-aws_kinesis_cell_manager",
+    "118-cloudflare_bgp_reorder_withdraw"
+  ],
+  "eval": [
+    "002-cpu_saturation",
+    "003-disk_pressure",
+    "004-crashloop",
+    "010-upstream_5xx",
+    "012-db_pool_exhaustion",
+    "103-incidentio_anetd_cpu",
+    "106-github_network_partition_orchestrator",
+    "111-github_git_failover_rollback",
+    "112-github_cache_ttl_read_explosion",
+    "119-launchdarkly_legacy_routing_cold_cache"
+  ]
+}

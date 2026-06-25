@@ -1,0 +1,198 @@
+{
+  "summary": {
+    "mode": "offline_proxy_ceiling",
+    "caption": "UPPER BOUND on cloning best demos on held-out scenarios; NOT a trained SFT/RFT result.",
+    "n_eval_scenarios_graded": 10,
+    "skipped_no_demo": [],
+    "mean_proxy_ceiling_v2": 0.6787,
+    "mean_subscores": {
+      "root_cause_category": 0.7,
+      "mechanism_match": 1.0,
+      "evidence_keywords": 0.8273,
+      "ruled_out_red_herrings": 0.2682,
+      "remediation_tool": 0.0
+    }
+  },
+  "per_scenario": [
+    {
+      "scenario_id": "002-cpu_saturation",
+      "teacher": "claude-opus-4-8",
+      "proxy_ceiling_v2": 0.831,
+      "subscores": {
+        "root_cause_category": 1.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.857,
+        "ruled_out_red_herrings": 0.667,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 2044,
+        "req_kw_score": 0.857,
+        "herring_kw_score": 0.667,
+        "req_density_per100c": 0.0419
+      }
+    },
+    {
+      "scenario_id": "003-disk_pressure",
+      "teacher": "claude-opus-4-8",
+      "proxy_ceiling_v2": 0.7375,
+      "subscores": {
+        "root_cause_category": 1.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.75,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 1915,
+        "req_kw_score": 0.75,
+        "herring_kw_score": 0.0,
+        "req_density_per100c": 0.0392
+      }
+    },
+    {
+      "scenario_id": "004-crashloop",
+      "teacher": "claude-opus-4-8",
+      "proxy_ceiling_v2": 0.4067,
+      "subscores": {
+        "root_cause_category": 0.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.667,
+        "ruled_out_red_herrings": 0.4,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 2838,
+        "req_kw_score": 0.667,
+        "herring_kw_score": 0.4,
+        "req_density_per100c": 0.0235
+      }
+    },
+    {
+      "scenario_id": "010-upstream_5xx",
+      "teacher": "kimi-k2p5",
+      "proxy_ceiling_v2": 0.8125,
+      "subscores": {
+        "root_cause_category": 1.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 1.0,
+        "ruled_out_red_herrings": 0.125,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 1657,
+        "req_kw_score": 1.0,
+        "herring_kw_score": 0.125,
+        "req_density_per100c": 0.0604
+      }
+    },
+    {
+      "scenario_id": "012-db_pool_exhaustion",
+      "teacher": "claude-opus-4-8",
+      "proxy_ceiling_v2": 0.4375,
+      "subscores": {
+        "root_cause_category": 0.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.75,
+        "ruled_out_red_herrings": 0.5,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 1916,
+        "req_kw_score": 0.75,
+        "herring_kw_score": 0.5,
+        "req_density_per100c": 0.0391
+      }
+    },
+    {
+      "scenario_id": "103-incidentio_anetd_cpu",
+      "teacher": "claude-haiku-4-5",
+      "proxy_ceiling_v2": 0.775,
+      "subscores": {
+        "root_cause_category": 1.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.9,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 1912,
+        "req_kw_score": 0.9,
+        "herring_kw_score": 0.0,
+        "req_density_per100c": 0.0471
+      }
+    },
+    {
+      "scenario_id": "106-github_network_partition_orchestrator",
+      "teacher": "claude-opus-4-8",
+      "proxy_ceiling_v2": 0.8097,
+      "subscores": {
+        "root_cause_category": 1.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.889,
+        "ruled_out_red_herrings": 0.375,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 2540,
+        "req_kw_score": 0.889,
+        "herring_kw_score": 0.375,
+        "req_density_per100c": 0.035
+      }
+    },
+    {
+      "scenario_id": "111-github_git_failover_rollback",
+      "teacher": "claude-opus-4-8",
+      "proxy_ceiling_v2": 0.7865,
+      "subscores": {
+        "root_cause_category": 1.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.889,
+        "ruled_out_red_herrings": 0.143,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 2096,
+        "req_kw_score": 0.889,
+        "herring_kw_score": 0.143,
+        "req_density_per100c": 0.0424
+      }
+    },
+    {
+      "scenario_id": "112-github_cache_ttl_read_explosion",
+      "teacher": "claude-haiku-4-5",
+      "proxy_ceiling_v2": 0.7893,
+      "subscores": {
+        "root_cause_category": 1.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.857,
+        "ruled_out_red_herrings": 0.25,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 3013,
+        "req_kw_score": 0.857,
+        "herring_kw_score": 0.25,
+        "req_density_per100c": 0.0284
+      }
+    },
+    {
+      "scenario_id": "119-launchdarkly_legacy_routing_cold_cache",
+      "teacher": "kimi-k2p5",
+      "proxy_ceiling_v2": 0.4008,
+      "subscores": {
+        "root_cause_category": 0.0,
+        "mechanism_match": 1.0,
+        "evidence_keywords": 0.714,
+        "ruled_out_red_herrings": 0.222,
+        "remediation_tool": 0.0
+      },
+      "hack": {
+        "answer_chars": 2103,
+        "req_kw_score": 0.714,
+        "herring_kw_score": 0.222,
+        "req_density_per100c": 0.034
+      }
+    }
+  ]
+}

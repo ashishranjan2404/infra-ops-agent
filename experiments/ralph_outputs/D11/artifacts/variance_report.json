@@ -1,0 +1,79 @@
+{
+  "generated_utc": "2026-06-25T08:03:49+00:00",
+  "last_k": 5,
+  "collapse_thresh": 0.03,
+  "mode": "cross-config",
+  "seed_group": null,
+  "seed_variance_status": "NOT MEASURED \u2014 trainer (train_rft.py / train_rft_v2.py) lacks a --seed flag; no run log contains a seed field. See add_seed_patch.diff + run_multiseed.sh (blocked on HUD Tinker GPU backend).",
+  "runs": [
+    {
+      "path": "../../../../opensre-traj/runs/train_qwen3-8b.jsonl",
+      "n_steps": 25,
+      "group_n": 24,
+      "curve_mean": 0.5088,
+      "curve_std": 0.0223,
+      "plateau_mean": 0.4937,
+      "plateau_std": 0.0209,
+      "plateau_window": 5,
+      "within_step_spread_mean": 0.1724,
+      "within_step_spread_min": 0.155,
+      "collapse_steps": [],
+      "first_reward": 0.522,
+      "last_reward": 0.491,
+      "delta": -0.031
+    },
+    {
+      "path": "../../../../opensre-traj/runs/train_qwen3-8b_v2.jsonl",
+      "n_steps": 15,
+      "group_n": 40,
+      "curve_mean": 0.5293,
+      "curve_std": 0.0136,
+      "plateau_mean": 0.5356,
+      "plateau_std": 0.0071,
+      "plateau_window": 5,
+      "within_step_spread_mean": 0.183,
+      "within_step_spread_min": 0.1714,
+      "collapse_steps": [],
+      "first_reward": 0.5039,
+      "last_reward": 0.541,
+      "delta": 0.0371
+    },
+    {
+      "path": "../../../../opensre-traj/runs/train_qwen3-30b.jsonl",
+      "n_steps": 14,
+      "group_n": 24,
+      "curve_mean": 0.4826,
+      "curve_std": 0.0241,
+      "plateau_mean": 0.4853,
+      "plateau_std": 0.0302,
+      "plateau_window": 5,
+      "within_step_spread_mean": 0.1683,
+      "within_step_spread_min": 0.1555,
+      "collapse_steps": [],
+      "first_reward": 0.4737,
+      "last_reward": 0.4905,
+      "delta": 0.0168
+    }
+  ],
+  "seed_ci": null,
+  "cross_config": {
+    "configs": [
+      "../../../../opensre-traj/runs/train_qwen3-8b.jsonl",
+      "../../../../opensre-traj/runs/train_qwen3-8b_v2.jsonl",
+      "../../../../opensre-traj/runs/train_qwen3-30b.jsonl"
+    ],
+    "plateau_means": [
+      0.4937,
+      0.5356,
+      0.4853
+    ],
+    "min": 0.4853,
+    "max": 0.5356,
+    "spread_std_ddof1": 0.0269,
+    "caveat": "NOT seed variance. Confounds: (1) model size (8B vs 30B), (2) rollouts/step n (24 vs 40), (3) trainer version (v1 vs v2). No CI computed \u2014 these are different configs, not seeds of one config."
+  },
+  "notes": [
+    "To get a real seed-variance CI: apply add_seed_patch.diff, run run_multiseed.sh (5 seeds, same config), then re-run with --seed-group.",
+    "No within-step spread collapse (all steps >= 0.03); GRPO advantage signal preserved throughout every run."
+  ]
+}

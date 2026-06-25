@@ -1,0 +1,37 @@
+\section{Honest Ablation and Limitations}
+\label{sec:ablation}
+
+% [F5 content: ablation + limitations. Source: rex/runs/ablation.json, docs/headline_insights.md]
+\paragraph{A fair control deflates the refinement loop.}
+We ran a fair-control ablation isolating where the REx lift comes from. With the root-cause
+hint stripped, REx collapses to \(0.25\), indistinguishable from zero-shot \(0.24\). Extra
+compute (best-of-\(N\), \(0.24\)) and outcome-only feedback (retry, \(0.23\)) add essentially
+nothing (Table~\ref{tab:ablation}). The apparent headline lift was largely
+\emph{oracle-feedback leakage}.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lc}
+\toprule
+Condition & Mean reward \\
+\midrule
+Zero-shot                       & 0.24 \\
+Best-of-$N$                     & 0.24 \\
+Retry (outcome-only feedback)   & 0.23 \\
+REx, root-cause hint stripped   & 0.25 \\
+\bottomrule
+\end{tabular}
+\caption{Fair-control ablation. Source: \texttt{rex/runs/ablation.json}.}
+\label{tab:ablation}
+\end{table}
+
+\paragraph{What this re-centers.}
+The defensible contributions are therefore the \emph{verifiable environment} and the
+\emph{searched verifier}, not the refinement loop. We report this rather than the inflated
+number.
+
+\paragraph{Limitations.}
+(i) The searched verifier cannot gate hazards absent from training. (ii) Tier-B fidelity is
+bounded by the synthetic call mesh, not a production system of record. (iii) The mechanism
+judge is an LLM and inherits its biases, mitigated but not eliminated by the
+phrasing-robustness work. (iv) Open-model RFT results are preliminary.

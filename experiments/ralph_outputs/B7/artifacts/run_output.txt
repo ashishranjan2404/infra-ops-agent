@@ -1,0 +1,25 @@
+Root-cause accuracy (standalone): 0.213  (42/197)
+Records evaluated: 197
+
+Per-category accuracy (gold -> recall):
+  bad_deploy             1.000
+  config_error           0.167
+  dependency_failure     0.000
+  network_fault          0.256
+  node_failure           0.167
+  resource_exhaustion    0.227
+  saturation             0.119
+  unknown                0.250
+
+Confusion (gold -> predicted counts):
+  bad_deploy             {'bad_deploy': 12}
+  config_error           {'bad_deploy': 11, 'config_error': 8, 'unknown': 15, 'dependency_failure': 4, 'node_failure': 2, 'resource_exhaustion': 6, 'network_fault': 2}
+  dependency_failure     {'saturation': 7, 'bad_deploy': 5, 'network_fault': 1, 'unknown': 6, 'resource_exhaustion': 5}
+  network_fault          {'unknown': 14, 'bad_deploy': 4, 'resource_exhaustion': 9, 'network_fault': 10, 'saturation': 1, 'dependency_failure': 1}
+  node_failure           {'resource_exhaustion': 2, 'unknown': 2, 'bad_deploy': 1, 'node_failure': 1}
+  resource_exhaustion    {'node_failure': 1, 'bad_deploy': 13, 'unknown': 3, 'resource_exhaustion': 5}
+  saturation             {'unknown': 9, 'bad_deploy': 14, 'resource_exhaustion': 13, 'saturation': 5, 'network_fault': 1}
+  unknown                {'bad_deploy': 3, 'unknown': 1}
+
+Decoupling check: root-cause-correct disagrees with incident-resolved on 43.1% of 197 records
+  (non-zero => this metric carries signal pass/fail does NOT.)

@@ -1,0 +1,92 @@
+--- a/sim/spec.py	2026-06-24 23:46:16
++++ b/sim/spec.py	2026-06-24 23:46:35
+@@ -189,6 +189,7 @@
+     canonical_fix: Fix
+     observation: Observation = field(default_factory=Observation)
+     trap_actions: list = field(default_factory=list)   # list[Action] (intended, for tests)
++    secondary_faults: list = field(default_factory=list)  # list[dict]: extra simultaneous faults
+     paired_positive: Optional[str] = None              # id of a sibling where the trap tool is CORRECT
+     assertions: Assertions = field(default_factory=Assertions)
+     chance: Chance = field(default_factory=Chance)
+@@ -259,6 +260,7 @@
+         slo=[_build(SLO, s) for s in d["slo"]],
+         canonical_fix=fix, observation=obs,
+         trap_actions=[_build(Action, a) for a in d.get("trap_actions", [])],
++        secondary_faults=list(d.get("secondary_faults", [])),
+         paired_positive=d.get("paired_positive"),
+         assertions=_build(Assertions, d.get("assertions", {})) or Assertions(),
+         chance=_build(Chance, d.get("chance", {})) or Chance(),
+@@ -321,6 +323,19 @@
+     if rc.persistent and not rc.reset_by:
+         errs.append("root_cause.persistent=true but reset_by is empty (hysteresis needs a reset tool)")
+ 
++    seen_locs = {loc}
++    for i, sf in enumerate(spec.secondary_faults):
++        loc2 = sf.get("location")
++        if sf.get("kind") not in ROOT_CAUSE_KINDS:
++            errs.append(f"secondary_faults[{i}].kind {sf.get('kind')!r} not in closed vocab")
++        if loc2 not in nameset:
++            errs.append(f"secondary_faults[{i}].location {loc2!r} is not a node")
++        if loc2 in seen_locs:
++            errs.append(f"secondary_faults[{i}].location {loc2!r} duplicates an existing fault")
++        seen_locs.add(loc2)
++        if sf.get("slo_node") and sf["slo_node"] not in nameset:
++            errs.append(f"secondary_faults[{i}].slo_node {sf['slo_node']!r} not in topology")
++
+     if not spec.slo:
+         errs.append("no SLO defined")
+     for s in spec.slo:
+--- a/sim/engine.py	2026-06-24 23:46:16
++++ b/sim/engine.py	2026-06-24 23:47:04
+@@ -75,8 +75,18 @@
+         rc = spec.root_cause
+         loc = rc.location.split("->")[0].strip() if "->" in rc.location else rc.location
+         self._fault_node = loc
++        # Multi-fault: primary root_cause + any secondary_faults are all live simultaneously.
++        self._fault_nodes = [loc]
++        for sf in getattr(spec, "secondary_faults", []):
++            sloc = sf.get("location")
++            if sloc in self.own_error and sloc not in self._fault_nodes:
++                self._fault_nodes.append(sloc)
+         if inject:
+             self.own_error[loc] = rc.severity
++            for sf in getattr(spec, "secondary_faults", []):
++                sloc = sf.get("location")
++                if sloc in self.own_error:
++                    self.own_error[sloc] = float(sf.get("severity", rc.severity))
+         self._order = _dep_order(spec)
+         # required + discovery both propagate error/latency to the dependent: if a
+         # required dep or the control plane you discover through is down, you're down.
+@@ -116,14 +126,23 @@
+     def root_cleared(self) -> bool:
+         return self.own_error[self._fault_node] == 0.0
+ 
++    @property
++    def all_roots_cleared(self) -> bool:
++        """Conjunctive: every live fault (primary + secondary) must be cleared."""
++        return all(self.own_error[n] == 0.0 for n in self._fault_nodes)
+ 
++
+ def apply_action(world: World, action: Action) -> None:
+     """Apply a remediation. The root cause is cleared ONLY by a tool that causally
+     fixes its kind AND targets the root node — right-tool/wrong-target does nothing."""
+-    kind = world.spec.root_cause.kind
+     target = action.args.get("target")
+-    if action.tool in REMEDIATION.get(kind, set()) and target == world._fault_node:
+-        world.own_error[world._fault_node] = 0.0
++    # kind of whichever fault sits on the targeted node (primary or a secondary)
++    kind_by_node = {world._fault_node: world.spec.root_cause.kind}
++    for sf in getattr(world.spec, "secondary_faults", []):
++        kind_by_node[sf.get("location")] = sf.get("kind")
++    kind = kind_by_node.get(target)
++    if kind and action.tool in REMEDIATION.get(kind, set()) and target in world._fault_nodes:
++        world.own_error[target] = 0.0
+     world.propagate()
+ 
+ 
+@@ -143,4 +162,4 @@
+ def is_resolved(world: World) -> bool:
+     """Root-cause-aware: SLOs back under threshold AND the hidden root is cleared.
+     Metric-masking (green metrics, root still active) does NOT count as resolved."""
+-    return world.root_cleared and _slo_ok(world)
++    return world.all_roots_cleared and _slo_ok(world)

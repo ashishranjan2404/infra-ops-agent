@@ -1,0 +1,174 @@
+{
+  "project": "SRE-Degrees / REx",
+  "git_sha": "8a12b414652f6a014dac9abce1e1681067185db8",
+  "python": "3.13.7",
+  "generated_utc": "2026-06-25T08:19:22.220428+00:00",
+  "framing": "code-as-policy over frozen LLMs; core results train no weights",
+  "tiers": {
+    "replay": {
+      "deterministic": true,
+      "anchor": "opensre-traj/out/hud_trajectories.jsonl + rex.scoring.deterministic_judge",
+      "note": "exact given fixed inputs; verified by double-grade"
+    },
+    "generation": {
+      "deterministic": false,
+      "note": "mean +/- std over seeds; LLM sampling not bitwise; providers may patch"
+    }
+  },
+  "items": [
+    {
+      "id": "code.repo_public",
+      "axis": "code",
+      "status": "AVAILABLE",
+      "evidence": "README.md / ARCHITECTURE.md / rex,sim,agent,opensre-traj",
+      "note": "Single repo, remote infra-ops-agent."
+    },
+    {
+      "id": "code.entrypoints",
+      "axis": "code",
+      "status": "AVAILABLE",
+      "evidence": "rex/eval_pass_at_k.py, rex/ablation.py, rex/README.md",
+      "note": "CLI with --model/--seeds."
+    },
+    {
+      "id": "code.deps_runtime",
+      "axis": "code",
+      "status": "AVAILABLE",
+      "evidence": "requirements-rex.txt",
+      "note": "Runtime stack only."
+    },
+    {
+      "id": "code.deps_gpu",
+      "axis": "code",
+      "status": "AVAILABLE",
+      "evidence": "requirements.txt",
+      "note": "GPU/SFT stack; not needed for evals."
+    },
+    {
+      "id": "code.control_flow_det",
+      "axis": "code",
+      "status": "SEEDED",
+      "evidence": "rex/tree.py:30,67 random.Random(seed)",
+      "note": "Seeds fix traversal, not LLM output."
+    },
+    {
+      "id": "seed.tree",
+      "axis": "seed",
+      "status": "SEEDED",
+      "evidence": "rex/tree.py:30,67",
+      "note": "thompson_search seed=0 default."
+    },
+    {
+      "id": "seed.eval_sweep",
+      "axis": "seed",
+      "status": "SEEDED",
+      "evidence": "rex/eval_pass_at_k.py --seeds",
+      "note": "job=(cond,incident,seed)."
+    },
+    {
+      "id": "seed.ablation",
+      "axis": "seed",
+      "status": "SEEDED",
+      "evidence": "rex/ablation.py SEEDS (3 seeds)",
+      "note": "mean +/- std over 15 values."
+    },
+    {
+      "id": "seed.det_judge",
+      "axis": "seed",
+      "status": "AVAILABLE",
+      "evidence": "rex/scoring.py:79 deterministic_judge",
+      "note": "empirically stable, double-grade PASS."
+    },
+    {
+      "id": "data.trajectories_committed",
+      "axis": "data",
+      "status": "AVAILABLE",
+      "evidence": "opensre-traj/out/hud_trajectories.jsonl (197 rollouts)",
+      "note": "opus68/haiku68/kimi61, measured."
+    },
+    {
+      "id": "data.scenarios_base",
+      "axis": "data",
+      "status": "AVAILABLE",
+      "evidence": "scenarios/cidg/*.yaml (10 tracked)",
+      "note": "hand-written real incidents."
+    },
+    {
+      "id": "data.simple_generator",
+      "axis": "data",
+      "status": "AVAILABLE",
+      "evidence": "rex/curriculum.py:77 generate_simple()",
+      "note": "15 incidents reproducible-by-code."
+    },
+    {
+      "id": "data.generated_committed",
+      "axis": "data",
+      "status": "PARTIAL",
+      "evidence": "scenarios/cidg/generated/*.yaml (53, UNTRACKED)",
+      "note": "dead on fresh clone; commit files or generator+seed."
+    },
+    {
+      "id": "data.doc_drift",
+      "axis": "data",
+      "status": "PARTIAL",
+      "evidence": "opensre-traj/DATA.md",
+      "note": "stale vs committed jsonl; refresh."
+    },
+    {
+      "id": "weights.roster",
+      "axis": "weights",
+      "status": "AVAILABLE",
+      "evidence": "agent/models.py ROSTER (dated version strings)",
+      "note": "closed weights: version-pinned, not weight-reproducible."
+    },
+    {
+      "id": "weights.open_recipe",
+      "axis": "weights",
+      "status": "AVAILABLE",
+      "evidence": "opensre-traj/train_rft.py",
+      "note": "GRPO/RFT recipe via HUD Tinker."
+    },
+    {
+      "id": "weights.checkpoint",
+      "axis": "weights",
+      "status": "BLOCKED",
+      "evidence": "none (no *.safetensors/*.pt/*.bin)",
+      "note": "needs HUD_API_KEY+GPU; core results frozen-LLM."
+    },
+    {
+      "id": "weights.judge_pinned",
+      "axis": "weights",
+      "status": "AVAILABLE",
+      "evidence": "rex/scoring.py:79/100/141",
+      "note": "record judge per metric; det=replayable, llm/hybrid=not."
+    },
+    {
+      "id": "compute.cost_ledger",
+      "axis": "compute",
+      "status": "PARTIAL",
+      "evidence": "(none committed)",
+      "note": "add aggregate $/GPU-hour table."
+    },
+    {
+      "id": "compute.license",
+      "axis": "compute",
+      "status": "AVAILABLE",
+      "evidence": "LICENSE",
+      "note": "present at root."
+    },
+    {
+      "id": "compute.secrets",
+      "axis": "compute",
+      "status": "AVAILABLE",
+      "evidence": ".env (gitignored): ANTHROPIC/FIREWORKS/EXA keys",
+      "note": "keys required, not committed."
+    }
+  ],
+  "counts": {
+    "AVAILABLE": 13,
+    "SEEDED": 4,
+    "PARTIAL": 3,
+    "BLOCKED": 1
+  },
+  "n_items": 21
+}

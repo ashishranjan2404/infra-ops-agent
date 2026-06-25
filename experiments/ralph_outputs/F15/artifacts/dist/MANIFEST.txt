@@ -1,0 +1,16 @@
+READINESS: NOT-READY
+  [BLOCK] NO_BBL: \bibliography{} present but no .bbl shipped (arXiv will not run BibTeX)
+  [WARN ] ANON_AUTHOR: main still says 'Anonymous' — de-anonymize the arXiv copy
+TAR_SHA256: 668b2835616f4ee782b7b58139dfc889773f63acffe4b0c2dab93b4543bbec70
+
+FILES:
+  aaai2026-stub.sty	1630
+  main.tex	2647
+  references.bib	1289
+  sections/00_abstract.tex	1419
+  sections/01_introduction.tex	1974
+  sections/02_environment.tex	1739
+  sections/03_reward_verifier.tex	1581
+  sections/04_experiments.tex	1941
+  sections/05_ablation_limits.tex	1574
+  sections/06_conclusion.tex	882

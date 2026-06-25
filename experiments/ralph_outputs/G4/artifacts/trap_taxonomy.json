@@ -1,0 +1,791 @@
+{
+  "trap_penalty": 0.6,
+  "score_weights": {
+    "root": 0.3,
+    "fix": 0.25,
+    "resolved": 0.45
+  },
+  "n_scenario_files": 51,
+  "n_with_trap": 51,
+  "trap_tool_distribution": {
+    "scale_deployment": 48,
+    "restart_pod": 1,
+    "rollback_deployment": 1,
+    "restart_service": 1
+  },
+  "why_table_tools": [
+    "clear_cache",
+    "restart_service",
+    "scale_deployment"
+  ],
+  "records": [
+    {
+      "scenario_id": "redis-cache-flush",
+      "file": "40-redis-cache-flush.yaml",
+      "failure_class": "cache_flush",
+      "fault_node": "session-cache",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "session-cache",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "clear_cache"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "billing-disk-fill",
+      "file": "41-billing-disk-fill.yaml",
+      "failure_class": "disk_fill",
+      "fault_node": "billing-worker",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "billing-worker",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "rotate_logs"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "auth-cert-expiry",
+      "file": "42-auth-cert-expiry.yaml",
+      "failure_class": "cert_expire",
+      "fault_node": "auth-gateway",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "auth-gateway",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "renew_certificate"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "checkout-bad-rollout",
+      "file": "43-checkout-bad-rollout.yaml",
+      "failure_class": "bad_revision",
+      "fault_node": "checkout-api",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "checkout-api",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "rollback_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "search-cpu-starve",
+      "file": "44-search-cpu-starve.yaml",
+      "failure_class": "cpu_starve",
+      "fault_node": "search-api",
+      "trap": {
+        "tool": "restart_pod",
+        "target": "search-api",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "scale_deployment"
+      ],
+      "why_label": null
+    },
+    {
+      "scenario_id": "ingest-fd-exhaust",
+      "file": "45-ingest-fd-exhaust.yaml",
+      "failure_class": "fd_exhaust",
+      "fault_node": "log-ingest",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "log-ingest",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "media-oom-leak",
+      "file": "46-media-oom-leak.yaml",
+      "failure_class": "mem_leak",
+      "fault_node": "thumbnailer",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "thumbnailer",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "increase_memory_limit"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "payments-dep-revoked",
+      "file": "47-payments-dep-revoked.yaml",
+      "failure_class": "dep_revoked",
+      "fault_node": "payments-api",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "payments-api",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "circleci-kubeproxy-iptables",
+      "file": "50-circleci-kubeproxy-iptables.yaml",
+      "failure_class": "net_delay",
+      "fault_node": "kube-proxy",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "web-app",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "datadog-systemd-cilium",
+      "file": "51-datadog-systemd-cilium.yaml",
+      "failure_class": "config_bloat",
+      "fault_node": "cni-agent",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "region-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "incidentio-anetd-cpu",
+      "file": "52-incidentio-anetd-cpu.yaml",
+      "failure_class": "cpu_starve",
+      "fault_node": "dataplane-agent",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "pg-proxy",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "scale_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "slack-tgw-fd-exhaustion",
+      "file": "53-slack-tgw-fd-exhaustion.yaml",
+      "failure_class": "net_delay",
+      "fault_node": "transit-gateway",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "web-tier",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "slack-consul-cache-db",
+      "file": "54-slack-consul-cache-db.yaml",
+      "failure_class": "churn_spike",
+      "fault_node": "consul-agent",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "cache-ring",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "github-network-partition",
+      "file": "55-github-network-partition.yaml",
+      "failure_class": "net_delay",
+      "fault_node": "orchestrator",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "app-east",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "github-proxysql-fd-limit",
+      "file": "56-github-proxysql-fd-limit.yaml",
+      "failure_class": "fd_exhaust",
+      "fault_node": "proxysql",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "mysql1",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "github-mysql-semaphore-rename",
+      "file": "57-github-mysql-semaphore-rename.yaml",
+      "failure_class": "thread_exhaust",
+      "fault_node": "replica-pool",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "reads-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "cloudflare-zonemd-stale-cache",
+      "file": "58-cloudflare-zonemd-stale-cache.yaml",
+      "failure_class": "config_bloat",
+      "fault_node": "static-zone-parser",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "resolver-1111",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "cloudflare-byzantine-switch",
+      "file": "59-cloudflare-byzantine-switch.yaml",
+      "failure_class": "net_delay",
+      "fault_node": "agg-switch",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "cluster-node-a",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "cloudflare-bgp-reorder",
+      "file": "60-cloudflare-bgp-reorder.yaml",
+      "failure_class": "config_bloat",
+      "fault_node": "bgp-policy",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "edge-pop-a",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "github-dns-zone-corruption",
+      "file": "61-github-dns-zone-corruption.yaml",
+      "failure_class": "config_bloat",
+      "fault_node": "dns-pipeline",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "caching-ns",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "launchdarkly-cold-cache",
+      "file": "62-launchdarkly-cold-cache.yaml",
+      "failure_class": "dep_revoked",
+      "fault_node": "flag-router",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "sdk-stream",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "aws-kinesis-cell-manager",
+      "file": "63-aws-kinesis-cell-manager.yaml",
+      "failure_class": "churn_spike",
+      "fault_node": "cell-manager",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "kinesis-dataplane",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "facebook-bgp-backbone",
+      "file": "70-facebook-bgp-backbone.yaml",
+      "failure_class": "config_bloat",
+      "fault_node": "backbone-router",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "dns-edge",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "cloudflare-leap-second",
+      "file": "71-cloudflare-leap-second.yaml",
+      "failure_class": "config_bloat",
+      "fault_node": "rrdns",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "dns-resolver",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "knight-capital-conflict",
+      "file": "72-knight-capital-conflict.yaml",
+      "failure_class": "bad_revision",
+      "fault_node": "order-router",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "trade-gateway",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "rollback_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "azure-leapyear-cert",
+      "file": "73-azure-leapyear-cert.yaml",
+      "failure_class": "cert_expire",
+      "fault_node": "fabric-agent",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "guest-vm-a",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "renew_certificate"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "github-zk-splitbrain",
+      "file": "74-github-zk-splitbrain.yaml",
+      "failure_class": "net_delay",
+      "fault_node": "zk-ensemble",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "kafka-broker",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "firefox-addon-cert",
+      "file": "75-firefox-addon-cert.yaml",
+      "failure_class": "cert_expire",
+      "fault_node": "addon-signer",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "browser-fleet",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "renew_certificate"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "cloudflare-waf-regex",
+      "file": "76-cloudflare-waf-regex.yaml",
+      "failure_class": "bad_revision",
+      "fault_node": "waf-engine",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "edge-proxy",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "rollback_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "gke-ip-exhaustion",
+      "file": "77-gke-ip-exhaustion.yaml",
+      "failure_class": "pool_leak",
+      "fault_node": "pod-cidr-pool",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "scheduler-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "kafka-poison-pill",
+      "file": "78-kafka-poison-pill.yaml",
+      "failure_class": "bad_content",
+      "fault_node": "consumer-group",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "orders-consumer",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "rollback_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "conntrack-exhaustion",
+      "file": "79-conntrack-exhaustion.yaml",
+      "failure_class": "fd_exhaust",
+      "fault_node": "nat-gateway",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "egress-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "gitlab-db-deletion",
+      "file": "80-gitlab-db-deletion.yaml",
+      "failure_class": "cache_flush",
+      "fault_node": "db-primary",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "web-app",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "clear_cache"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "multi-cert-poolleak",
+      "file": "80-multi-cert-poolleak.yaml",
+      "failure_class": "cert_expire",
+      "fault_node": "auth-gw",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "login-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "renew_certificate",
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "cloudbleed-parser-overrun",
+      "file": "81-cloudbleed-parser-overrun.yaml",
+      "failure_class": "bad_revision",
+      "fault_node": "html-parser",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "edge-proxy",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "rollback_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "multi-rollout-cacheflush",
+      "file": "81-multi-rollout-cacheflush.yaml",
+      "failure_class": "bad_revision",
+      "fault_node": "api-edge",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "read-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "clear_cache",
+        "rollback_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "multi-fdexhaust-cpustarve",
+      "file": "82-multi-fdexhaust-cpustarve.yaml",
+      "failure_class": "fd_exhaust",
+      "fault_node": "conn-router",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "gateway-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service",
+        "scale_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "travis-ci-leaked-secret",
+      "file": "82-travis-ci-leaked-secret.yaml",
+      "failure_class": "dep_revoked",
+      "fault_node": "secrets-vault",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "build-runner",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "rotate_secret"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "roblox-consul-streaming",
+      "file": "83-roblox-consul-streaming.yaml",
+      "failure_class": "churn_spike",
+      "fault_node": "consul-streaming",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "game-svc",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "fastly-pop-config",
+      "file": "84-fastly-pop-config.yaml",
+      "failure_class": "bad_revision",
+      "fault_node": "edge-config",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "pop-edge",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "rollback_deployment"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "reddit-piday-k8s-route",
+      "file": "85-reddit-piday-k8s-route.yaml",
+      "failure_class": "config_bloat",
+      "fault_node": "route-controller",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "front-web",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "modify_network_policy"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "honeycomb-retry-storm",
+      "file": "86-honeycomb-retry-storm.yaml",
+      "failure_class": "thread_exhaust",
+      "fault_node": "query-worker",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "ui-svc",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "aws-s3-typo-capacity",
+      "file": "87-aws-s3-typo-capacity.yaml",
+      "failure_class": "node_notready",
+      "fault_node": "index-subsystem",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "get-svc",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "stripe-redis-fork-latency",
+      "file": "88-stripe-redis-fork-latency.yaml",
+      "failure_class": "mem_leak",
+      "fault_node": "redis-store",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "charge-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "increase_memory_limit"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "monzo-cassandra-compaction",
+      "file": "89-monzo-cassandra-compaction.yaml",
+      "failure_class": "churn_spike",
+      "fault_node": "cassandra-ring",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "cassandra-ring",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "cert-expire-cascade-ingress",
+      "file": "a11-pair-cert-expire-cascade-ingress.yaml",
+      "failure_class": "cert_expire",
+      "fault_node": "tls-ingress",
+      "trap": {
+        "tool": "rollback_deployment",
+        "target": "web-frontend",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "renew_certificate"
+      ],
+      "why_label": null
+    },
+    {
+      "scenario_id": "cert-expire-leaf-sidecar",
+      "file": "a11-pair-cert-expire-leaf-sidecar.yaml",
+      "failure_class": "cert_expire",
+      "fault_node": "payments-svc",
+      "trap": {
+        "tool": "restart_service",
+        "target": "payments-svc",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "renew_certificate"
+      ],
+      "why_label": "blindly restarting the control plane before disabling the bad path re-triggers the crash and herds the datastore \u2014 it WORSENS the outage"
+    },
+    {
+      "scenario_id": "fd-exhaust-cascade-gw",
+      "file": "a11-pair-fd-exhaust-cascade-gw.yaml",
+      "failure_class": "fd_exhaust",
+      "fault_node": "api-gw",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "orders-svc",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "fd-exhaust-leaf-shipper",
+      "file": "a11-pair-fd-exhaust-leaf-shipper.yaml",
+      "failure_class": "fd_exhaust",
+      "fault_node": "log-shipper",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "log-shipper",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "restart_service"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "mem-leak-cascade-cache",
+      "file": "a11-pair-mem-leak-cascade-cache.yaml",
+      "failure_class": "mem_leak",
+      "fault_node": "object-cache",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "catalog-api",
+        "replicas": 8
+      },
+      "contrasted_gold_fix": [
+        "increase_memory_limit"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    },
+    {
+      "scenario_id": "mem-leak-leaf-transcoder",
+      "file": "a11-pair-mem-leak-leaf-transcoder.yaml",
+      "failure_class": "mem_leak",
+      "fault_node": "transcoder",
+      "trap": {
+        "tool": "scale_deployment",
+        "target": "transcoder",
+        "replicas": null
+      },
+      "contrasted_gold_fix": [
+        "increase_memory_limit"
+      ],
+      "why_label": "scaling does not address the root cause \u2014 for a per-process leak every replica OOMs the same way, and scaling a crash-looping control plane HERDS its datastore and worsens recovery; it will NOT resolve the incident"
+    }
+  ]
+}

@@ -1,0 +1,1410 @@
+{
+  "model": "glm-5p2",
+  "label": "glm-5p2 (full-42)",
+  "threshold": 0.8,
+  "seeds": 3,
+  "incidents_by_family": {
+    "simple": [
+      "auth_cert_expiry",
+      "bad_deploy_leaf",
+      "billing_disk_fill",
+      "checkout_bad_rollout",
+      "cpu_saturation_leaf",
+      "ingest_fd_exhaust",
+      "media_oom_leak",
+      "oom_kill",
+      "payments_dep_revoked",
+      "redis_cache_flush",
+      "search_cpu_starve",
+      "singleton_node_notready"
+    ],
+    "cascade": [
+      "aws_dynamodb_dns",
+      "aws_kinesis_cell_manager",
+      "azure_ddos",
+      "circleci_kubeproxy_iptables",
+      "cloudflare_bgp_reorder",
+      "cloudflare_byzantine_switch",
+      "cloudflare_waf",
+      "cloudflare_zonemd_stale_cache",
+      "crowdstrike_bsod",
+      "datadog_systemd_cilium",
+      "gcp_service_control",
+      "github_dns_zone_corruption",
+      "github_mysql_semaphore_rename",
+      "github_network_partition",
+      "github_proxysql_fd_limit",
+      "incidentio_anetd_cpu",
+      "launchdarkly_cold_cache",
+      "railway_gcp_suspension",
+      "slack_consul_cache_db",
+      "slack_tgw_fd_exhaustion"
+    ],
+    "novel": [
+      "azure_leapyear_cert",
+      "cloudflare_leap_second",
+      "cloudflare_waf_regex",
+      "conntrack_exhaustion",
+      "facebook_bgp_backbone",
+      "firefox_addon_cert",
+      "github_zk_splitbrain",
+      "gke_ip_exhaustion",
+      "kafka_poison_pill",
+      "knight_capital_conflict"
+    ]
+  },
+  "n_jobs": 630,
+  "elapsed_s": 1608.3,
+  "errors": [],
+  "n_errors": 0,
+  "floor_check": {
+    "empty_plan_max_reward": 0.0,
+    "trap_max_reward": 0.1,
+    "threshold": 0.8,
+    "floor_ok": true
+  },
+  "by_condition": {
+    "zero_shot": {
+      "overall": {
+        "n": 126,
+        "passes": 29,
+        "pass@1": 0.2302,
+        "ci95": [
+          0.1653,
+          0.311
+        ],
+        "pass@2": 0.4088,
+        "pass@5": 0.7361,
+        "mean_reward": 0.4286,
+        "reward_std": 0.3841
+      },
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "passes": 20,
+          "pass@1": 0.5556,
+          "ci95": [
+            0.3958,
+            0.7046
+          ],
+          "pass@2": 0.8095,
+          "pass@5": 0.9884,
+          "mean_reward": 0.6694,
+          "reward_std": 0.4032
+        },
+        "cascade": {
+          "n": 60,
+          "passes": 4,
+          "pass@1": 0.0667,
+          "ci95": [
+            0.0262,
+            0.1593
+          ],
+          "pass@2": 0.1299,
+          "pass@5": 0.3006,
+          "mean_reward": 0.2833,
+          "reward_std": 0.3276
+        },
+        "novel": {
+          "n": 30,
+          "passes": 5,
+          "pass@1": 0.1667,
+          "ci95": [
+            0.0734,
+            0.3356
+          ],
+          "pass@2": 0.3103,
+          "pass@5": 0.6272,
+          "mean_reward": 0.43,
+          "reward_std": 0.3131
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "billing_disk_fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "checkout_bad_rollout": [
+          1.0,
+          0.0,
+          1.0
+        ],
+        "cpu_saturation_leaf": [
+          1.0,
+          1.0,
+          0.0
+        ],
+        "ingest_fd_exhaust": [
+          0.75,
+          0.75,
+          0.3
+        ],
+        "media_oom_leak": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "oom_kill": [
+          0.3,
+          0.4,
+          0.4
+        ],
+        "payments_dep_revoked": [
+          0.3,
+          0.0,
+          0.3
+        ],
+        "redis_cache_flush": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "search_cpu_starve": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "singleton_node_notready": [
+          0.3,
+          0.3,
+          0.0
+        ],
+        "aws_dynamodb_dns": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "aws_kinesis_cell_manager": [
+          0.75,
+          0.75,
+          0.0
+        ],
+        "azure_ddos": [
+          0.25,
+          0.25,
+          0.0
+        ],
+        "circleci_kubeproxy_iptables": [
+          0.0,
+          0.3,
+          0.3
+        ],
+        "cloudflare_bgp_reorder": [
+          0.75,
+          0.3,
+          0.75
+        ],
+        "cloudflare_byzantine_switch": [
+          0.3,
+          0.0,
+          0.3
+        ],
+        "cloudflare_waf": [
+          0.0,
+          0.55,
+          0.55
+        ],
+        "cloudflare_zonemd_stale_cache": [
+          0.75,
+          0.0,
+          0.3
+        ],
+        "crowdstrike_bsod": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "datadog_systemd_cilium": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "gcp_service_control": [
+          0.0,
+          0.0,
+          0.45
+        ],
+        "github_dns_zone_corruption": [
+          0.0,
+          0.0,
+          0.75
+        ],
+        "github_mysql_semaphore_rename": [
+          1.0,
+          0.3,
+          1.0
+        ],
+        "github_network_partition": [
+          0.0,
+          0.0,
+          0.3
+        ],
+        "github_proxysql_fd_limit": [
+          0.0,
+          0.3,
+          1.0
+        ],
+        "incidentio_anetd_cpu": [
+          0.0,
+          0.3,
+          0.3
+        ],
+        "launchdarkly_cold_cache": [
+          0.75,
+          0.3,
+          0.75
+        ],
+        "railway_gcp_suspension": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "slack_consul_cache_db": [
+          0.75,
+          0.0,
+          0.0
+        ],
+        "slack_tgw_fd_exhaustion": [
+          0.3,
+          0.0,
+          0.3
+        ],
+        "azure_leapyear_cert": [
+          0.0,
+          0.3,
+          0.3
+        ],
+        "cloudflare_leap_second": [
+          0.75,
+          0.0,
+          0.75
+        ],
+        "cloudflare_waf_regex": [
+          0.3,
+          0.425,
+          0.3
+        ],
+        "conntrack_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "facebook_bgp_backbone": [
+          0.3,
+          0.75,
+          0.0
+        ],
+        "firefox_addon_cert": [
+          0.3,
+          0.0,
+          0.3
+        ],
+        "github_zk_splitbrain": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "gke_ip_exhaustion": [
+          0.3,
+          1.0,
+          1.0
+        ],
+        "kafka_poison_pill": [
+          0.425,
+          0.3,
+          0.3
+        ],
+        "knight_capital_conflict": [
+          0.3,
+          0.3,
+          0.3
+        ]
+      }
+    },
+    "best_of_n": {
+      "overall": {
+        "n": 126,
+        "passes": 43,
+        "pass@1": 0.3413,
+        "ci95": [
+          0.2643,
+          0.4277
+        ],
+        "pass@2": 0.5679,
+        "pass@5": 0.8811,
+        "mean_reward": 0.6524,
+        "reward_std": 0.3136
+      },
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "passes": 27,
+          "pass@1": 0.75,
+          "ci95": [
+            0.5893,
+            0.8625
+          ],
+          "pass@2": 0.9429,
+          "pass@5": 0.9997,
+          "mean_reward": 0.8528,
+          "reward_std": 0.271
+        },
+        "cascade": {
+          "n": 60,
+          "passes": 9,
+          "pass@1": 0.15,
+          "ci95": [
+            0.081,
+            0.2611
+          ],
+          "pass@2": 0.2797,
+          "pass@5": 0.5699,
+          "mean_reward": 0.59,
+          "reward_std": 0.2844
+        },
+        "novel": {
+          "n": 30,
+          "passes": 7,
+          "pass@1": 0.2333,
+          "ci95": [
+            0.1179,
+            0.4093
+          ],
+          "pass@2": 0.4184,
+          "pass@5": 0.7639,
+          "mean_reward": 0.5367,
+          "reward_std": 0.306
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "billing_disk_fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "checkout_bad_rollout": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cpu_saturation_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ingest_fd_exhaust": [
+          1.0,
+          0.75,
+          0.75
+        ],
+        "media_oom_leak": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "oom_kill": [
+          0.4,
+          1.0,
+          1.0
+        ],
+        "payments_dep_revoked": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "redis_cache_flush": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "search_cpu_starve": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "singleton_node_notready": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "aws_dynamodb_dns": [
+          0.7,
+          0.3,
+          1.0
+        ],
+        "aws_kinesis_cell_manager": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "azure_ddos": [
+          0.55,
+          0.55,
+          0.55
+        ],
+        "circleci_kubeproxy_iptables": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_bgp_reorder": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "cloudflare_byzantine_switch": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_waf": [
+          0.55,
+          0.55,
+          0.55
+        ],
+        "cloudflare_zonemd_stale_cache": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "crowdstrike_bsod": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "datadog_systemd_cilium": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "gcp_service_control": [
+          0.0,
+          0.45,
+          0.3
+        ],
+        "github_dns_zone_corruption": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "github_mysql_semaphore_rename": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "github_network_partition": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "github_proxysql_fd_limit": [
+          1.0,
+          1.0,
+          0.7
+        ],
+        "incidentio_anetd_cpu": [
+          0.7,
+          0.3,
+          0.3
+        ],
+        "launchdarkly_cold_cache": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "railway_gcp_suspension": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "slack_consul_cache_db": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "slack_tgw_fd_exhaustion": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "azure_leapyear_cert": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_leap_second": [
+          0.3,
+          0.75,
+          0.75
+        ],
+        "cloudflare_waf_regex": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "conntrack_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "facebook_bgp_backbone": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "firefox_addon_cert": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "github_zk_splitbrain": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "gke_ip_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "kafka_poison_pill": [
+          0.3,
+          0.425,
+          1.0
+        ],
+        "knight_capital_conflict": [
+          0.125,
+          0.3,
+          0.3
+        ]
+      }
+    },
+    "retry_realistic": {
+      "overall": {
+        "n": 126,
+        "passes": 44,
+        "pass@1": 0.3492,
+        "ci95": [
+          0.2715,
+          0.4358
+        ],
+        "pass@2": 0.5783,
+        "pass@5": 0.8883,
+        "mean_reward": 0.6617,
+        "reward_std": 0.3027
+      },
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "passes": 25,
+          "pass@1": 0.6944,
+          "ci95": [
+            0.5314,
+            0.82
+          ],
+          "pass@2": 0.9127,
+          "pass@5": 0.9988,
+          "mean_reward": 0.8194,
+          "reward_std": 0.2873
+        },
+        "cascade": {
+          "n": 60,
+          "passes": 12,
+          "pass@1": 0.2,
+          "ci95": [
+            0.1183,
+            0.3178
+          ],
+          "pass@2": 0.3627,
+          "pass@5": 0.6865,
+          "mean_reward": 0.6225,
+          "reward_std": 0.2773
+        },
+        "novel": {
+          "n": 30,
+          "passes": 7,
+          "pass@1": 0.2333,
+          "ci95": [
+            0.1179,
+            0.4093
+          ],
+          "pass@2": 0.4184,
+          "pass@5": 0.7639,
+          "mean_reward": 0.5508,
+          "reward_std": 0.2945
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "billing_disk_fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "checkout_bad_rollout": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cpu_saturation_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ingest_fd_exhaust": [
+          0.75,
+          1.0,
+          0.75
+        ],
+        "media_oom_leak": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "oom_kill": [
+          0.4,
+          0.4,
+          0.4
+        ],
+        "payments_dep_revoked": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "redis_cache_flush": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "search_cpu_starve": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "singleton_node_notready": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "aws_dynamodb_dns": [
+          0.3,
+          0.3,
+          1.0
+        ],
+        "aws_kinesis_cell_manager": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "azure_ddos": [
+          0.55,
+          0.3,
+          0.55
+        ],
+        "circleci_kubeproxy_iptables": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_bgp_reorder": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "cloudflare_byzantine_switch": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_waf": [
+          0.55,
+          0.55,
+          0.55
+        ],
+        "cloudflare_zonemd_stale_cache": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "crowdstrike_bsod": [
+          0.0,
+          0.3,
+          0.0
+        ],
+        "datadog_systemd_cilium": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "gcp_service_control": [
+          0.45,
+          0.45,
+          0.45
+        ],
+        "github_dns_zone_corruption": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "github_mysql_semaphore_rename": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "github_network_partition": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "github_proxysql_fd_limit": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "incidentio_anetd_cpu": [
+          1.0,
+          0.7,
+          1.0
+        ],
+        "launchdarkly_cold_cache": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "railway_gcp_suspension": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "slack_consul_cache_db": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "slack_tgw_fd_exhaustion": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "azure_leapyear_cert": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_leap_second": [
+          0.75,
+          0.3,
+          0.75
+        ],
+        "cloudflare_waf_regex": [
+          0.3,
+          0.3,
+          0.425
+        ],
+        "conntrack_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "facebook_bgp_backbone": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "firefox_addon_cert": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "github_zk_splitbrain": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "gke_ip_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "kafka_poison_pill": [
+          0.3,
+          0.425,
+          0.3
+        ],
+        "knight_capital_conflict": [
+          1.0,
+          0.425,
+          0.3
+        ]
+      }
+    },
+    "rex": {
+      "overall": {
+        "n": 126,
+        "passes": 113,
+        "pass@1": 0.8968,
+        "ci95": [
+          0.8315,
+          0.9387
+        ],
+        "pass@2": 0.9901,
+        "pass@5": 1.0,
+        "mean_reward": 0.9427,
+        "reward_std": 0.1733
+      },
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "passes": 32,
+          "pass@1": 0.8889,
+          "ci95": [
+            0.7468,
+            0.9559
+          ],
+          "pass@2": 0.9905,
+          "pass@5": 1.0,
+          "mean_reward": 0.9222,
+          "reward_std": 0.22
+        },
+        "cascade": {
+          "n": 60,
+          "passes": 51,
+          "pass@1": 0.85,
+          "ci95": [
+            0.7389,
+            0.919
+          ],
+          "pass@2": 0.9797,
+          "pass@5": 1.0,
+          "mean_reward": 0.9263,
+          "reward_std": 0.1785
+        },
+        "novel": {
+          "n": 30,
+          "passes": 30,
+          "pass@1": 1.0,
+          "ci95": [
+            0.8865,
+            1.0
+          ],
+          "pass@2": 1.0,
+          "pass@5": 1.0,
+          "mean_reward": 1.0,
+          "reward_std": 0.0
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "billing_disk_fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "checkout_bad_rollout": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cpu_saturation_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ingest_fd_exhaust": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "media_oom_leak": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "oom_kill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "payments_dep_revoked": [
+          0.3,
+          1.0,
+          1.0
+        ],
+        "redis_cache_flush": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "search_cpu_starve": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "singleton_node_notready": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "aws_dynamodb_dns": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "aws_kinesis_cell_manager": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "azure_ddos": [
+          0.55,
+          0.55,
+          0.55
+        ],
+        "circleci_kubeproxy_iptables": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cloudflare_bgp_reorder": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cloudflare_byzantine_switch": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cloudflare_waf": [
+          0.55,
+          0.55,
+          0.55
+        ],
+        "cloudflare_zonemd_stale_cache": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "crowdstrike_bsod": [
+          0.55,
+          0.3,
+          0.425
+        ],
+        "datadog_systemd_cilium": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "gcp_service_control": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "github_dns_zone_corruption": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "github_mysql_semaphore_rename": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "github_network_partition": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "github_proxysql_fd_limit": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "incidentio_anetd_cpu": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "launchdarkly_cold_cache": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "railway_gcp_suspension": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "slack_consul_cache_db": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "slack_tgw_fd_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "azure_leapyear_cert": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cloudflare_leap_second": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cloudflare_waf_regex": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "conntrack_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "facebook_bgp_backbone": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "firefox_addon_cert": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "github_zk_splitbrain": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "gke_ip_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "kafka_poison_pill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "knight_capital_conflict": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "rex_no_oracle": {
+      "overall": {
+        "n": 126,
+        "passes": 42,
+        "pass@1": 0.3333,
+        "ci95": [
+          0.257,
+          0.4195
+        ],
+        "pass@2": 0.5573,
+        "pass@5": 0.8736,
+        "mean_reward": 0.6599,
+        "reward_std": 0.3033
+      },
+      "by_family": {
+        "simple": {
+          "n": 36,
+          "passes": 26,
+          "pass@1": 0.7222,
+          "ci95": [
+            0.5601,
+            0.8415
+          ],
+          "pass@2": 0.9286,
+          "pass@5": 0.9993,
+          "mean_reward": 0.8458,
+          "reward_std": 0.2704
+        },
+        "cascade": {
+          "n": 60,
+          "passes": 9,
+          "pass@1": 0.15,
+          "ci95": [
+            0.081,
+            0.2611
+          ],
+          "pass@2": 0.2797,
+          "pass@5": 0.5699,
+          "mean_reward": 0.5975,
+          "reward_std": 0.2759
+        },
+        "novel": {
+          "n": 30,
+          "passes": 7,
+          "pass@1": 0.2333,
+          "ci95": [
+            0.1179,
+            0.4093
+          ],
+          "pass@2": 0.4184,
+          "pass@5": 0.7639,
+          "mean_reward": 0.5617,
+          "reward_std": 0.2956
+        }
+      },
+      "per_incident_rewards": {
+        "auth_cert_expiry": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bad_deploy_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "billing_disk_fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "checkout_bad_rollout": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cpu_saturation_leaf": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ingest_fd_exhaust": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "media_oom_leak": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "oom_kill": [
+          1.0,
+          0.4,
+          1.0
+        ],
+        "payments_dep_revoked": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "redis_cache_flush": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "search_cpu_starve": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "singleton_node_notready": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "aws_dynamodb_dns": [
+          0.7,
+          1.0,
+          0.7
+        ],
+        "aws_kinesis_cell_manager": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "azure_ddos": [
+          0.3,
+          0.4,
+          0.55
+        ],
+        "circleci_kubeproxy_iptables": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_bgp_reorder": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "cloudflare_byzantine_switch": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_waf": [
+          0.55,
+          0.55,
+          0.55
+        ],
+        "cloudflare_zonemd_stale_cache": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "crowdstrike_bsod": [
+          0.3,
+          0.0,
+          0.0
+        ],
+        "datadog_systemd_cilium": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "gcp_service_control": [
+          0.0,
+          0.45,
+          0.45
+        ],
+        "github_dns_zone_corruption": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "github_mysql_semaphore_rename": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "github_network_partition": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "github_proxysql_fd_limit": [
+          1.0,
+          0.3,
+          1.0
+        ],
+        "incidentio_anetd_cpu": [
+          0.7,
+          0.3,
+          0.7
+        ],
+        "launchdarkly_cold_cache": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "railway_gcp_suspension": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "slack_consul_cache_db": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "slack_tgw_fd_exhaustion": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "azure_leapyear_cert": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "cloudflare_leap_second": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "cloudflare_waf_regex": [
+          0.3,
+          0.3,
+          1.0
+        ],
+        "conntrack_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "facebook_bgp_backbone": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "firefox_addon_cert": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "github_zk_splitbrain": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "gke_ip_exhaustion": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "kafka_poison_pill": [
+          0.3,
+          0.3,
+          0.425
+        ],
+        "knight_capital_conflict": [
+          0.3,
+          0.3,
+          0.425
+        ]
+      }
+    }
+  },
+  "n_incidents": 42,
+  "full_set": true
+}

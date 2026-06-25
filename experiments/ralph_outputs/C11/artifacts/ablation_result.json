@@ -1,0 +1,190 @@
+{
+  "scenarios_used": [
+    "auth_cert_expiry",
+    "aws_dynamodb_dns",
+    "aws_kinesis_cell_manager",
+    "azure_ddos",
+    "azure_leapyear_cert",
+    "bad_deploy_leaf",
+    "billing_disk_fill",
+    "checkout_bad_rollout",
+    "circleci_kubeproxy_iptables",
+    "cloudflare_bgp_reorder",
+    "cloudflare_byzantine_switch",
+    "cloudflare_leap_second",
+    "cloudflare_waf",
+    "cloudflare_waf_regex",
+    "cloudflare_zonemd_stale_cache",
+    "conntrack_exhaustion",
+    "cpu_saturation_leaf",
+    "crowdstrike_bsod",
+    "datadog_systemd_cilium",
+    "facebook_bgp_backbone",
+    "firefox_addon_cert",
+    "gcp_service_control",
+    "github_dns_zone_corruption",
+    "github_mysql_semaphore_rename",
+    "github_network_partition",
+    "github_proxysql_fd_limit",
+    "github_zk_splitbrain",
+    "gke_ip_exhaustion",
+    "incidentio_anetd_cpu",
+    "ingest_fd_exhaust",
+    "kafka_poison_pill",
+    "knight_capital_conflict",
+    "launchdarkly_cold_cache",
+    "media_oom_leak",
+    "oom_kill",
+    "payments_dep_revoked",
+    "railway_gcp_suspension",
+    "redis_cache_flush",
+    "search_cpu_starve",
+    "singleton_node_notready",
+    "slack_consul_cache_db",
+    "slack_tgw_fd_exhaustion"
+  ],
+  "scenarios_skipped": [],
+  "n_labeled_actions": 580,
+  "full_harness": {
+    "n": 580,
+    "tp": 216,
+    "tn": 325,
+    "false_allow": 37,
+    "false_block": 2,
+    "accuracy": 0.9328
+  },
+  "ablations": {
+    "R1_forbidden_category": {
+      "n": 580,
+      "tp": 9,
+      "tn": 325,
+      "false_allow": 244,
+      "false_block": 2,
+      "accuracy": 0.5759,
+      "accuracy_drop": 0.3569,
+      "false_allows_introduced": 207,
+      "false_blocks_removed": 0
+    },
+    "R2_leak_restart": {
+      "n": 580,
+      "tp": 212,
+      "tn": 325,
+      "false_allow": 41,
+      "false_block": 2,
+      "accuracy": 0.9259,
+      "accuracy_drop": 0.0069,
+      "false_allows_introduced": 4,
+      "false_blocks_removed": 0
+    },
+    "R3_last_ready_node": {
+      "n": 580,
+      "tp": 214,
+      "tn": 325,
+      "false_allow": 39,
+      "false_block": 2,
+      "accuracy": 0.9293,
+      "accuracy_drop": 0.0035,
+      "false_allows_introduced": 2,
+      "false_blocks_removed": 0
+    },
+    "R4_replica_limit": {
+      "n": 580,
+      "tp": 216,
+      "tn": 325,
+      "false_allow": 37,
+      "false_block": 2,
+      "accuracy": 0.9328,
+      "accuracy_drop": 0.0,
+      "false_allows_introduced": 0,
+      "false_blocks_removed": 0
+    },
+    "R5_rollback_no_deploy": {
+      "n": 580,
+      "tp": 213,
+      "tn": 327,
+      "false_allow": 40,
+      "false_block": 0,
+      "accuracy": 0.931,
+      "accuracy_drop": 0.0018,
+      "false_allows_introduced": 3,
+      "false_blocks_removed": 2
+    }
+  },
+  "headline_rules": [
+    "R1_forbidden_category",
+    "R2_leak_restart",
+    "R3_last_ready_node"
+  ],
+  "ranking_by_accuracy_drop": [
+    [
+      "R1_forbidden_category",
+      {
+        "n": 580,
+        "tp": 9,
+        "tn": 325,
+        "false_allow": 244,
+        "false_block": 2,
+        "accuracy": 0.5759,
+        "accuracy_drop": 0.3569,
+        "false_allows_introduced": 207,
+        "false_blocks_removed": 0
+      }
+    ],
+    [
+      "R2_leak_restart",
+      {
+        "n": 580,
+        "tp": 212,
+        "tn": 325,
+        "false_allow": 41,
+        "false_block": 2,
+        "accuracy": 0.9259,
+        "accuracy_drop": 0.0069,
+        "false_allows_introduced": 4,
+        "false_blocks_removed": 0
+      }
+    ],
+    [
+      "R3_last_ready_node",
+      {
+        "n": 580,
+        "tp": 214,
+        "tn": 325,
+        "false_allow": 39,
+        "false_block": 2,
+        "accuracy": 0.9293,
+        "accuracy_drop": 0.0035,
+        "false_allows_introduced": 2,
+        "false_blocks_removed": 0
+      }
+    ],
+    [
+      "R5_rollback_no_deploy",
+      {
+        "n": 580,
+        "tp": 213,
+        "tn": 327,
+        "false_allow": 40,
+        "false_block": 0,
+        "accuracy": 0.931,
+        "accuracy_drop": 0.0018,
+        "false_allows_introduced": 3,
+        "false_blocks_removed": 2
+      }
+    ],
+    [
+      "R4_replica_limit",
+      {
+        "n": 580,
+        "tp": 216,
+        "tn": 325,
+        "false_allow": 37,
+        "false_block": 2,
+        "accuracy": 0.9328,
+        "accuracy_drop": 0.0,
+        "false_allows_introduced": 0,
+        "false_blocks_removed": 0
+      }
+    ]
+  ]
+}

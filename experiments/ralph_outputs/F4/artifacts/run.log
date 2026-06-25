@@ -1,0 +1,9 @@
+REPO=/Users/mei/rl
+OUT =/Users/mei/rl/experiments/ralph_outputs/F4/artifacts/figures
+  fig -> experiments/ralph_outputs/F4/artifacts/figures/fig1_passk_ci.png
+  fig -> experiments/ralph_outputs/F4/artifacts/figures/fig2_passk_by_family.png
+  fig -> experiments/ralph_outputs/F4/artifacts/figures/fig3_passk_curve.png
+  fig -> experiments/ralph_outputs/F4/artifacts/figures/fig4_mcnemar.png
+  fig -> experiments/ralph_outputs/F4/artifacts/figures/fig5_frontier.png
+  fig -> experiments/ralph_outputs/F4/artifacts/figures/fig6_harness.png
+done.

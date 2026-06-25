@@ -1,0 +1,16 @@
+baselines:
+- mixed
+- none
+eval_families:
+- simple
+- cascade
+max_tokens: 1400
+model: glm-5p2
+n_eval_incidents: 2
+n_exemplars: 3
+name: d7_cascade_only
+no_leakage: true
+pass_threshold: 0.8
+seeds: 2
+temperature: 0.7
+train_family: cascade

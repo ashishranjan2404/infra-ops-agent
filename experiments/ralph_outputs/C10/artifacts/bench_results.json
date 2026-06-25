@@ -1,0 +1,28 @@
+{
+  "python": "3.13.7",
+  "iters": 200000,
+  "warmup": 20000,
+  "n_cases": 6,
+  "is_safe": {
+    "n": 200000,
+    "mean_us": 0.270420315,
+    "p50_us": 0.25,
+    "p99_us": 0.416,
+    "min_us": 0.125,
+    "max_us": 80.25,
+    "stdev_us": 0.19494622817664561
+  },
+  "noop_baseline": {
+    "n": 200000,
+    "mean_us": 0.052813370000000005,
+    "p50_us": 0.042,
+    "p99_us": 0.084,
+    "min_us": 0.0,
+    "max_us": 6.125,
+    "stdev_us": 0.030286368538388685
+  },
+  "overhead_mean_us": 0.21760694500000002,
+  "overhead_p99_us": 0.33199999999999996,
+  "overhead_ratio_mean": 5.120300314106069,
+  "projected_cost_per_10action_plan_us": 2.70420315
+}

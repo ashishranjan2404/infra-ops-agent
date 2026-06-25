@@ -1,0 +1,127 @@
+{
+  "source_data": "rex/runs/ablation.json",
+  "model": "claude-haiku-4-5",
+  "threshold": 0.8,
+  "resamples": 10000,
+  "rng_seed": 12345,
+  "reference_estimator_source": "imported",
+  "n_incidents": 5,
+  "metric": "pass@1 (P[reward>=threshold])",
+  "conditions": {
+    "zero_shot": {
+      "n": 15,
+      "passes": 0,
+      "pass@1": 0.0,
+      "wilson95": [
+        0.0,
+        0.2039
+      ],
+      "bootstrap95": [
+        0.0,
+        0.0
+      ],
+      "bootstrap_se": 0.0,
+      "cluster_bootstrap95": [
+        0.0,
+        0.0
+      ],
+      "cluster_bootstrap_se": 0.0,
+      "n_blocks": 5,
+      "wilson_width": 0.2039,
+      "bootstrap_width": 0.0,
+      "cluster_bootstrap_width": 0.0
+    },
+    "best_of_n": {
+      "n": 15,
+      "passes": 1,
+      "pass@1": 0.0667,
+      "wilson95": [
+        0.0119,
+        0.2982
+      ],
+      "bootstrap95": [
+        0.0,
+        0.2
+      ],
+      "bootstrap_se": 0.0638,
+      "cluster_bootstrap95": [
+        0.0,
+        0.2
+      ],
+      "cluster_bootstrap_se": 0.0595,
+      "n_blocks": 5,
+      "wilson_width": 0.2863,
+      "bootstrap_width": 0.2,
+      "cluster_bootstrap_width": 0.2
+    },
+    "retry_realistic": {
+      "n": 15,
+      "passes": 0,
+      "pass@1": 0.0,
+      "wilson95": [
+        0.0,
+        0.2039
+      ],
+      "bootstrap95": [
+        0.0,
+        0.0
+      ],
+      "bootstrap_se": 0.0,
+      "cluster_bootstrap95": [
+        0.0,
+        0.0
+      ],
+      "cluster_bootstrap_se": 0.0,
+      "n_blocks": 5,
+      "wilson_width": 0.2039,
+      "bootstrap_width": 0.0,
+      "cluster_bootstrap_width": 0.0
+    },
+    "rex": {
+      "n": 15,
+      "passes": 6,
+      "pass@1": 0.4,
+      "wilson95": [
+        0.1982,
+        0.6425
+      ],
+      "bootstrap95": [
+        0.1333,
+        0.6667
+      ],
+      "bootstrap_se": 0.126,
+      "cluster_bootstrap95": [
+        0.0,
+        0.8
+      ],
+      "cluster_bootstrap_se": 0.2191,
+      "n_blocks": 5,
+      "wilson_width": 0.4443,
+      "bootstrap_width": 0.5333,
+      "cluster_bootstrap_width": 0.8
+    },
+    "rex_no_oracle": {
+      "n": 15,
+      "passes": 0,
+      "pass@1": 0.0,
+      "wilson95": [
+        0.0,
+        0.2039
+      ],
+      "bootstrap95": [
+        0.0,
+        0.0
+      ],
+      "bootstrap_se": 0.0,
+      "cluster_bootstrap95": [
+        0.0,
+        0.0
+      ],
+      "cluster_bootstrap_se": 0.0,
+      "n_blocks": 5,
+      "wilson_width": 0.2039,
+      "bootstrap_width": 0.0,
+      "cluster_bootstrap_width": 0.0
+    }
+  }
+}

@@ -1,0 +1,29 @@
+
+=== SRE-Degrees: autonomous incident response demo ===
+scenario : 44-search-cpu-starve.yaml
+simulator: sim/engine.py (deterministic Tier-A graph kernel)
+
+sre-degrees$ incident open --auto
+  [PAGE] SLO breach on 'search-api' — error rate over threshold
+  search-api       error= 70.0%  p99=  50.0ms
+  hidden root-cause kind = cpu_starve @ search-api (unknown to the agent)
+
+sre-degrees$ agent diagnose
+  hypothesis : degradation localizes to search-api
+  category   : resource/cpu pressure (from metric shape)
+
+sre-degrees$ agent act --tool restart_pod --target search-api
+  search-api       error= 70.0%  p99=  50.0ms
+  [ORACLE] root still active — restart did not clear the fault
+  feedback -> refine: restart treats symptoms, not cpu starvation
+
+sre-degrees$ agent act --tool scale_deployment --target search-api
+  search-api       error=  0.0%  p99=  50.0ms
+  [ORACLE] root cleared AND SLOs green — incident RESOLVED
+
+sre-degrees$ incident summary
+  attempts     : 2 (1 refinement)
+  fix          : scale_deployment @ search-api
+  resolved     : yes
+=== end of trace ===
+

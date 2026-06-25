@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "item_id": "DX01",
+      "model": "claude-opus-4-8",
+      "trace_id": "bcdb5b3bf8474f7db6997acd7e0ea844",
+      "auto_reward": 0.6708,
+      "auto_subscores": {
+        "root_cause_category": 1.0,
+        "evidence_keywords": 0.625,
+        "ruled_out_red_herrings": 0.3333333333333333,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX02",
+      "model": "claude-opus-4-8",
+      "trace_id": "bb6c3cfb5aaf42d49b4437fe0773f195",
+      "auto_reward": 0.2842,
+      "auto_subscores": {
+        "root_cause_category": 0.15,
+        "evidence_keywords": 0.5,
+        "ruled_out_red_herrings": 0.6666666666666666,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX03",
+      "model": "claude-haiku-4-5",
+      "trace_id": "86ac30e282c9461496fdae9ccaaab92a",
+      "auto_reward": 0.231,
+      "auto_subscores": {
+        "root_cause_category": 0.0,
+        "evidence_keywords": 0.7142857142857143,
+        "ruled_out_red_herrings": 0.16666666666666666,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX04",
+      "model": "claude-opus-4-8",
+      "trace_id": "119a4a42967d48399c60a925a97964b0",
+      "auto_reward": 0.1664,
+      "auto_subscores": {
+        "root_cause_category": 0.0,
+        "evidence_keywords": 0.45454545454545453,
+        "ruled_out_red_herrings": 0.3,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX05",
+      "model": "claude-haiku-4-5",
+      "trace_id": "1923271c194f47e3813eef6faff7f6ee",
+      "auto_reward": 0.6955,
+      "auto_subscores": {
+        "root_cause_category": 1.0,
+        "evidence_keywords": 0.8181818181818182,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX06",
+      "model": "claude-haiku-4-5",
+      "trace_id": "893c9c1716c842c28cd389f1c33692af",
+      "auto_reward": 0.6955,
+      "auto_subscores": {
+        "root_cause_category": 1.0,
+        "evidence_keywords": 0.8181818181818182,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX07",
+      "model": "claude-haiku-4-5",
+      "trace_id": "7680ca9c577c41f2baf41b4b968e0d43",
+      "auto_reward": 0.15,
+      "auto_subscores": {
+        "root_cause_category": 0.0,
+        "evidence_keywords": 0.5,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX08",
+      "model": "claude-opus-4-8",
+      "trace_id": "31d3451850a845e193543b32769f20ee",
+      "auto_reward": 0.75,
+      "auto_subscores": {
+        "root_cause_category": 1.0,
+        "evidence_keywords": 1.0,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX09",
+      "model": "kimi-k2p5",
+      "trace_id": "ea953464b2ff47f1b11cc1a2e872352d",
+      "auto_reward": 0.7125,
+      "auto_subscores": {
+        "root_cause_category": 1.0,
+        "evidence_keywords": 0.875,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX10",
+      "model": "kimi-k2p5",
+      "trace_id": "1199b30082594fa599c2f7523946ae8d",
+      "auto_reward": 0.1091,
+      "auto_subscores": {
+        "root_cause_category": 0.0,
+        "evidence_keywords": 0.36363636363636365,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX11",
+      "model": "kimi-k2p5",
+      "trace_id": "c6b6d74e8d50480ebd6df7774084e7ff",
+      "auto_reward": 0.3,
+      "auto_subscores": {
+        "root_cause_category": 0.0,
+        "evidence_keywords": 1.0,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      }
+    },
+    {
+      "item_id": "DX12",
+      "model": "kimi-k2p5",
+      "trace_id": "e674b321a5d141deb4a6819726de25db",
+      "auto_reward": 0.6643,
+      "auto_subscores": {
+        "root_cause_category": 1.0,
+        "evidence_keywords": 0.7142857142857143,
+        "ruled_out_red_herrings": 0.0,
+        "remediation_tool": 0.0
+      }
+    }
+  ]
+}

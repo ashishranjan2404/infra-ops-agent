@@ -1,0 +1,34 @@
+{
+  "artifact": "SRE-Degrees / REx benchmark + pass@k evaluation harness",
+  "commit_pin": "8a12b41 (PIN_THE_CAMERA_READY_TAG_BEFORE_SUBMISSION)",
+  "repo": "https://github.com/ashishranjan2404/infra-ops-agent",
+  "badges": [
+    {
+      "badge": "Artifacts Available",
+      "claim": "The benchmark scenarios, simulator, and evaluation harness are publicly and persistently archived under an open license.",
+      "tier": "availability",
+      "command": "",
+      "evidence_file": "LICENSE",
+      "expected": "A tagged GitHub release (DOI-minted via Zenodo) containing scenarios/, sim/, rex/, experiments/, requirements-rex.txt, and LICENSE.",
+      "needs_credentials": false
+    },
+    {
+      "badge": "Artifacts Evaluated - Functional",
+      "claim": "The harness installs, the benchmark loads, the deterministic judge is correct, and the reward floor does not leak (empty plan and trap both score below the 0.8 pass threshold).",
+      "tier": "offline",
+      "command": "bash experiments/ralph_outputs/F11/artifacts/smoke_ae.sh",
+      "evidence_file": "tests/test_rex_deterministic_judge.py",
+      "expected": "Script exits 0: family counts > 0; floor_ok == true over the full registry; pytest test_rex_deterministic_judge.py all green. No credentials required.",
+      "needs_credentials": false
+    },
+    {
+      "badge": "Results Reproduced",
+      "claim": "REx attains higher pass@1 than zero-shot/best-of-N on the novel-incident family, with the gap exceeding sampling noise (non-overlapping or improved Wilson 95% CI).",
+      "tier": "online",
+      "command": "python3 -m rex.eval_pass_at_k --frontier --per-family 2 --seeds 3 --conditions zero_shot,rex",
+      "evidence_file": "rex/eval_pass_at_k.py",
+      "expected": "experiments/results/frontier_pass_at_k.json written; by_condition.rex.by_family.novel['pass@1'] >= by_condition.zero_shot.by_family.novel['pass@1'], with the reproduced per-condition pass@1 landing inside the camera-ready Wilson 95% CI (or CIs overlapping).",
+      "needs_credentials": true
+    }
+  ]
+}

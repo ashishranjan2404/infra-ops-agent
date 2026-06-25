@@ -1,0 +1,50 @@
+# Proposed wire-in of the harness-in-the-loop reward into opensre-traj/train_rft_v2.py.
+# NOT applied (real-artifact rule: do not edit shared core files). Shown as the minimal
+# diff a maintainer would apply to route the shaped reward into TrainingClient.step.
+#
+# The shaped reward replaces the raw env reward fed to the trainer. Each rollout's plan
+# is gated by the REAL rex/harness.py::is_safe; blocked actions are penalized so the
+# policy gradient sees their cost (LLM + harness, not LLM alone).
+
+--- a/opensre-traj/train_rft_v2.py
++++ b/opensre-traj/train_rft_v2.py
+@@ import block
++import sys, os
++sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.pardir,
++                                "experiments", "ralph_outputs", "D4", "artifacts"))
++from harness_in_loop import harness_in_loop_reward, HarnessInLoopConfig
++from rex.harness import load_scenario
++
++_HIL_CFG = HarnessInLoopConfig(unsafe_penalty=0.25)
++
++def _shape(run):
++    """Map a HUD run -> shaped reward via the in-loop safety harness.
++    run must expose .reward (env reward), the rollout .plan (model's action dict),
++    and the scenario name (run.task metadata). Falls back to raw reward if a run
++    lacks a parseable plan (keeps training robust to malformed rollouts)."""
++    try:
++        plan = run.plan                      # {"actions": [...]} parsed from the rollout
++        scenario = load_scenario(run.scenario_name)
++        return harness_in_loop_reward(plan, scenario, run.reward, _HIL_CFG).reward
++    except Exception:
++        return run.reward
+
+@@ in run(), after `batch = session.runs[start:]`
+-        rewards = [r.reward for r in batch]
++        rewards = [_shape(r) for r in batch]   # harness-in-the-loop shaped reward
+         mean_r = sum(rewards) / len(rewards) if rewards else 0.0
+         spread = st.pstdev(rewards) if len(rewards) > 1 else 0.0
+@@ trainer.step now consumes the shaped rewards
+-        res = await _aretry(
+-            lambda: trainer.step(batch, learning_rate=args.lr, group_size=args.group),
++        # attach shaped rewards onto the batch runs so trainer.step optimizes them
++        for r, shaped in zip(batch, rewards):
++            r.reward = shaped
++        res = await _aretry(
++            lambda: trainer.step(batch, learning_rate=args.lr, group_size=args.group),
+             f"step@{step}")
+
+# NOTE: `run.plan` / `run.scenario_name` are the integration points that depend on the
+# HUD env (hud_env_v2.py) exposing the model's parsed action plan + scenario id on each
+# rollout. If the env only returns a scalar reward, the env grader must additionally
+# surface the plan (one-line change in hud_env_v2.py's evaluate()) — see 09_critique.md.

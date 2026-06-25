@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sre-degrees/anonymization_schema.json",
+  "title": "AnonymizedIncidentRecord",
+  "description": "v1: only incidents the partner has already publicly disclosed. Free-text fields must be pre-redacted (rules R2/R3 are a human+regex pipeline step, not schema-enforced).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["incident_id", "disclosed_publicly", "failure_class", "timeline", "alert_shapes", "remediation_steps", "provenance"],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "description": "Partner-assigned opaque id. MUST NOT be an internal ticket number.",
+      "minLength": 1
+    },
+    "disclosed_publicly": {
+      "type": "boolean",
+      "const": true,
+      "description": "v1 requires already-public incidents."
+    },
+    "failure_class": {
+      "type": "string",
+      "enum": ["net_delay", "config_bloat", "resource_exhaustion", "dependency", "deploy", "other"]
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["t_offset_seconds", "event_type", "redacted_text"],
+        "properties": {
+          "t_offset_seconds": {
+            "type": "integer",
+            "description": "Offset from t0. Integer by design so no absolute date-time can be submitted (R1)."
+          },
+          "event_type": {
+            "type": "string",
+            "enum": ["detect", "alert", "escalate", "diagnose", "mitigate", "resolve", "other"]
+          },
+          "redacted_text": {
+            "type": "string",
+            "description": "Pre-redacted per R2/R3: no hostnames/IPs/customers/people."
+          }
+        }
+      }
+    },
+    "alert_shapes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["signal", "threshold_relation", "unit"],
+        "properties": {
+          "signal": { "type": "string" },
+          "threshold_relation": { "type": "string", "enum": ["gt", "lt", "eq"] },
+          "unit": { "type": "string", "description": "e.g. ms, percent, count. No numeric value (R4)." }
+        }
+      }
+    },
+    "remediation_steps": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["public_url", "shared_under"],
+      "properties": {
+        "public_url": { "type": ["string", "null"] },
+        "shared_under": { "type": "string", "enum": ["public", "nda", "dpa"], "description": "v1 = public only; nda/dpa reserved for phase-2." }
+      }
+    }
+  }
+}

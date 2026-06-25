@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SRE-Degrees — Promotion Engine Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: #0a0e1a; color: #e0e7ef; min-height: 100vh; padding: 24px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header h1 { font-size: 22px; color: #60a5fa; font-weight: 700; }
+  header .sub { font-size: 13px; color: #94a3b8; margin-top: 4px; }
+  .bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 18px 0; }
+  .pill { background: #1e293b; border: 1px solid #334155; border-radius: 999px;
+          padding: 6px 12px; font-size: 12px; color: #cbd5e1; }
+  .pill b { color: #e0e7ef; }
+  input[type=file] { font-size: 12px; color: #94a3b8; }
+  button { background: #1e293b; border: 1px solid #334155; color: #cbd5e1;
+           border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+  button:hover { border-color: #60a5fa; }
+  .gate-box { background: #111827; border: 1px solid #334155; border-radius: 10px;
+              padding: 12px 16px; margin: 12px 0 20px; font-size: 12px; color: #94a3b8; }
+  .gate-box code { color: #fbbf24; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  .stat { background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+          padding: 14px; text-align: center; }
+  .stat .num { font-size: 26px; font-weight: 800; }
+  .stat .lab { font-size: 10px; color: #94a3b8; text-transform: uppercase; margin-top: 4px; letter-spacing: .5px; }
+  .s-prom .num { color: #4ade80; } .s-hold .num { color: #fbbf24; }
+  .s-rej .num { color: #f87171; }  .s-tot .num { color: #e0e7ef; }
+  h2 { font-size: 14px; color: #93c5fd; margin: 20px 0 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #1f2937; }
+  th { color: #94a3b8; font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: .5px; cursor: pointer; user-select: none; }
+  th:hover { color: #cbd5e1; }
+  tr:hover td { background: #131c2e; }
+  .mono { font-variant-numeric: tabular-nums; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  .t-PROMOTE { background: #052e1a; color: #4ade80; border: 1px solid #166534; }
+  .t-HOLD    { background: #2e2606; color: #fbbf24; border: 1px solid #92660a; }
+  .t-REJECT  { background: #2e0a0a; color: #f87171; border: 1px solid #7f1d1d; }
+  .barcell { position: relative; min-width: 160px; }
+  .track { background: #0f172a; border-radius: 4px; height: 16px; overflow: hidden; position: relative; border: 1px solid #1f2937; }
+  .fill { height: 100%; background: linear-gradient(90deg,#3b82f6,#8b5cf6); }
+  .ci { position: absolute; top: 0; height: 100%; border-left: 1px solid #f8fafc88; border-right: 1px solid #f8fafc88; background: #ffffff14; }
+  .thresh { position: absolute; top: -2px; height: 20px; width: 2px; background: #fbbf24; }
+  .reasons { font-size: 10px; color: #64748b; }
+  .fam { font-size: 10px; color: #94a3b8; }
+  .fam b { color: #cbd5e1; }
+  .err { background: #2e0a0a; border: 1px solid #7f1d1d; color: #fca5a5; padding: 12px; border-radius: 8px; margin: 16px 0; font-size: 13px; }
+  footer { margin-top: 28px; font-size: 11px; color: #475569; }
+  .modelhdr { color: #c4b5fd; font-size: 12px; margin: 18px 0 6px; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>SRE-Degrees — Promotion Engine</h1>
+    <div class="sub">Model / condition pass@k with a promotion-gate view. Reads a results JSON manifest.</div>
+  </header>
+
+  <div class="bar">
+    <span class="pill">manifest: <b id="src">sample_manifest.json</b></span>
+    <span class="pill">generated: <b id="gen">—</b></span>
+    <button id="reload">Reload sample_manifest.json</button>
+    <label class="pill">Load file: <input type="file" id="file" accept="application/json,.json"></label>
+  </div>
+
+  <div id="err" class="err" style="display:none"></div>
+
+  <div class="gate-box" id="gatebox">Promotion gate: —</div>
+
+  <div class="stats">
+    <div class="stat s-tot"><div class="num" id="n-tot">0</div><div class="lab">Candidates</div></div>
+    <div class="stat s-prom"><div class="num" id="n-prom">0</div><div class="lab">Promote</div></div>
+    <div class="stat s-hold"><div class="num" id="n-hold">0</div><div class="lab">Hold</div></div>
+    <div class="stat s-rej"><div class="num" id="n-rej">0</div><div class="lab">Reject</div></div>
+  </div>
+
+  <div id="tables"></div>
+
+  <footer>
+    Manifest schema <code>sre-degrees.promotion-manifest/v1</code>.
+    Numbers sourced from real A1 (glm-5p2, 630 episodes) and A2 (deepseek-v4-pro, 750 episodes) pass@k runs.
+    The yellow tick on each bar marks the promote pass@1 threshold; the lighter band is the 95% CI.
+  </footer>
+</div>
+
+<script>
+const PCT = x => (x==null ? "—" : (100*x).toFixed(1)+"%");
+const state = { manifest: null, sort: { key: "pass_at_1", dir: -1 } };
+
+function decide(){ /* gate is precomputed in manifest; UI only renders */ }
+
+function fmtGate(g){
+  return `Promotion gate — PROMOTE requires ALL of: `
+    + `pass@1 &ge; <code>${PCT(g.promote_p1)}</code>, `
+    + `95% CI lower bound &ge; <code>${PCT(g.promote_ci_lo)}</code>, `
+    + `lift over same-model zero_shot &ge; <code>${PCT(g.min_lift_over_baseline)}</code>. `
+    + `Fails lift &rarr; REJECT, otherwise HOLD.`;
+}
+
+function barCell(c, gate){
+  const p1 = c.pass_at_1, lo = c.ci_lo, hi = c.ci_hi;
+  const ciL = (lo*100).toFixed(1), ciW = ((hi-lo)*100).toFixed(1);
+  const th = (gate.promote_p1*100).toFixed(1);
+  return `<div class="track">
+      <div class="fill" style="width:${(p1*100).toFixed(1)}%"></div>
+      <div class="ci" style="left:${ciL}%;width:${ciW}%"></div>
+      <div class="thresh" style="left:${th}%"></div>
+    </div>`;
+}
+
+function famCell(c){
+  const fams = state.manifest.families || [];
+  return fams.map(f => {
+    const fb = (c.by_family||{})[f];
+    return fb ? `<span class="fam">${f[0].toUpperCase()}:<b>${PCT(fb.pass_at_1)}</b></span>` : "";
+  }).join(" ");
+}
+
+function render(){
+  const m = state.manifest;
+  document.getElementById("src").textContent = m.__src || "sample_manifest.json";
+  document.getElementById("gen").textContent = m.generated_at || "—";
+  document.getElementById("gatebox").innerHTML = fmtGate(m.gate);
+
+  const cs = m.candidates;
+  document.getElementById("n-tot").textContent = cs.length;
+  document.getElementById("n-prom").textContent = cs.filter(c=>c.decision==="PROMOTE").length;
+  document.getElementById("n-hold").textContent = cs.filter(c=>c.decision==="HOLD").length;
+  document.getElementById("n-rej").textContent  = cs.filter(c=>c.decision==="REJECT").length;
+
+  // group by model, sort within group
+  const byModel = {};
+  cs.forEach(c => { (byModel[c.model] = byModel[c.model] || []).push(c); });
+  const sk = state.sort.key, sd = state.sort.dir;
+  const tablesEl = document.getElementById("tables");
+  tablesEl.innerHTML = "";
+
+  Object.keys(byModel).sort().forEach(model => {
+    const rows = byModel[model].slice().sort((a,b)=>{
+      const av=a[sk], bv=b[sk];
+      if (typeof av === "string") return sd*av.localeCompare(bv);
+      return sd*((av??-1)-(bv??-1));
+    });
+    const hdr = document.createElement("div");
+    hdr.className = "modelhdr";
+    hdr.textContent = "Model: " + model + "  (source " + (rows[0].source||"?") + ")";
+    tablesEl.appendChild(hdr);
+
+    const t = document.createElement("table");
+    t.innerHTML = `<thead><tr>
+      <th data-k="condition">Condition</th>
+      <th data-k="pass_at_1">pass@1 (bar = pass@1, band = 95% CI)</th>
+      <th data-k="pass_at_1">pass@1</th>
+      <th data-k="pass_at_2">pass@2</th>
+      <th data-k="pass_at_5">pass@5</th>
+      <th data-k="lift_over_baseline">lift</th>
+      <th data-k="condition">by family</th>
+      <th data-k="decision">gate</th>
+    </tr></thead><tbody></tbody>`;
+    const tb = t.querySelector("tbody");
+    rows.forEach(c => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><b>${c.condition}</b><div class="reasons">n=${c.n}, passes=${c.passes}</div></td>
+        <td class="barcell">${barCell(c, m.gate)}</td>
+        <td class="mono">${PCT(c.pass_at_1)}<div class="reasons">[${PCT(c.ci_lo)}, ${PCT(c.ci_hi)}]</div></td>
+        <td class="mono">${PCT(c.pass_at_2)}</td>
+        <td class="mono">${PCT(c.pass_at_5)}</td>
+        <td class="mono">${c.lift_over_baseline>=0?"+":""}${PCT(c.lift_over_baseline)}</td>
+        <td>${famCell(c)}</td>
+        <td><span class="tag t-${c.decision}">${c.decision}</span>
+            <div class="reasons">${(c.reasons||[]).join(" · ")}</div></td>`;
+      tb.appendChild(tr);
+    });
+    tablesEl.appendChild(t);
+
+    t.querySelectorAll("th").forEach(th=>{
+      th.onclick = ()=>{
+        const k = th.dataset.k;
+        if (state.sort.key === k) state.sort.dir *= -1;
+        else state.sort = { key: k, dir: -1 };
+        render();
+      };
+    });
+  });
+}
+
+function validate(m){
+  if (!m || m.schema !== "sre-degrees.promotion-manifest/v1")
+    throw new Error("Unexpected schema: " + (m && m.schema));
+  if (!Array.isArray(m.candidates)) throw new Error("manifest.candidates is not an array");
+  if (!m.gate) throw new Error("manifest.gate missing");
+  return m;
+}
+
+function loadManifest(obj, srcName){
+  try {
+    const m = validate(obj);
+    m.__src = srcName;
+    state.manifest = m;
+    document.getElementById("err").style.display = "none";
+    render();
+  } catch(e){
+    const el = document.getElementById("err");
+    el.style.display = "block";
+    el.textContent = "Failed to load manifest: " + e.message;
+  }
+}
+
+function fetchSample(){
+  fetch("sample_manifest.json", {cache:"no-store"})
+    .then(r => { if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+    .then(o => loadManifest(o, "sample_manifest.json"))
+    .catch(e => {
+      const el = document.getElementById("err");
+      el.style.display = "block";
+      el.innerHTML = "Could not fetch <b>sample_manifest.json</b> ("+e.message
+        +"). If you opened this file via file://, your browser may block fetch — "
+        +"use the <b>Load file</b> picker, or serve the folder with "
+        +"<code>python3 -m http.server</code>.";
+    });
+}
+
+document.getElementById("reload").onclick = fetchSample;
+document.getElementById("file").onchange = ev => {
+  const f = ev.target.files[0]; if(!f) return;
+  const rd = new FileReader();
+  rd.onload = () => { try { loadManifest(JSON.parse(rd.result), f.name); }
+    catch(e){ const el=document.getElementById("err"); el.style.display="block"; el.textContent="Bad JSON: "+e.message; } };
+  rd.readAsText(f);
+};
+
+fetchSample();
+</script>
+</body>
+</html>

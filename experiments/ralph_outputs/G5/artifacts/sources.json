@@ -1,0 +1,82 @@
+{
+  "snapshot": "2026-06",
+  "sources": {
+    "S1": {
+      "url": "file:///Users/mei/rl/ARCHITECTURE.md",
+      "who": "us",
+      "claim": "reward = 0.30*diag + 0.25*fix + 0.45*resolved - 0.60*trap; frozen swappable policy; within-group reward spread; GKE test cluster; 0.86 ceiling = escalate the unsolvable",
+      "verification": "self-reported",
+      "as_of": "2026-06"
+    },
+    "S2": {
+      "url": "https://arxiv.org/abs/2605.07161",
+      "who": "SREGym",
+      "claim": "Live benchmark, 90 SRE problems, fault/noise injectors over real cloud-native stacks; diagnosis 38.9-72.6%, mitigation 57.3-78.5%",
+      "verification": "primary",
+      "as_of": "2026-05"
+    },
+    "S3": {
+      "url": "https://github.com/SREGym/SREGym",
+      "who": "SREGym",
+      "claim": "Open-source benchmarking platform for SRE agents",
+      "verification": "primary",
+      "as_of": "2026-05"
+    },
+    "S4": {
+      "url": "https://www.caisconf.org/program/2026/demos/sregym/",
+      "who": "SREGym",
+      "claim": "Positioned as a live training ground for AI SRE agents (provides environment, not training algorithm)",
+      "verification": "primary",
+      "as_of": "2026-06"
+    },
+    "S5": {
+      "url": "https://komodor.com/blog/komodor-introduces-autonomous-self-healing-capabilities-for-cloud-native-infrastructure-and-operations/",
+      "who": "Komodor",
+      "claim": "Klaudia agents; 95% accuracy claim; Cisco 40% ticket reduction / 80% faster MTTR; Cisco/Dell/BlackRock customers",
+      "verification": "vendor-stated",
+      "as_of": "2025-11"
+    },
+    "S6": {
+      "url": "https://www.globenewswire.com/news-release/2025/11/05/3181574/0/en/komodor-introduces-autonomous-self-healing-capabilities-for-cloud-native-infrastructure-and-operations.html",
+      "who": "Komodor",
+      "claim": "Autonomous self-healing GA; detect/investigate/remediate with or without human in the loop",
+      "verification": "vendor-stated",
+      "as_of": "2025-11"
+    },
+    "S7": {
+      "url": "https://www.helpnetsecurity.com/2025/11/05/komodor-platform-self-healing-and-cost-optimization-capabilities/",
+      "who": "third-party",
+      "claim": "Independent coverage: Komodor remediates with or without a human in the loop",
+      "verification": "third-party-review",
+      "as_of": "2025-11"
+    },
+    "S8": {
+      "url": "https://www.datadoghq.com/blog/bits-ai-sre/",
+      "who": "Datadog",
+      "claim": "Bits AI SRE investigates alerts against live telemetry (RUM, profiler, network path, DB); human-in-the-loop triage",
+      "verification": "vendor-stated",
+      "as_of": "2025-12"
+    },
+    "S9": {
+      "url": "https://www.datadoghq.com/about/latest-news/press-releases/datadog-launches-bits-ai-sre-agent-to-resolve-incidents-faster/",
+      "who": "Datadog",
+      "claim": "Tested across 2,000+ customer environments; tens of thousands of investigations",
+      "verification": "vendor-stated",
+      "as_of": "2025-12"
+    },
+    "S10": {
+      "url": "https://www.datadoghq.com/blog/engineering/bits-ai-eval-platform/",
+      "who": "Datadog",
+      "claim": "Internal eval platform built on proprietary labeled real customer incidents; not publicly available",
+      "verification": "vendor-stated",
+      "as_of": "2026-01"
+    },
+    "S11": {
+      "url": "https://www.datadoghq.com/blog/bits-ai-sre-deeper-reasoning/",
+      "who": "Datadog",
+      "claim": "New Bits AI ~2x faster and more accurate on internal benchmark; no independent RCA benchmark exists",
+      "verification": "vendor-stated",
+      "as_of": "2026-03"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "incident": "acme_redis_failover_thundering_herd",
+  "source_company": "anonymized",
+  "provenance": "first_party_nonpublic",
+  "consent": {
+    "granted": true,
+    "anonymized": true,
+    "dua": true,
+    "contact": null
+  },
+  "loud_symptom": "Checkout API p99 latency spiked to 30s and error rate hit 40%; the loud alert fired on the checkout service and on-call assumed a checkout regression. Checkout itself was healthy.",
+  "root_cause": "A primary Redis node had a brief network blip; Sentinel failed over correctly, but every app instance reconnected at once and re-ran its cache-warm routine, hammering the new primary. The new primary CPU-saturated on the reconnect storm, so cache reads timed out fleet-wide — the checkout alert was the victim, not the cause.",
+  "trap_action": "On-call rolled back the most recent checkout deploy (unrelated) and then restarted the checkout fleet, which forced ANOTHER simultaneous reconnect to Redis and worsened the thundering herd.",
+  "correct_fix": "Stop the synchronized reconnect: enable jittered/backoff reconnect + connection pooling on the Redis clients, temporarily throttle cache-warm on boot, and let the new primary drain the storm. Do NOT mass-restart app instances during a failover.",
+  "category": "saturation",
+  "provider": "aws",
+  "timeline": [
+    { "ts": "T+0", "actor": "infra", "action": "Redis primary network blip; Sentinel begins failover", "effect": "new primary promoted" },
+    { "ts": "T+1m", "actor": "fleet", "action": "all app instances reconnect + cache-warm simultaneously", "effect": "new primary CPU saturates; reads time out" },
+    { "ts": "T+4m", "actor": "oncall", "action": "rolled back latest checkout deploy", "effect": "no change (unrelated)" },
+    { "ts": "T+7m", "actor": "oncall", "action": "restarted checkout fleet", "effect": "TRAP — second reconnect storm, worsened" },
+    { "ts": "T+18m", "actor": "oncall", "action": "enabled jittered reconnect + throttled cache-warm", "effect": "storm drains; latency recovers" }
+  ],
+  "causal_chain": "redis primary blip -> sentinel failover -> synchronized fleet reconnect + cache-warm -> new primary CPU saturation -> fleet-wide cache read timeouts -> checkout p99/error spike (victim) -> naive checkout rollback + mass restart -> second reconnect storm -> prolonged outage",
+  "source_url": null,
+  "severity": "critical",
+  "difficulty": 4
+}

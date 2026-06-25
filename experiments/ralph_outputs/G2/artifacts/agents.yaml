@@ -1,0 +1,21 @@
+# SREGym agent registration (task G2).
+# Schema per https://sregym.com/docs/running-your-own-agent :
+#   each agent has name / kickoff_command / kickoff_workdir / kickoff_env.
+# SREGym launches the agent as an EXTERNAL process and exposes its 5 MCP servers
+# (Metrics/Prometheus, Logs/Loki, Traces/Jaeger, Cluster-control/kubectl, Submission).
+#
+# `stratus` is the upstream reference agent (documented command; NOT vendored in this
+# repo — see RUN_PLAN.md for the blocker). `cidg-stub` is our deterministic proof agent
+# that drives our adapter through the identical contract.
+agents:
+  - name: stratus
+    # Upstream Stratus driver, exactly as documented by SREGym.
+    kickoff_command: python -m clients.stratus.stratus_agent.driver.driver --server http://localhost:8000
+    kickoff_workdir: .
+    kickoff_env: null
+
+  - name: cidg-stub
+    # Our proof agent — runs the SREGym-shaped loop against our sim via sregym_adapter.
+    kickoff_command: python experiments/ralph_outputs/G2/artifacts/stub_agent.py --scenario scenarios/cidg/22-leaf-bad-deploy-positive.yaml
+    kickoff_workdir: .
+    kickoff_env: null

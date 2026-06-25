@@ -1,0 +1,17 @@
+target,track,channel,owner,status,first_contact,last_touch,next_action,provenance_expected,incident_id,notes
+incident.io Slack community,community_warm,community_dm,outreach_lead,not_started,,,Post CFC in community channel,first_party_donated,,Existing relationship; highest-yield warm node
+SREcon attendee network,community_warm,public_cfc,outreach_lead,not_started,,,Submit CFC blurb to SREcon Slack/list,first_party_donated,,Practitioners who live cascades
+r/sre + r/kubernetes,community_warm,community_dm,outreach_lead,not_started,,,Post war-story CFC,first_party_donated,,Volume channel; skews public
+rootly/FireHydrant communities,community_warm,community_dm,outreach_lead,not_started,,,DM community managers,first_party_donated,,Incident-tooling cultural fit
+CNCF kubernetes-users Slack,community_warm,community_dm,outreach_lead,not_started,,,Post in sig-network,first_party_donated,,Where CNI cascades get debugged
+k8s.af maintainers,community_warm,warm_intro,outreach_lead,not_started,,,Warm intro to curators,public_postmortem,,Curated failure list
+SRE Weekly readers,community_warm,public_cfc,outreach_lead,not_started,,,Sponsor CFC blurb,first_party_donated,,Senior infra demographic
+Honeycomb dev-rel,community_warm,warm_intro,outreach_lead,not_started,,,Email dev-rel,first_party_donated,,War-story-friendly culture
+PagerDuty community,community_warm,community_dm,outreach_lead,not_started,,,Post in postmortem groups,first_party_donated,,On-call practitioners
+Personal SRE network,community_warm,warm_intro,outreach_lead,not_started,,,Direct asks to ex-colleagues,first_party_nonpublic,,Source of genuinely non-public data
+HUD community,community_warm,community_dm,outreach_lead,not_started,,,Post in HUD channel,first_party_donated,,Adjacent to project
+incident.io (company),dua_nonpublic,warm_intro,outreach_lead,not_started,,,Propose 1-page DUA,first_party_nonpublic,,Best DUA candidate
+Mid-size SaaS (VP-Eng contact),dua_nonpublic,warm_intro,outreach_lead,not_started,,,Find internal sponsor,first_party_nonpublic,,Realistic non-public source
+Cloud-native startup (Series B/C),dua_nonpublic,cold_email,outreach_lead,not_started,,,Cold email + offer scenario back,first_party_nonpublic,,Faster on light DUA than FAANG
+University SRE/research-infra,dua_nonpublic,cold_email,outreach_lead,not_started,,,Email research-infra team,first_party_nonpublic,,Low legal friction
+Managed-K8s vendor dev-rel,dua_nonpublic,warm_intro,outreach_lead,not_started,,,Ask for sanitized aggregate,first_party_nonpublic,,Sees many customer cascades

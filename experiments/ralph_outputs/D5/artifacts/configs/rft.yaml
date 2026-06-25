@@ -1,0 +1,20 @@
+# D5 — RFT (GRPO/RLVR) leg config. Shared keys MUST match sft.yaml verbatim.
+regime: rft
+# --- shared (identical across both legs => "same data") ---
+base_model: opensre-qwen3-8b        # forked Qwen base; SAME slug as sft.yaml
+split_path: ../split.json           # frozen train/eval scenario split
+env: opensre-traj/hud_env_v2.py     # deterministic v2 grader (category .35 | mechanism .20 | kw .25 | ruled_out .10 | rem .10)
+grader: hud_env_v2._grade_v2
+eval_metric: mean_v2_reward_on_eval_split
+# --- regime-specific ---
+trainer: opensre-traj/train_rft_v2.py
+group: 6                # GRPO group size (within-group spread is the trainability unit)
+steps: 30
+lr: 1.0e-5
+reset_head: true        # reward/objective is v2 -> roll head back before step 0
+# RFT consumes the train scenarios as TASKS and generates its own graded rollouts;
+# it needs NO gold completions, only the grader. Trains tasks = split.train indices.
+notes: >
+  RFT optimizes the policy directly against the deterministic grader on the SAME train
+  scenarios SFT clones from. Hypothesis H2: smaller-but-additional gain concentrated in
+  mechanism_match (the highest-spread subscore).

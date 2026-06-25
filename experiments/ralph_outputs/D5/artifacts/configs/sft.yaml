@@ -1,0 +1,21 @@
+# D5 — SFT (behavioral cloning) leg config. Shared keys MUST match rft.yaml verbatim.
+regime: sft
+# --- shared (identical across both legs => "same data") ---
+base_model: opensre-qwen3-8b        # forked Qwen base; SAME slug as rft.yaml
+split_path: ../split.json           # frozen train/eval scenario split
+env: opensre-traj/hud_env_v2.py     # SAME env, used only for EVAL of the SFT checkpoint
+grader: hud_env_v2._grade_v2
+eval_metric: mean_v2_reward_on_eval_split
+# --- regime-specific ---
+trainer: train_sft.py
+data: ../sft_pairs.jsonl            # best demo per train scenario, reward >= min_reward
+min_reward: 0.5                     # threshold for a demo to qualify as an SFT target
+epochs: 3
+lr: 1.0e-5
+# SFT consumes the SAME train scenarios as (prompt, completion) pairs, where completion =
+# argmax-reward existing trajectory (RAFT/STaR). Coverage 21/24 train scenarios (87.5%);
+# 3 hard scenarios have no demo >= min_reward and are dropped (RFT can still attempt them).
+notes: >
+  SFT clones the best Opus/Haiku/Kimi demonstration per scenario. Hypothesis H1: larger
+  single-jump gain from transferring strong demonstrator behavior cheaply. Failure mode:
+  inherits the demonstrator's category bias and cannot cover the no-demo tail.

@@ -1,0 +1,251 @@
+{
+  "_source": "rex/runs/ablation.json",
+  "model": "claude-haiku-4-5",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "N": 4,
+  "incidents": [
+    "aws_dynamodb_dns",
+    "cloudflare_waf",
+    "crowdstrike_bsod",
+    "railway_gcp_suspension",
+    "azure_ddos"
+  ],
+  "n_attempts_per_arm": 15,
+  "thresholds": [
+    0.7,
+    0.8,
+    0.86,
+    0.9
+  ],
+  "arms": [
+    "zero_shot",
+    "best_of_n",
+    "retry_realistic",
+    "rex",
+    "rex_no_oracle"
+  ],
+  "rows": {
+    "0.70": {
+      "per_arm": {
+        "zero_shot": {
+          "n": 15,
+          "passes": 3,
+          "pass_rate": 0.2,
+          "wilson95": [
+            0.0705,
+            0.4519
+          ]
+        },
+        "best_of_n": {
+          "n": 15,
+          "passes": 3,
+          "pass_rate": 0.2,
+          "wilson95": [
+            0.0705,
+            0.4519
+          ]
+        },
+        "retry_realistic": {
+          "n": 15,
+          "passes": 3,
+          "pass_rate": 0.2,
+          "wilson95": [
+            0.0705,
+            0.4519
+          ]
+        },
+        "rex": {
+          "n": 15,
+          "passes": 6,
+          "pass_rate": 0.4,
+          "wilson95": [
+            0.1982,
+            0.6425
+          ]
+        },
+        "rex_no_oracle": {
+          "n": 15,
+          "passes": 3,
+          "pass_rate": 0.2,
+          "wilson95": [
+            0.0705,
+            0.4519
+          ]
+        }
+      },
+      "best_control": "zero_shot",
+      "rex_pass_rate": 0.4,
+      "best_control_pass_rate": 0.2,
+      "rex_minus_best_control": 0.2,
+      "rex_wins": true
+    },
+    "0.80": {
+      "per_arm": {
+        "zero_shot": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        },
+        "best_of_n": {
+          "n": 15,
+          "passes": 1,
+          "pass_rate": 0.0667,
+          "wilson95": [
+            0.0119,
+            0.2982
+          ]
+        },
+        "retry_realistic": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        },
+        "rex": {
+          "n": 15,
+          "passes": 6,
+          "pass_rate": 0.4,
+          "wilson95": [
+            0.1982,
+            0.6425
+          ]
+        },
+        "rex_no_oracle": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        }
+      },
+      "best_control": "best_of_n",
+      "rex_pass_rate": 0.4,
+      "best_control_pass_rate": 0.0667,
+      "rex_minus_best_control": 0.3333,
+      "rex_wins": true
+    },
+    "0.86": {
+      "per_arm": {
+        "zero_shot": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        },
+        "best_of_n": {
+          "n": 15,
+          "passes": 1,
+          "pass_rate": 0.0667,
+          "wilson95": [
+            0.0119,
+            0.2982
+          ]
+        },
+        "retry_realistic": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        },
+        "rex": {
+          "n": 15,
+          "passes": 6,
+          "pass_rate": 0.4,
+          "wilson95": [
+            0.1982,
+            0.6425
+          ]
+        },
+        "rex_no_oracle": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        }
+      },
+      "best_control": "best_of_n",
+      "rex_pass_rate": 0.4,
+      "best_control_pass_rate": 0.0667,
+      "rex_minus_best_control": 0.3333,
+      "rex_wins": true
+    },
+    "0.90": {
+      "per_arm": {
+        "zero_shot": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        },
+        "best_of_n": {
+          "n": 15,
+          "passes": 1,
+          "pass_rate": 0.0667,
+          "wilson95": [
+            0.0119,
+            0.2982
+          ]
+        },
+        "retry_realistic": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        },
+        "rex": {
+          "n": 15,
+          "passes": 6,
+          "pass_rate": 0.4,
+          "wilson95": [
+            0.1982,
+            0.6425
+          ]
+        },
+        "rex_no_oracle": {
+          "n": 15,
+          "passes": 0,
+          "pass_rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.2039
+          ]
+        }
+      },
+      "best_control": "best_of_n",
+      "rex_pass_rate": 0.4,
+      "best_control_pass_rate": 0.0667,
+      "rex_minus_best_control": 0.3333,
+      "rex_wins": true
+    }
+  },
+  "robust": true,
+  "table": "arm                 thr=0.70    thr=0.80    thr=0.86    thr=0.90\n----------------------------------------------------------------\nzero_shot               0.20        0.00        0.00        0.00\nbest_of_n               0.20        0.07        0.07        0.07\nretry_realistic         0.20        0.00        0.00        0.00\nrex                     0.40        0.40        0.40        0.40\nrex_no_oracle           0.20        0.00        0.00        0.00\n----------------------------------------------------------------\nREx - best ctrl        +0.20       +0.33       +0.33       +0.33\nREx wins?                yes         yes         yes         yes"
+}

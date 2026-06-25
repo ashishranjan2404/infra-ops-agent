@@ -1,0 +1,32 @@
+{
+  "dry_run": true,
+  "error": null,
+  "finished": "2026-06-25T08:18:29+00:00",
+  "host": "Meis-MacBook-Pro-2.local",
+  "model": "glm-5p2",
+  "result": {
+    "dry_run": true,
+    "incidents": [
+      "auth_cert_expiry",
+      "bad_deploy_leaf",
+      "aws_dynamodb_dns",
+      "aws_kinesis_cell_manager",
+      "azure_leapyear_cert",
+      "cloudflare_leap_second"
+    ],
+    "model": "glm-5p2",
+    "n_incidents": 6,
+    "note": "synthetic deterministic scorer \u2014 no LLM/network calls",
+    "seeds": 2,
+    "summary": {
+      "zero_shot": {
+        "n": 12,
+        "pass@1": 0.75,
+        "passes": 9
+      }
+    }
+  },
+  "schema_version": 2,
+  "status": "ok",
+  "ts": "2026-06-25T08:18:29+00:00"
+}
